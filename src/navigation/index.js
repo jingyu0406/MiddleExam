@@ -25,9 +25,28 @@ const Navigation = () => {
 }
 const MyTabs=() => {
     return (
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={TestScreen} />
+      <Tab.Navigator
+      initialRouteName='Home'
+      tabBarPosition="bottom"
+        screenOptions={{
+            activeTintColor: 'blue',
+            inactiveTintColor: 'gray',
+        }}
+      >
+        <Tab.Screen name="Home" component={HomeScreen} 
+            options={{
+                tabBarIcon: ({ color }) => (
+                    <MaterialCommunityIcons name="home" color={color} size={30} />
+                )
+            }}
+            />
+        <Tab.Screen name="Settings" component={TestScreen} 
+            options={{
+                tabBarIcon: ({ color }) => (
+                    <MaterialCommunityIcons name="bookmark" color={color} size={30} />
+                )
+            }}
+        />
       </Tab.Navigator>
     );
   }
