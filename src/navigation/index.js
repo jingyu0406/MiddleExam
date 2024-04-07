@@ -8,10 +8,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 
 import HomeScreen from '../screen/HomeScreen';
-import DetailScreen from '../screen/DetailScreen';
 import AccountScreen from '../screen/AccountScreen';
 import MessageScreen from '../screen/MessageScreen';
 import { Header } from 'react-native/Libraries/NewAppScreen';
+import MessageBoard from '../screen/MessageBoard';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,7 +35,7 @@ const MyTabs = () => {
         inactiveTintColor: 'gray',
       }}
     >
-      <Tab.Screen name="留言區" component={MessageScreen}
+      <Tab.Screen name="留言區" component={MessageBoard}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="chat" color={color} size={40} />
