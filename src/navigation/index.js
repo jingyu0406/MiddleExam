@@ -9,8 +9,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import HomeScreen from '../screen/HomeScreen';
 import DetailScreen from '../screen/DetailScreen';
-import TestScreen from '../screen/TestScreen';
-
+import AccountScreen from '../screen/AccountScreen';
+import MessageScreen from '../screen/MessageScreen';
+import { Header } from 'react-native/Libraries/NewAppScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,32 +24,65 @@ const Navigation = () => {
     </NavigationContainer>
   );
 }
-const MyTabs=() => {
-    return (
-      <Tab.Navigator
+const MyTabs = () => {
+  return (
+    <Tab.Navigator
       initialRouteName='Home'
       tabBarPosition="bottom"
-        screenOptions={{
-            activeTintColor: 'blue',
-            inactiveTintColor: 'gray',
+      screenOptions={{
+        tabBarStyle: { height: 80, paddingBottom: 10 }, //更改tab的高度
+        activeTintColor: 'blue',
+        inactiveTintColor: 'gray',
+      }}
+    >
+      <Tab.Screen name="留言區" component={MessageScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="chat" color={color} size={40} />
+          )
         }}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} 
-            options={{
-                tabBarIcon: ({ color }) => (
-                    <MaterialCommunityIcons name="home" color={color} size={30} />
-                )
-            }}
+      />
+      <Tab.Screen name="借傘" component={HomeStack}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="umbrella" color={color} size={50} />
+          )
+        }}
+      />
+      <Tab.Screen name="關於" component={AccountScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={40} />
+          )
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+const HomeStack = () => {
+  return (
+    <Stack.Navigator
+    >
+      <Stack.Screen
+        name="-傘電-"
+        component={HomeScreen}
+        options={{
+          headerTitleAlign: "center", //文字置中
+          headerRight: () => (
+            <MaterialCommunityIcons
+              name={'magnify'}
+              size={30}
+              style={{ marginRight: 10 }}
             />
-        <Tab.Screen name="Settings" component={TestScreen} 
-            options={{
-                tabBarIcon: ({ color }) => (
-                    <MaterialCommunityIcons name="bookmark" color={color} size={30} />
-                )
-            }}
-        />
-      </Tab.Navigator>
-    );
-  }
+          )
+        }
+
+        }
+      />
+    </Stack.Navigator >
+  )
+}
 
 export default Navigation;
