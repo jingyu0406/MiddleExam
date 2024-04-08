@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList } from 'react-native';
 import Message from '../component/Message';
+import MessageScreen from './MessageScreen';
 
-const MessageBoard = () => {
+const MessageBoard = ({navigation}) => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
 
@@ -20,13 +21,9 @@ const MessageBoard = () => {
 
   return (
     <View style={{ flex: 1, padding: 20 }}>
-      <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10 }}
-        placeholder="Type your message here"
-        onChangeText={text => setInputText(text)}
-        value={inputText}
-      />
-      <Button title="Add Message" onPress={handleAddMessage} />
+ 
+      <Button title="Add" onPress={() => navigation.navigate('留言')} />
+
       <FlatList
         data={messages}
         renderItem={({ item }) => 

@@ -42,7 +42,7 @@ const MyTabs = () => {
         
       }}
     >
-      <Tab.Screen name="留言區" component={MessageBoard}
+      <Tab.Screen name="留言區" component={MessageStack}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="chat" color={color} size={40} />
@@ -71,6 +71,8 @@ const MyTabs = () => {
 const HomeStack = () => {
   return (
     <Stack.Navigator
+    initialRouteName='Home'
+
     >
       <Stack.Screen
         name="-傘電-"
@@ -87,6 +89,28 @@ const HomeStack = () => {
         }
 
         }
+      />
+    </Stack.Navigator >
+  )
+}
+
+const MessageStack= ()=>{
+  return(
+    <Stack.Navigator
+    >
+      <Stack.Screen
+        name="留言板"
+        component={MessageBoard}
+        options={{
+          headerTitleAlign: "center", //文字置中
+        }}
+      />
+      <Stack.Screen
+        name="留言"
+        component={MessageScreen}
+        options={{
+          headerTitleAlign: "center", //文字置中
+        }}
       />
     </Stack.Navigator >
   )
