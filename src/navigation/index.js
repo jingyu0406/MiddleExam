@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer ,useTheme} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -13,26 +13,33 @@ import MessageScreen from '../screen/MessageScreen';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import MessageBoard from '../screen/MessageBoard';
 
+
+import MyTheme from '../theme';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 
 const Navigation = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <MyTabs />
     </NavigationContainer>
   );
 }
 const MyTabs = () => {
+  const {colors}= useTheme();
   return (
+    
     <Tab.Navigator
       initialRouteName='Home'
       tabBarPosition="bottom"
       screenOptions={{
-        tabBarStyle: { height: 80, paddingBottom: 10 }, //更改tab的高度
-        activeTintColor: 'blue',
-        inactiveTintColor: 'gray',
+        tabBarStyle: { height: 80, paddingBottom: 10 , backgroundColor:colors.DayGreen}, //更改tab的高度
+        tabBarActiveTintColor: 'red',
+        tabBarInactiveTintColor: 'white',
+        tabBarLabel: () => null
+        
       }}
     >
       <Tab.Screen name="留言區" component={MessageBoard}
