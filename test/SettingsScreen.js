@@ -19,12 +19,13 @@ const SettingsScreen = () => {
         if (colorMode == "light") setColorMode("dark");
         else setColorMode("light");
     };
-    let region = {
+    const [region, setRegion] = useState({
         longitude: 121.544637,
         latitude: 25.024624,
-        longitudeDelta: 0.001,
-        latitudeDelta: 0.002,
-    };
+        longitudeDelta: 0.01,
+        latitudeDelta: 0.02,
+    })
+
 
     return (
         <Box flex={1}>
