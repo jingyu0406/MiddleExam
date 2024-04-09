@@ -10,7 +10,7 @@ import {
     Text,
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 const SettingsScreen = () => {
     const [counter, setCounter] = useState(0);
@@ -22,10 +22,17 @@ const SettingsScreen = () => {
     const [region, setRegion] = useState({
         longitude: 121.544637,
         latitude: 25.024624,
-        longitudeDelta: 0.01,
-        latitudeDelta: 0.02,
+        longitudeDelta: 0.001,
+        latitudeDelta: 0.002,
     })
-
+    const [marker, setMarker] = useState({
+        coord: {
+            longitude: 121.544637,
+            latitude: 25.024624,
+        },
+        name: "國立臺北教育大學",
+        address: "台北市和平東路二段134號",
+    });
 
     return (
         <Box flex={1}>
@@ -71,18 +78,20 @@ const SettingsScreen = () => {
                         />
                     </HStack>
 
-
-
-
-
                 </Center>
+
                 <MapView
                     region={region}
                     style={{ flex: 1 }}
                     showsTraffic
-                    mapType='hybrid'
-                //standard
-                />
+                    mapType='hybrid'>
+                    {/* //standard */}
+                    <Marker
+                        coordinate={marker.coord}
+                        title={marker.name}
+                        description={marker.address}
+                    />
+                </MapView>
             </GluestackUIProvider>
 
         </Box>
