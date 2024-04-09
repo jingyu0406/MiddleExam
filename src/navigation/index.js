@@ -44,6 +44,7 @@ const MyTabs = () => {
     >
       <Tab.Screen name="留言區" component={MessageStack}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="chat" color={color} size={40} />
           )
@@ -71,7 +72,7 @@ const MyTabs = () => {
 const HomeStack = () => {
   return (
     <Stack.Navigator
-    initialRouteName='Home'
+    initialRouteName='-傘電-'
 
     >
       <Stack.Screen
@@ -97,6 +98,10 @@ const HomeStack = () => {
 const MessageStack= ()=>{
   return(
     <Stack.Navigator
+    initialRouteName='留言板'
+    screenOptions={{
+      backgroundColor: 'white', // 设置背景颜色为白色
+    }}
     >
       <Stack.Screen
         name="留言板"

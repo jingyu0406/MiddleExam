@@ -9,8 +9,9 @@ import { selectMessage } from '../redux/messageSlice';
 const MessageBoard = ({navigation}) => {
   const message = useSelector(selectMessage);
 
+
   return (
-    <View style={{ flex: 1, padding: 20 }}>
+    <View style={{ flex: 1}}>
  
       <Button title="Add" onPress={() => navigation.navigate('留言')} />
 
