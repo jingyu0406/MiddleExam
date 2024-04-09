@@ -10,7 +10,7 @@ import {
     Text,
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
-
+import MapView from 'react-native-maps';
 
 const SettingsScreen = () => {
     const [counter, setCounter] = useState(0);
@@ -19,13 +19,18 @@ const SettingsScreen = () => {
         if (colorMode == "light") setColorMode("dark");
         else setColorMode("light");
     };
-
-
+    let region = {
+        longitude: 121.544637,
+        latitude: 25.024624,
+        longitudeDelta: 0.001,
+        latitudeDelta: 0.002,
+    };
 
     return (
-        <Box>
+        <Box flex={1}>
+
             <GluestackUIProvider config={config}>
-                <Center flex={0} bg={colorMode == "light" ? "white" : "black"}>
+                <Center flex={1} bg={colorMode == "light" ? "white" : "black"}>
                     <HStack space="3xl">
                         <Button
                             onPress={() => setCounter(counter + 2)}
@@ -70,7 +75,13 @@ const SettingsScreen = () => {
 
 
                 </Center>
-
+                <MapView
+                    region={region}
+                    style={{ flex: 1 }}
+                    showsTraffic
+                    mapType='hybrid'
+                //standard
+                />
             </GluestackUIProvider>
 
         </Box>
