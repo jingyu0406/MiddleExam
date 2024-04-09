@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer ,useTheme} from '@react-navigation/native';
+import { NavigationContainer, useTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -28,18 +28,18 @@ const Navigation = () => {
   );
 }
 const MyTabs = () => {
-  const {colors}= useTheme();
+  const { colors } = useTheme();
   return (
-    
+
     <Tab.Navigator
       initialRouteName='借傘'
-     //tabBarPosition="bottom"
+      //tabBarPosition="bottom"
       screenOptions={{
-        tabBarStyle: { height: 80, paddingBottom: 10 , backgroundColor:colors.DayGreen}, //更改tab的高度
+        tabBarStyle: { height: 80, paddingBottom: 10, backgroundColor: colors.DayGreen }, //更改tab的高度
         tabBarActiveTintColor: 'red',
         tabBarInactiveTintColor: 'white',
         tabBarLabel: () => null
-        
+
       }}
     >
       <Tab.Screen name="留言區" component={MessageStack}
@@ -72,8 +72,7 @@ const MyTabs = () => {
 const HomeStack = () => {
   return (
     <Stack.Navigator
-    initialRouteName='-傘電-'
-
+      initialRouteName='-傘電-'
     >
       <Stack.Screen
         name="-傘電-"
@@ -95,13 +94,13 @@ const HomeStack = () => {
   )
 }
 
-const MessageStack= ()=>{
-  return(
+const MessageStack = () => {
+  return (
     <Stack.Navigator
-    initialRouteName='留言板'
-    screenOptions={{
-      backgroundColor: 'white', // 设置背景颜色为白色
-    }}
+      initialRouteName='留言板'
+      screenOptions={{
+        backgroundColor: 'white', // 设置背景颜色为白色
+      }}
     >
       <Stack.Screen
         name="留言板"
