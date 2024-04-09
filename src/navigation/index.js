@@ -32,8 +32,8 @@ const MyTabs = () => {
   return (
     
     <Tab.Navigator
-      initialRouteName='Home'
-      tabBarPosition="bottom"
+      initialRouteName='借傘'
+     //tabBarPosition="bottom"
       screenOptions={{
         tabBarStyle: { height: 80, paddingBottom: 10 , backgroundColor:colors.DayGreen}, //更改tab的高度
         tabBarActiveTintColor: 'red',
