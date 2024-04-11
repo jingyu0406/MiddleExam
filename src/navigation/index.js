@@ -15,6 +15,7 @@ import MessageBoard from '../screen/MessageBoard';
 
 
 import MyTheme from '../theme';
+import { View } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,9 +36,10 @@ const MyTabs = () => {
       initialRouteName='借傘'
       //tabBarPosition="bottom"
       screenOptions={{
-        tabBarStyle: { height: 80, paddingBottom: 10, backgroundColor: colors.DayGreen }, //更改tab的高度
-        tabBarActiveTintColor: 'red',
+        tabBarStyle: { height: 80, backgroundColor: colors.DayGreen }, //更改tab的高度
+        tabBarActiveTintColor: colors.DayGreen,
         tabBarInactiveTintColor: 'white',
+        
         tabBarLabel: () => null
 
       }}
@@ -45,23 +47,29 @@ const MyTabs = () => {
       <Tab.Screen name="留言區" component={MessageStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color ,focused}) => (
+            <View style={{ backgroundColor: focused ? 'white' : 'transparent', borderRadius: 50, padding: 10 }}>
             <MaterialCommunityIcons name="chat" color={color} size={40} />
+            </View>
           )
         }}
       />
       <Tab.Screen name="借傘" component={HomeStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color ,focused}) => (
+            <View style={{ backgroundColor: focused ? 'white' : 'transparent', borderRadius: 50, padding: 10 }}>
             <MaterialCommunityIcons name="umbrella" color={color} size={50} />
+            </View>
           )
         }}
       />
       <Tab.Screen name="關於" component={AccountScreen}
         options={{
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color ,focused}) => (
+            <View style={{ backgroundColor: focused ? 'white' : 'transparent', borderRadius: 50, padding: 10 }}>
             <MaterialCommunityIcons name="account" color={color} size={40} />
+            </View>
           )
         }}
       />

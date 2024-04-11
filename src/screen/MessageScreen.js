@@ -35,7 +35,12 @@ const MessageScreen = ({ navigation }) => {
                 onChangeText={setInputText}
                 value={inputText}
             />
-            <Button title="Add Message" onPress={handleAddMessage} />
+            <Button title="Add Message" onPress={()=>{
+                handleAddMessage();
+                navigation.navigate('留言板')
+            }
+
+                } />
 
         </Box>
 

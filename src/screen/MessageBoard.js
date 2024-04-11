@@ -9,12 +9,34 @@ import { selectMessage } from '../redux/messageSlice';
 import { useNavigation } from '@react-navigation/native';
 
 import { Pressable, StyleSheet } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
 const FloatingActionButton = ({ onPress }) => {
+
+  const {colors}=useTheme();
+  const styles = StyleSheet.create({
+  
+    FAB: {
+      position: 'absolute',
+      bottom: 20,
+      right: 20,
+      width: 60,
+      height: 60,
+      backgroundColor: colors.DayGreen,
+      borderRadius: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex:1000
+    },
+  });
+
   return (
     <Pressable style={styles.FAB} onPress={onPress}>
       <MaterialCommunityIcons name="plus" size={30} color="white" />
     </Pressable>
+
+
+
   );
 };
 
@@ -22,10 +44,13 @@ const MessageBoard = ({navigation}) => {
   const message = useSelector(selectMessage);
 
 
+
+
+
   return (
+
     <View style={{ flex: 1}}>
  
-      <Button title="Add" onPress={() => navigation.navigate('留言')} />
       <FloatingActionButton onPress={() => {console.log('Button pressed');
       navigation.navigate('留言');}} />
       <FlatList
@@ -43,20 +68,7 @@ const MessageBoard = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  FAB: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    width: 60,
-    height: 60,
-    backgroundColor: 'blue',
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex:1000
-  },
-});
+
 
 
 export default MessageBoard;
