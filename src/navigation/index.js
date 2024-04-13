@@ -36,7 +36,7 @@ const MyTabs = () => {
       initialRouteName='借傘'
       //tabBarPosition="bottom"
       screenOptions={{
-        tabBarStyle: { height: 80, backgroundColor: colors.DayGreen }, //更改tab的高度
+        tabBarStyle: { height: 60, backgroundColor: colors.DayGreen }, //更改tab的高度
         tabBarActiveTintColor: colors.DayGreen,
         tabBarInactiveTintColor: 'white',
         
@@ -49,7 +49,7 @@ const MyTabs = () => {
           headerShown: false,
           tabBarIcon: ({ color ,focused}) => (
             <View style={{ backgroundColor: focused ? 'white' : 'transparent', borderRadius: 50, padding: 10 }}>
-            <MaterialCommunityIcons name="chat" color={color} size={40} />
+            <MaterialCommunityIcons name="chat" color={color} size={30} />
             </View>
           )
         }}
@@ -59,7 +59,7 @@ const MyTabs = () => {
           headerShown: false,
           tabBarIcon: ({ color ,focused}) => (
             <View style={{ backgroundColor: focused ? 'white' : 'transparent', borderRadius: 50, padding: 10 }}>
-            <MaterialCommunityIcons name="umbrella" color={color} size={50} />
+            <MaterialCommunityIcons name="umbrella" color={color} size={30} />
             </View>
           )
         }}
@@ -68,7 +68,7 @@ const MyTabs = () => {
         options={{
           tabBarIcon: ({ color ,focused}) => (
             <View style={{ backgroundColor: focused ? 'white' : 'transparent', borderRadius: 50, padding: 10 }}>
-            <MaterialCommunityIcons name="account" color={color} size={40} />
+            <MaterialCommunityIcons name="account" color={color} size={30} />
             </View>
           )
         }}
@@ -122,6 +122,7 @@ const MessageStack = () => {
         component={MessageScreen}
         options={{
           headerTitleAlign: "center", //文字置中
+
         }}
       />
     </Stack.Navigator >

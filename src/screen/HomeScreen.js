@@ -39,7 +39,7 @@ const HomeScreen = () => {
                     region={region}
                     style={styles.map}
                     showsTraffic
-                    mapType="hybrid">
+                    mapType="terrain">
                     <Marker
                         coordinate={marker.coord}
                         title={marker.name}

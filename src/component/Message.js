@@ -31,14 +31,14 @@ const Message = ({ text }) => {
             <MaterialCommunityIcons 
                 marginRight={10} 
                 name="account" 
-                size={70}
+                size={50}
                 color='white'
                 backgroundColor='pink'
                 style={{
                     borderRadius: 100000
                   }}
                 />
-            <Text fontSize={20} width={270}>{text} </Text>
+            <Text fontSize={15} width={270}>{text} </Text>
         </Box> 
     );
 }
