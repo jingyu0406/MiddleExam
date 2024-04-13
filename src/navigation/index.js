@@ -66,6 +66,7 @@ const MyTabs = () => {
       />
       <Tab.Screen name="關於" component={AccountScreen}
         options={{
+          
           tabBarIcon: ({ color ,focused}) => (
             <View style={{ backgroundColor: focused ? 'white' : 'transparent', borderRadius: 50, padding: 10 }}>
             <MaterialCommunityIcons name="account" color={color} size={30} />
@@ -86,6 +87,7 @@ const HomeStack = () => {
         name="-傘電-"
         component={HomeScreen}
         options={{
+        
           headerTitleAlign: "center", //文字置中
           headerRight: () => (
             <MaterialCommunityIcons

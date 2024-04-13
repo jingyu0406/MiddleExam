@@ -11,22 +11,22 @@ const initialState={messageContent:[
         text:"有人現在要來學餐嗎 可不可以幫我借把傘過來還...被卡在這裡好久了QQ", id:"test3"
     },
     {
-        text:"test123", id:"test3"
+        text:"test123", id:"test4"
     },
     {
-        text:"今天天氣好好", id:"test3"
+        text:"今天天氣好好", id:"test5"
     },
     {
-        text:"今天天氣好好", id:"test3"
+        text:"今天天氣好好", id:"test6"
     },
     {
-        text:"今天天氣好好", id:"test3"
+        text:"今天天氣好好", id:"test7"
     },
     {
-        text:"今天天氣好好", id:"test3"
+        text:"今天天氣好好", id:"test8"
     },
     {
-        text:"今天天氣好好", id:"test3"
+        text:"今天天氣好好", id:"test9"
     },
 
 ]};
