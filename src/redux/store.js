@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import messageSlice from './messageSlice'
-import counterReducer from './counterSlice';
+import toggleSlice from './toggleSlice';
 
 export default configureStore({
     reducer: {
         message: messageSlice,
-        counter: counterReducer
+        toggle: toggleSlice
     },
     devTools: process.env.NODE_ENV !== 'production',
 })

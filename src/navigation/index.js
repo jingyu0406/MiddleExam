@@ -10,16 +10,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import HomeScreen from '../screen/HomeScreen';
 import AccountScreen from '../screen/AccountScreen';
 import MessageScreen from '../screen/MessageScreen';
-import SearchScreen from '../screen/SearchScreen'
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import MessageBoard from '../screen/MessageBoard';
-import { useNavigation } from '@react-navigation/native';
-
 
 
 import MyTheme from '../theme';
-import { View } from 'react-native';
-import { Pressable } from '@gluestack-ui/config/build/theme';
+import { useSelector } from 'react-redux';
+import { selectToggle } from '../redux/toggleSlice';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -33,18 +30,17 @@ const Navigation = () => {
   );
 }
 const MyTabs = () => {
-  const { colors } = useTheme();
-
+  // const { colors } = useTheme();
+  const colormode = useSelector(selectToggle);
   return (
 
     <Tab.Navigator
       initialRouteName='借傘'
       //tabBarPosition="bottom"
       screenOptions={{
-        tabBarStyle: { height: 60, backgroundColor: colors.DayGreen }, //更改tab的高度
-        tabBarActiveTintColor: colors.DayGreen,
+        tabBarStyle: { height: 80, paddingBottom: 10, backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B" }, //更改tab的高度
+        tabBarActiveTintColor: 'red',
         tabBarInactiveTintColor: 'white',
-        
         tabBarLabel: () => null
 
       }}
@@ -52,30 +48,24 @@ const MyTabs = () => {
       <Tab.Screen name="留言區" component={MessageStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color ,focused}) => (
-            <View style={{ backgroundColor: focused ? 'white' : 'transparent', borderRadius: 50, padding: 10 }}>
-            <MaterialCommunityIcons name="chat" color={color} size={30} />
-            </View>
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="chat" color={color} size={40} />
           )
         }}
       />
       <Tab.Screen name="借傘" component={HomeStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color ,focused}) => (
-            <View style={{ backgroundColor: focused ? 'white' : 'transparent', borderRadius: 50, padding: 10 }}>
-            <MaterialCommunityIcons name="umbrella" color={color} size={30} />
-            </View>
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="umbrella" color={color} size={50} />
           )
         }}
       />
-      <Tab.Screen name="關於" component={AccountScreen}
+      <Tab.Screen name="關於" component={AccountStack}
         options={{
-          
-          tabBarIcon: ({ color ,focused}) => (
-            <View style={{ backgroundColor: focused ? 'white' : 'transparent', borderRadius: 50, padding: 10 }}>
-            <MaterialCommunityIcons name="account" color={color} size={30} />
-            </View>
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={40} />
           )
         }}
       />
@@ -83,38 +73,38 @@ const MyTabs = () => {
   );
 }
 
-const HomeStack = ({ navigation }) => {
+const HomeStack = () => {
+  const colormode = useSelector(selectToggle);
   return (
     <Stack.Navigator
       initialRouteName='-傘電-'
+
     >
       <Stack.Screen
         name="-傘電-"
         component={HomeScreen}
         options={{
+          headerStyle: {
+            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
+          },
           headerTitleAlign: "center", //文字置中
           headerRight: () => (
             <MaterialCommunityIcons
               name={'magnify'}
               size={30}
               style={{ marginRight: 10 }}
-              onPress={() => navigation.navigate('search')} // 在這裡添加導航功能
             />
           )
-        }}
-      />
-      <Stack.Screen
-        name="search"
-        component={SearchScreen}
-        options={{
-          headerTitleAlign: "center", //文字置中
-        }}
+        }
+
+        }
       />
     </Stack.Navigator >
   )
 }
 
 const MessageStack = () => {
+  const colormode = useSelector(selectToggle);
   return (
     <Stack.Navigator
       initialRouteName='留言板'
@@ -126,6 +116,9 @@ const MessageStack = () => {
         name="留言板"
         component={MessageBoard}
         options={{
+          headerStyle: {
+            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
+          },
           headerTitleAlign: "center", //文字置中
         }}
       />
@@ -133,12 +126,39 @@ const MessageStack = () => {
         name="留言"
         component={MessageScreen}
         options={{
+          headerStyle: {
+            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
+          },
           headerTitleAlign: "center", //文字置中
-
         }}
       />
     </Stack.Navigator >
   )
 }
 
+const AccountStack = () => {
+  const colormode = useSelector(selectToggle);
+  return (
+    <Stack.Navigator
+      initialRouteName='關於'
+      screenOptions={{
+
+        backgroundColor: 'white', // 设置背景颜色为白色
+      }}
+    >
+      <Stack.Screen
+        name="關於"
+        component={AccountScreen}
+        options={{
+
+          headerStyle: {
+            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
+          },
+          headerTitleAlign: "center", //文字置中
+        }}
+      />
+
+    </Stack.Navigator >
+  )
+}
 export default Navigation;

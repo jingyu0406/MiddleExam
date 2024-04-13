@@ -5,7 +5,8 @@ import { config } from "@gluestack-ui/config";
 import MapView, { Marker } from "react-native-maps";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import mapMarker from "../json/mapMarker.json";
-
+import { useDispatch, useSelector } from "react-redux";
+import { selectToggle, toggleColorMode } from "../redux/toggleSlice";
 
 const HomeScreen = () => {
 
@@ -27,28 +28,31 @@ const HomeScreen = () => {
     });
 
 
-    //darkmode
-    const [toggle, setToggle] = useState("light");
+    // //darkmode 
+    // Get states from store
+    const colormode = useSelector(selectToggle);
+
+    // Define a dispatch to send actions
+    const dispatch = useDispatch();
+
+
     const toggleFunction = () => {
-        setToggle(toggle === "light" ? "dark" : "light");
+        dispatch(toggleColorMode());
     };
 
 
-/*     const [markers, setMarkers] = useState([]);
-
-    useEffect(() => {
-      // 在這裡發起獲取 JSON 文件的請求
-      fetch('../json/mapMarker.json')
-        .then(response => response.json())
-        .then(data => setMarkers(data))
-        .catch(error => console.error('Error fetching markers data:', error));
-    }, []); */
+    /*     const [markers, setMarkers] = useState([]);
+    
+        useEffect(() => {
+          // 在這裡發起獲取 JSON 文件的請求
+          fetch('../json/mapMarker.json')
+            .then(response => response.json())
+            .then(data => setMarkers(data))
+            .catch(error => console.error('Error fetching markers data:', error));
+        }, []); */
 
 
     return (
-
-        
-
         <Box flex={1}>
             <GluestackUIProvider config={config}>
                 <MapView
@@ -61,7 +65,7 @@ const HomeScreen = () => {
                         title={marker.name}
                         description={marker.address}
                     />
-{/*                     {markers.map(marker => (
+                    {/*                     {markers.map(marker => (
                         <Marker
                             key={marker.id}
                             coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
@@ -73,9 +77,9 @@ const HomeScreen = () => {
                 <View style={styles.toggleButton}>
                     <TouchableOpacity onPress={toggleFunction}>
                         <MaterialCommunityIcons
-                            name={toggle === "light" ? "white-balance-sunny" : "moon-waxing-crescent"}
+                            name={colormode === "light" ? "white-balance-sunny" : "moon-waxing-crescent"}
                             size={20}
-                            color={toggle === "light" ? "gold" : "black"} // 根據切換按鈕的狀態設置不同的顏色
+                            color={colormode === "light" ? "gold" : "black"} // 根據切換按鈕的狀態設置不同的顏色
                         />
                     </TouchableOpacity>
                 </View>
