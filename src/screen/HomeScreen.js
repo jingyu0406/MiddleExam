@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Box, GluestackUIProvider, Center, HStack, Text, FlatList } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
@@ -34,13 +34,15 @@ const HomeScreen = () => {
     };
 
 
-    const renderItem = ({ item }) => (
-        <Marker
-            coordinate={{ latitude: item.latitude, longitude: item.longitude }}
-            title={item.title}
-            description={item.description}
-          />
-    );
+/*     const [markers, setMarkers] = useState([]);
+
+    useEffect(() => {
+      // 在這裡發起獲取 JSON 文件的請求
+      fetch('../json/mapMarker.json')
+        .then(response => response.json())
+        .then(data => setMarkers(data))
+        .catch(error => console.error('Error fetching markers data:', error));
+    }, []); */
 
 
     return (
@@ -59,11 +61,14 @@ const HomeScreen = () => {
                         title={marker.name}
                         description={marker.address}
                     />
-                    <FlatList
-                        data={mapMarker}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id}
-                    />
+{/*                     {markers.map(marker => (
+                        <Marker
+                            key={marker.id}
+                            coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                            title={marker.title}
+                            description={marker.description}
+                        />
+                    ))} */}
                 </MapView>
                 <View style={styles.toggleButton}>
                     <TouchableOpacity onPress={toggleFunction}>
