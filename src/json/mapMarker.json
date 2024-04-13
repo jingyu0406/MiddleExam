@@ -1,0 +1,24 @@
+[
+    {
+      "id": 1,
+      "latitude": 25.02411,
+      "longitude": 121.54452,
+      "title": "篤行樓",
+      "description": "This is 篤行樓"
+    },
+    {
+      "id": 2,
+      "latitude": 25.02419,
+      "longitude": 121.54497,
+      "title": "行政大樓",
+      "description": "This is 行政大樓"
+    },
+    {
+        "id": 3,
+        "latitude": 25.02405,
+        "longitude": 121.54536,
+        "title": "科學館",
+        "description": "This is 科學館"
+    }
+
+  ]

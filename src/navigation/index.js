@@ -10,12 +10,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import HomeScreen from '../screen/HomeScreen';
 import AccountScreen from '../screen/AccountScreen';
 import MessageScreen from '../screen/MessageScreen';
+import SearchScreen from '../screen/SearchScreen'
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import MessageBoard from '../screen/MessageBoard';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 import MyTheme from '../theme';
 import { View } from 'react-native';
+import { Pressable } from '@gluestack-ui/config/build/theme';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,6 +34,7 @@ const Navigation = () => {
 }
 const MyTabs = () => {
   const { colors } = useTheme();
+
   return (
 
     <Tab.Navigator
@@ -78,7 +83,7 @@ const MyTabs = () => {
   );
 }
 
-const HomeStack = () => {
+const HomeStack = ({ navigation }) => {
   return (
     <Stack.Navigator
       initialRouteName='-傘電-'
@@ -87,18 +92,23 @@ const HomeStack = () => {
         name="-傘電-"
         component={HomeScreen}
         options={{
-        
           headerTitleAlign: "center", //文字置中
           headerRight: () => (
             <MaterialCommunityIcons
               name={'magnify'}
               size={30}
               style={{ marginRight: 10 }}
+              onPress={() => navigation.navigate('search')} // 在這裡添加導航功能
             />
           )
-        }
-
-        }
+        }}
+      />
+      <Stack.Screen
+        name="search"
+        component={SearchScreen}
+        options={{
+          headerTitleAlign: "center", //文字置中
+        }}
       />
     </Stack.Navigator >
   )

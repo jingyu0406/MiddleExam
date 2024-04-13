@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Box, GluestackUIProvider, Center, HStack, Text } from "@gluestack-ui/themed";
+import { Box, GluestackUIProvider, Center, HStack, Text, FlatList } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import MapView, { Marker } from "react-native-maps";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import mapMarker from "../json/mapMarker.json";
+
 
 const HomeScreen = () => {
 
@@ -32,7 +34,19 @@ const HomeScreen = () => {
     };
 
 
+    const renderItem = ({ item }) => (
+        <Marker
+            coordinate={{ latitude: item.latitude, longitude: item.longitude }}
+            title={item.title}
+            description={item.description}
+          />
+    );
+
+
     return (
+
+        
+
         <Box flex={1}>
             <GluestackUIProvider config={config}>
                 <MapView
@@ -44,6 +58,11 @@ const HomeScreen = () => {
                         coordinate={marker.coord}
                         title={marker.name}
                         description={marker.address}
+                    />
+                    <FlatList
+                        data={mapMarker}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
                     />
                 </MapView>
                 <View style={styles.toggleButton}>
