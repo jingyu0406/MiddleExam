@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Box, GluestackUIProvider, Center, HStack, Text, FlatList } from "@gluestack-ui/themed";
+import { Box, GluestackUIProvider, Center, HStack, Text, FlatList, Button, Pressable } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import mapMarker from "../json/mapMarker.json";
 import { useDispatch, useSelector } from "react-redux";
 import { selectToggle, toggleColorMode } from "../redux/toggleSlice";
+import { selectBorrow, borrowToggle } from "../redux/borrowSlice";
+
 
 const HomeScreen = () => {
 
@@ -48,6 +50,13 @@ const HomeScreen = () => {
         setMarkers(mapMarker);
     }, []);
 
+    //屆的變數
+    const borrowed = useSelector(selectBorrow);
+    const borrowToggleFunction=()=>{
+        dispatch(borrowToggle());
+    }
+
+
 
     return (
         <Box flex={1}>
@@ -57,18 +66,6 @@ const HomeScreen = () => {
                     style={styles.map}
                     showsTraffic
                     mapType="terrain">
-                    <Marker 
-                        coordinate={marker.coord}
-                        title={marker.name}
-                        description={marker.address}
-                    >
-                        <Callout >
-                            <Box width={100}>
-                                <Text>12312</Text>
-                                <Text>132</Text>
-                            </Box>
-                        </Callout>
-                    </Marker>
                     {markers.map(marker => (
                         <Marker
                             key={marker.id}
@@ -79,10 +76,15 @@ const HomeScreen = () => {
                             title={marker.title}
                             description={marker.description}
                         >
-                            <Callout >
-                                <Box width={100}>
-                                    <Text fontStyle="bold">{marker.title}</Text>
-                                    <Text>132</Text>
+                            <Callout                                         
+                            onPress={() => {
+                                console.log('Button pressed');
+                                console.log({ borrowed });
+                                borrowToggleFunction();
+                            }}>
+                                <Box width={200} height="auto" alignItems="center">
+                                    <Text fontWeight="bold">{marker.title}</Text>
+                                    <Text>{marker.description}</Text>
                                 </Box>
                             </Callout>
                         </Marker>
@@ -120,6 +122,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    
 });
 
 export default HomeScreen;
