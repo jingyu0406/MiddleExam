@@ -14,7 +14,7 @@ import { selectBuilding, buildingUmbrellaPlus, buildingUmbrellaMinus} from "../r
 
 const ConfirmationModal = ({ isVisible, onConfirm, onCancel,MarkerId ,borrowed}) => { // 將 Modal 改為 ConfirmationModal
     const confirmText = borrowed ? "借傘" : "還傘";
-
+    
     return (
       <Modal
         animationType="slide"
@@ -37,7 +37,29 @@ const ConfirmationModal = ({ isVisible, onConfirm, onCancel,MarkerId ,borrowed})
         </View>
       </Modal>
     );
-  };
+};
+
+const FailedModal=({FailedisVisible,onCancel})=>{
+    return (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={FailedisVisible}
+          onRequestClose={onCancel}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>借傘失敗</Text>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={onCancel} style={styles.button}>
+                  <Text style={styles.buttonText}>取消</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      );
+}
 
 const HomeScreen = () => {
 
@@ -83,6 +105,7 @@ const HomeScreen = () => {
     const handleCancel = () => {
       console.log('Cancelled');
       setModalVisible(false);
+      setfailed(false);
     };
   
     const openConfirmationModal = (markerId) => {
@@ -102,8 +125,12 @@ const HomeScreen = () => {
     //船id的
     const [selectedMarkerId, setSelectedMarkerId] = useState(null);
 
+    //提示
+    const hintText = borrowed ? "您已借傘":"您未借傘"
+    const hintContent = borrowed ? "點擊地點圖標提示即可還傘" : "點擊地點圖標提示即可借傘"
 
-
+    //失敗變數
+    const [failed, setfailed] = useState(false);
 
     return (
         <Box flex={1}>
@@ -150,18 +177,43 @@ const HomeScreen = () => {
                      MarkerId={selectedMarkerId} // 傳遞 selectedMarkerId
                      borrowed={{borrowed}}
                      onConfirm={(MarkerId)=>{
-                        borrowToggleFunction();
+
                         console.log({ borrowed });
                         if(borrowed){
+                            borrowToggleFunction();
                             UmbrellaPlusFunction(MarkerId); // 使用 MarkerId 而不是 MarkerId
+                            handleConfirm();
+                        }
+                        else if (!borrowed && UmbrellaSum[MarkerId]>0){
+                            borrowToggleFunction();
+                            UmbrellaMinusFunction(MarkerId); // 使用 MarkerId 而不是 MarkerId
+                            handleConfirm();
                         }
                         else{
-                            UmbrellaMinusFunction(MarkerId); // 使用 MarkerId 而不是 MarkerId
+                            setfailed(true);
+                            setModalVisible(false); 
+
                         }
-                        handleConfirm();
+
                     }}
                      onCancel={handleCancel}
-                   />
+                />
+                <FailedModal
+                    FailedisVisible={failed}
+                    onCancel={handleCancel}
+
+                />
+                <Box width={200} height={50} backgroundColor="white" position="absolute" top="3%"   left="50%" borderRadius={5}
+                    borderWidth={1}
+                      translateX={-100} // 移動寬度的一半
+                      //translateY={-50} // 移動高度的一半
+                      justifyContent="center"
+                      alignItems="center"
+                >
+                    
+                    <Text fontSize={10}>{hintText}</Text>
+                    <Text fontSize={10}>{hintContent}</Text>
+                </Box>
                 <View style={styles.toggleButton}>
                     <TouchableOpacity onPress={toggleFunction}>
                         <MaterialCommunityIcons
