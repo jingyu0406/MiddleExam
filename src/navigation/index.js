@@ -74,7 +74,7 @@ const MyTabs = () => {
   );
 }
 
-const HomeStack = ({navigation}) => {
+const HomeStack = ({ navigation }) => {
   const colormode = useSelector(selectToggle);
   return (
     <Stack.Navigator
@@ -99,7 +99,7 @@ const HomeStack = ({navigation}) => {
               color={colormode == "light" ? "black" : "white"}
               style={{ marginRight: 10 }}
               onPress={() => navigation.navigate('search')} // 在這裡添加導航功能
-            
+
             />
           )
         }
@@ -110,7 +110,10 @@ const HomeStack = ({navigation}) => {
         name="search"
         component={SearchScreen}
         options={{
-          headerTitleAlign: "center", //文字置中
+          title: "",
+          headerStyle: {
+            backgroundColor: colormode == "light" ? "#CDEDE7" : "#6B6B6B"
+          },
         }}
       />
 
