@@ -13,7 +13,7 @@ import { selectBuilding, buildingUmbrellaPlus, buildingUmbrellaMinus} from "../r
 
 
 const ConfirmationModal = ({ isVisible, onConfirm, onCancel,MarkerId ,borrowed}) => { // 將 Modal 改為 ConfirmationModal
-    const confirmText = borrowed ? "借傘" : "還傘";
+    const confirmText = borrowed ? "還傘" : "借傘";
     
     return (
       <Modal
@@ -175,7 +175,7 @@ const HomeScreen = () => {
                 <ConfirmationModal
                      isVisible={modalVisible}
                      MarkerId={selectedMarkerId} // 傳遞 selectedMarkerId
-                     borrowed={{borrowed}}
+                     borrowed={borrowed}
                      onConfirm={(MarkerId)=>{
 
                         console.log({ borrowed });

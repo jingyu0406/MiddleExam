@@ -7,10 +7,13 @@ import { Image } from 'react-native';
 import { Box, Text } from '@gluestack-ui/themed';
 import { useSelector } from 'react-redux';
 import { selectToggle } from '../redux/toggleSlice';
+import { selectBuilding, buildingUmbrellaPlus, buildingUmbrellaMinus} from "../redux/building/buildingSlice";
 
 
 const Search = ({ search }) => {
     const colormode = useSelector(selectToggle);
+    const UmbrellaSum = useSelector(selectBuilding);
+
     return (
         <Box flex={1}
             flexDirection='row'
@@ -31,7 +34,7 @@ const Search = ({ search }) => {
             </Box>
             <Box marginLeft={20}>
                 <Text fontSize={30} color={colormode == "light" ? "black" : "white"}>{search.title}</Text>
-                <Text fontSize={15} color={colormode == "light" ? "black" : "white"}>剩餘傘:</Text>
+                <Text fontSize={15} color={colormode == "light" ? "black" : "white"}>剩餘傘:{UmbrellaSum[search.id]}</Text>
             </Box>
         </Box>
     );

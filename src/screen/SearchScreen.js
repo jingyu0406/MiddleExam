@@ -12,12 +12,17 @@ import { useTheme } from '@react-navigation/native';
 import Search from "../component/Search"
 import searchMap from "../json/searchMap.json"
 import { selectToggle } from '../redux/toggleSlice';
+import { selectBuilding, buildingUmbrellaPlus, buildingUmbrellaMinus} from "../redux/building/buildingSlice";
 
 
 const SearchScreen = ({ navigation }) => {
     const colormode = useSelector(selectToggle);
+    const UmbrellaSum = useSelector(selectBuilding);
+    const filteredData = searchMap.filter(item => UmbrellaSum[item.id]>0);
+
+
     return (
-        <Box >
+        <Box flex={1}>
             <Box padding={10} backgroundColor={colormode == "light" ? "#73DBC8" : "#FF0000"}>
                 <Text fontSize={25} color="white">
                     目前尚有傘的地點
@@ -26,7 +31,7 @@ const SearchScreen = ({ navigation }) => {
 
             <FlatList
                 horizontal={false}
-                data={searchMap}
+                data={filteredData}
                 renderItem={({ item }) => <Search search={item} />}
                 keyExtractor={item => item.id.toString()}
             />
