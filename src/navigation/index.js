@@ -12,6 +12,7 @@ import AccountScreen from '../screen/AccountScreen';
 import MessageScreen from '../screen/MessageScreen';
 import { Header } from 'react-native/Libraries/NewAppScreen';
 import MessageBoard from '../screen/MessageBoard';
+import SearchScreen from '../screen/SearchScreen';
 
 
 import MyTheme from '../theme';
@@ -38,7 +39,7 @@ const MyTabs = () => {
       initialRouteName='借傘'
       //tabBarPosition="bottom"
       screenOptions={{
-        tabBarStyle: { height: 80, paddingBottom: 10, backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B" }, //更改tab的高度
+        tabBarStyle: { height: 60, backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B" }, //更改tab的高度
         tabBarActiveTintColor: "#FFB800",
         tabBarInactiveTintColor: 'white',
         tabBarLabel: () => null
@@ -49,7 +50,7 @@ const MyTabs = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="chat" color={color} size={40} />
+            <MaterialCommunityIcons name="chat" color={color} size={30} />
           )
         }}
       />
@@ -57,7 +58,7 @@ const MyTabs = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="umbrella" color={color} size={50} />
+            <MaterialCommunityIcons name="umbrella" color={color} size={40} />
           )
         }}
       />
@@ -65,7 +66,7 @@ const MyTabs = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={40} />
+            <MaterialCommunityIcons name="account" color={color} size={30} />
           )
         }}
       />
@@ -73,7 +74,7 @@ const MyTabs = () => {
   );
 }
 
-const HomeStack = () => {
+const HomeStack = ({navigation}) => {
   const colormode = useSelector(selectToggle);
   return (
     <Stack.Navigator
@@ -97,12 +98,22 @@ const HomeStack = () => {
               size={30}
               color={colormode == "light" ? "black" : "white"}
               style={{ marginRight: 10 }}
+              onPress={() => navigation.navigate('search')} // 在這裡添加導航功能
+            
             />
           )
         }
 
         }
       />
+      <Stack.Screen
+        name="search"
+        component={SearchScreen}
+        options={{
+          headerTitleAlign: "center", //文字置中
+        }}
+      />
+
     </Stack.Navigator >
   )
 }

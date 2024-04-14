@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Box, GluestackUIProvider, Center, HStack, Text, FlatList } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Callout, Marker } from "react-native-maps";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import mapMarker from "../json/mapMarker.json";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,15 +41,12 @@ const HomeScreen = () => {
     };
 
 
-    /*     const [markers, setMarkers] = useState([]);
-    
-        useEffect(() => {
-          // 在這裡發起獲取 JSON 文件的請求
-          fetch('../json/mapMarker.json')
-            .then(response => response.json())
-            .then(data => setMarkers(data))
-            .catch(error => console.error('Error fetching markers data:', error));
-        }, []); */
+    //讀json
+    const [markers, setMarkers] = useState([]);
+    useEffect(() => {
+        // 讀取 JSON 文件中的標記數據
+        setMarkers(mapMarker);
+    }, []);
 
 
     return (
@@ -60,19 +57,36 @@ const HomeScreen = () => {
                     style={styles.map}
                     showsTraffic
                     mapType="terrain">
-                    <Marker
+                    <Marker 
                         coordinate={marker.coord}
                         title={marker.name}
                         description={marker.address}
-                    />
-                    {/*                     {markers.map(marker => (
+                    >
+                        <Callout >
+                            <Box width={100}>
+                                <Text>12312</Text>
+                                <Text>132</Text>
+                            </Box>
+                        </Callout>
+                    </Marker>
+                    {markers.map(marker => (
                         <Marker
                             key={marker.id}
-                            coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+                            coordinate={{
+                                latitude: marker.latitude,
+                                longitude: marker.longitude,
+                            }}
                             title={marker.title}
                             description={marker.description}
-                        />
-                    ))} */}
+                        >
+                            <Callout >
+                                <Box width={100}>
+                                    <Text fontStyle="bold">{marker.title}</Text>
+                                    <Text>132</Text>
+                                </Box>
+                            </Callout>
+                        </Marker>
+                    ))}
                 </MapView>
                 <View style={styles.toggleButton}>
                     <TouchableOpacity onPress={toggleFunction}>
@@ -94,11 +108,17 @@ const styles = StyleSheet.create({
     },
     toggleButton: {
         position: "absolute",
-        top: 670,
-        left: 20,
+        top: "88%",
+        left: "3%",
         backgroundColor: "white",
         borderRadius: 20,
         padding: 10,
+    },
+    container: {
+        ...StyleSheet.absoluteFillObject,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 

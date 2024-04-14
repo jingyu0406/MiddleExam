@@ -60,7 +60,7 @@ const AccountScreen = ({ navigation }) => {
                 borderRadius={5}
             >
                 <Box flexDirection='row' justifyContent='space-between' alignItems='center' width='100%' paddingHorizontal={15}>
-                    <Text color={colormode == "light" ? "black" : "white"} fontSize={20}>借傘歷程</Text>
+                    <Text color={colormode == "light" ? "black" : "white"} fontSize={15}>借傘歷程</Text>
                     <MaterialCommunityIcons
                         name="chevron-right"
                         size={40}
@@ -78,7 +78,7 @@ const AccountScreen = ({ navigation }) => {
                 borderRadius={5}
             >
                 <Box flexDirection='row' justifyContent='space-between' alignItems='center' width='100%' paddingHorizontal={15}>
-                    <Text color={colormode == "light" ? "black" : "white"} fontSize={20}>維護公告</Text>
+                    <Text color={colormode == "light" ? "black" : "white"} fontSize={15}>維護公告</Text>
                     <MaterialCommunityIcons
                         name="chevron-right"
                         size={40}
@@ -97,7 +97,7 @@ const AccountScreen = ({ navigation }) => {
                 borderRadius={5}
             >
                 <Box flexDirection='row' justifyContent='space-between' alignItems='center' width='100%' paddingHorizontal={15}>
-                    <Text color={colormode == "light" ? "black" : "white"} fontSize={20}>常見問題</Text>
+                    <Text color={colormode == "light" ? "black" : "white"} fontSize={15}>常見問題</Text>
                     <MaterialCommunityIcons
                         name="chevron-right"
                         size={40}
@@ -119,7 +119,7 @@ const AccountScreen = ({ navigation }) => {
 
             >
                 <Box flexDirection='row' justifyContent='space-between' alignItems='center' width='100%' paddingHorizontal={15}>
-                    <Text fontSize={20} color={colormode == "light" ? "#73DBC8" : "red"}>登出帳號</Text>
+                    <Text fontSize={15} color={colormode == "light" ? "#73DBC8" : "red"}>登出帳號</Text>
                     <MaterialCommunityIcons
                         name="chevron-right"
                         size={40}
