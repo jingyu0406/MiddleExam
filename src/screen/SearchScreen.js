@@ -1,7 +1,7 @@
-import { Box, HStack} from '@gluestack-ui/themed';
+import { Box, FlatList, HStack, Image, Text } from '@gluestack-ui/themed';
 import { StatusBar } from 'expo-status-bar';
-import React ,{ useState } from "react";
-import { StyleSheet, Text, View,TextInput,Button, Pressable} from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet, View, TextInput, Button, Pressable } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,17 +9,28 @@ import { selectMessage, writeMessage } from '../redux/messageSlice';
 import messageSlice from '../redux/messageSlice';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTheme } from '@react-navigation/native';
-
-
+import Search from "../component/Search"
+import searchMap from "../json/searchMap.json"
+import { selectToggle } from '../redux/toggleSlice';
 
 
 const SearchScreen = ({ navigation }) => {
+    const colormode = useSelector(selectToggle);
     return (
-        <Box padding={20}>
-            <Text>12</Text>
+        <Box >
+            <Box padding={10} backgroundColor={colormode == "light" ? "#73DBC8" : "#FF0000"}>
+                <Text fontSize={25} color="white">
+                    目前尚有傘的地點
+                </Text>
+            </Box>
 
+            <FlatList
+                horizontal={false}
+                data={searchMap}
+                renderItem={({ item }) => <Search search={item} />}
+                keyExtractor={item => item.id.toString()}
+            />
         </Box>
-
     )
 }
 
