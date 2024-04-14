@@ -10,23 +10,25 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Pressable, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import { selectToggle } from '../redux/toggleSlice';
+
 
 const FloatingActionButton = ({ onPress }) => {
-
-  const {colors}=useTheme();
+  const colormode = useSelector(selectToggle);
+  // const { colors } = useTheme();
   const styles = StyleSheet.create({
-  
+
     FAB: {
       position: 'absolute',
       bottom: 20,
       right: 20,
       width: 60,
       height: 60,
-      backgroundColor: colors.DayGreen,
+      backgroundColor: colormode == "light" ? "#73DBC8" : "#FFB800",
       borderRadius: 30,
       justifyContent: 'center',
       alignItems: 'center',
-      zIndex:1000
+      zIndex: 1000
     },
   });
 
@@ -40,27 +42,29 @@ const FloatingActionButton = ({ onPress }) => {
   );
 };
 
-const MessageBoard = ({navigation}) => {
+const MessageBoard = ({ navigation }) => {
   const message = useSelector(selectMessage);
-
+  const colormode = useSelector(selectToggle);
 
 
 
 
   return (
 
-    <View style={{ flex: 1}}>
- 
-      <FloatingActionButton onPress={() => {console.log('Button pressed');
-      navigation.navigate('留言');}} />
+    <View style={{ flex: 1 }}>
+
+      <FloatingActionButton onPress={() => {
+        console.log('Button pressed');
+        navigation.navigate('留言');
+      }} />
       <FlatList
         data={message}
-        renderItem={({ item }) => 
-        <Message text={item.text} id={item.id} />
-/*           (<View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-            <Text>{item.text}</Text>
-            <Button title="Delete" onPress={() => handleDeleteMessage(item.id)} />
-          </View> )*/
+        renderItem={({ item }) =>
+          <Message text={item.text} id={item.id} />
+          /*           (<View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+                      <Text>{item.text}</Text>
+                      <Button title="Delete" onPress={() => handleDeleteMessage(item.id)} />
+                    </View> )*/
         }
         keyExtractor={item => item.id.toString()}
       />

@@ -77,9 +77,9 @@ const HomeScreen = () => {
                 <View style={styles.toggleButton}>
                     <TouchableOpacity onPress={toggleFunction}>
                         <MaterialCommunityIcons
-                            name={colormode === "light" ? "white-balance-sunny" : "moon-waxing-crescent"}
+                            name={colormode === "light" ? "moon-waxing-crescent" : "white-balance-sunny"}
                             size={20}
-                            color={colormode === "light" ? "gold" : "black"} // 根據切換按鈕的狀態設置不同的顏色
+                            color={colormode === "light" ? "black" : "gold"} // 根據切換按鈕的狀態設置不同的顏色
                         />
                     </TouchableOpacity>
                 </View>

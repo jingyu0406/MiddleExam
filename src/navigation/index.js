@@ -39,7 +39,7 @@ const MyTabs = () => {
       //tabBarPosition="bottom"
       screenOptions={{
         tabBarStyle: { height: 80, paddingBottom: 10, backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B" }, //更改tab的高度
-        tabBarActiveTintColor: 'red',
+        tabBarActiveTintColor: "#FFB800",
         tabBarInactiveTintColor: 'white',
         tabBarLabel: () => null
 
@@ -61,7 +61,7 @@ const MyTabs = () => {
           )
         }}
       />
-      <Tab.Screen name="關於" component={AccountStack}
+      <Tab.Screen name="個人" component={AccountStack}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
@@ -78,20 +78,24 @@ const HomeStack = () => {
   return (
     <Stack.Navigator
       initialRouteName='-傘電-'
-
     >
       <Stack.Screen
         name="-傘電-"
         component={HomeScreen}
         options={{
+          headerTintColor:
+            colormode == "light" ? "black" : "white"
+          ,
           headerStyle: {
             backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
           },
+
           headerTitleAlign: "center", //文字置中
           headerRight: () => (
             <MaterialCommunityIcons
               name={'magnify'}
               size={30}
+              color={colormode == "light" ? "black" : "white"}
               style={{ marginRight: 10 }}
             />
           )
@@ -108,14 +112,17 @@ const MessageStack = () => {
   return (
     <Stack.Navigator
       initialRouteName='留言板'
-      screenOptions={{
-        backgroundColor: 'white', // 设置背景颜色为白色
-      }}
+    // screenOptions={{
+    //   backgroundColor: 'white', // 背景白色
+    // }}
     >
       <Stack.Screen
         name="留言板"
         component={MessageBoard}
         options={{
+          headerTintColor:
+            colormode == "light" ? "black" : "white"
+          ,
           headerStyle: {
             backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
           },
@@ -141,16 +148,17 @@ const AccountStack = () => {
   return (
     <Stack.Navigator
       initialRouteName='關於'
-      screenOptions={{
-
-        backgroundColor: 'white', // 设置背景颜色为白色
-      }}
+    // screenOptions={{
+    //   backgroundColor: 'white',
+    // }}
     >
       <Stack.Screen
         name="關於"
         component={AccountScreen}
         options={{
-
+          headerTintColor:
+            colormode == "light" ? "black" : "white"
+          ,
           headerStyle: {
             backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
           },

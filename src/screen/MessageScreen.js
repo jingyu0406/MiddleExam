@@ -9,12 +9,14 @@ import { selectMessage, writeMessage } from '../redux/messageSlice';
 import messageSlice from '../redux/messageSlice';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTheme } from '@react-navigation/native';
+import { selectToggle } from '../redux/toggleSlice';
 
 
 
 
 const MessageScreen = ({ navigation }) => {
     const { colors } = useTheme();
+    const colormode = useSelector(selectToggle);
 
     const [inputText, setInputText] = useState('');
 
@@ -36,17 +38,18 @@ const MessageScreen = ({ navigation }) => {
     const styles = StyleSheet.create({
         input: {
             height: 450,
-            borderColor: colors.DayGreen,
+            borderColor: colormode == "light" ? "#73DBC8" : "#FFB800",
             borderWidth: 1,
             marginBottom: 10,
-            backgroundColor: "white",
+            backgroundColor: colormode == "light" ? "white" : "#929292",
             borderRadius: 10,
             padding: 10,
-            fontSize: 10
+            fontSize: 10,
+
         },
         AddButton: {
             height: 50,
-            backgroundColor: colors.DayGreen,
+            backgroundColor: colormode == "light" ? "#73DBC8" : "#FFB800",
             alignItems: "center",
             justifyContent: "center",
             borderRadius: 20
@@ -59,7 +62,7 @@ const MessageScreen = ({ navigation }) => {
 
 
     return (
-        <Box padding={20}>
+        <Box flex={1} padding={20} backgroundColor={colormode == "light" ? "#73DBC8" : "#404040"}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <MaterialCommunityIcons
                     marginRight={10}
@@ -72,7 +75,7 @@ const MessageScreen = ({ navigation }) => {
                         borderRadius: 100000
                     }}
                 />
-                <Text style={{ marginBottom: 10, fontSize: 15 }}>
+                <Text style={{ marginBottom: 10, fontSize: 15, color: colormode == "light" ? "black" : "white" }}>
                     匿名
                 </Text>
 
@@ -80,6 +83,7 @@ const MessageScreen = ({ navigation }) => {
             <TextInput
                 style={styles.input}
                 placeholder="輸入文字..."
+                placeholderTextColor={colormode == "light" ? "#73DBC8" : "white"}
                 onChangeText={setInputText}
                 value={inputText}
                 textAlignVertical="top"
