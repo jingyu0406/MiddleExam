@@ -8,6 +8,8 @@ import mapMarker from "../json/mapMarker.json";
 import { useDispatch, useSelector } from "react-redux";
 import { selectToggle, toggleColorMode } from "../redux/toggleSlice";
 import { selectBorrow, borrowToggle } from "../redux/borrowSlice";
+import { selectDuXing, DuXingUmbrellaMinus ,DuXingUmbrellaPlus} from "../redux/building/DuXingSlice";
+
 
 
 const ConfirmationModal = ({ isVisible, onConfirm, onCancel }) => { // 將 Modal 改為 ConfirmationModal
@@ -34,9 +36,6 @@ const ConfirmationModal = ({ isVisible, onConfirm, onCancel }) => { // 將 Modal
       </Modal>
     );
   };
-  
-
-
 
 const HomeScreen = () => {
 
@@ -81,7 +80,10 @@ const HomeScreen = () => {
 
     const handleConfirm = () => {
       console.log('Confirmed');
+      
       setModalVisible(false);
+      setMarkers([...markers]);
+
     };
   
     const handleCancel = () => {
@@ -92,7 +94,15 @@ const HomeScreen = () => {
     const openConfirmationModal = () => {
       setModalVisible(true);
     };
-  
+    //篤行變數
+    const DuXingUmbrellaSum = useSelector(selectDuXing);
+    const DuXingUmbrellaMinusFunction=()=>{
+        dispatch(DuXingUmbrellaMinus());
+    }
+    const DuXingUmbrellaPlusFunction=()=>{
+        dispatch(DuXingUmbrellaPlus());
+    }
+
 
 
 
@@ -122,11 +132,10 @@ const HomeScreen = () => {
                             <Callout                                         
                             onPress={() => {
                                 console.log('Button pressed');
-                                console.log({ borrowed });
                                 openConfirmationModal();
                             }}>
                                 <Box width={200} height="auto" alignItems="center">
-                                    <Text fontWeight="bold">{marker.title}</Text>
+                                    <Text fontWeight="bold">{DuXingUmbrellaSum}</Text>
                                     <Text>{marker.description}</Text>
                                 </Box>
                             </Callout>
@@ -138,6 +147,14 @@ const HomeScreen = () => {
                      isVisible={modalVisible}
                      onConfirm={()=>{
                         borrowToggleFunction();
+                        
+                        console.log({ borrowed });
+                        if(borrowed){
+                            DuXingUmbrellaPlusFunction();
+                        }
+                        else{
+                            DuXingUmbrellaMinusFunction();
+                        }
                         handleConfirm();
                      }}
                      onCancel={handleCancel}
