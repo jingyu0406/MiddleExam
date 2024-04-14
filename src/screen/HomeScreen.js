@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity ,Modal} from "react-native";
 import { Box, GluestackUIProvider, Center, HStack, Text, FlatList, Button, Pressable } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import MapView, { Callout, Marker } from "react-native-maps";
@@ -10,6 +10,34 @@ import { selectToggle, toggleColorMode } from "../redux/toggleSlice";
 import { selectBorrow, borrowToggle } from "../redux/borrowSlice";
 
 
+const ConfirmationModal = ({ isVisible, onConfirm, onCancel }) => { // 將 Modal 改為 ConfirmationModal
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isVisible}
+        onRequestClose={onCancel}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Do you want to proceed?</Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity onPress={onConfirm} style={styles.button}>
+                <Text style={styles.buttonText}>Confirm</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onCancel} style={styles.button}>
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+  
+
+
+
 const HomeScreen = () => {
 
     //Map
@@ -18,15 +46,6 @@ const HomeScreen = () => {
         latitude: 25.024624,
         longitudeDelta: 0.001,
         latitudeDelta: 0.002,
-    });
-
-    const [marker, setMarker] = useState({
-        coord: {
-            longitude: 121.544637,
-            latitude: 25.024624,
-        },
-        name: "國立臺北教育大學",
-        address: "台北市和平東路二段134號",
     });
 
 
@@ -55,6 +74,25 @@ const HomeScreen = () => {
     const borrowToggleFunction=()=>{
         dispatch(borrowToggle());
     }
+    
+    //Modal相關
+
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const handleConfirm = () => {
+      console.log('Confirmed');
+      setModalVisible(false);
+    };
+  
+    const handleCancel = () => {
+      console.log('Cancelled');
+      setModalVisible(false);
+    };
+  
+    const openConfirmationModal = () => {
+      setModalVisible(true);
+    };
+  
 
 
 
@@ -62,7 +100,12 @@ const HomeScreen = () => {
         <Box flex={1}>
             <GluestackUIProvider config={config}>
                 <MapView
-                    region={region}
+                    initialRegion={{
+                        longitude: 121.544637,
+                        latitude: 25.024624,
+                        longitudeDelta: 0.001,
+                        latitudeDelta: 0.002,
+                    }}
                     style={styles.map}
                     showsTraffic
                     mapType="terrain">
@@ -80,16 +123,25 @@ const HomeScreen = () => {
                             onPress={() => {
                                 console.log('Button pressed');
                                 console.log({ borrowed });
-                                borrowToggleFunction();
+                                openConfirmationModal();
                             }}>
                                 <Box width={200} height="auto" alignItems="center">
                                     <Text fontWeight="bold">{marker.title}</Text>
                                     <Text>{marker.description}</Text>
                                 </Box>
                             </Callout>
+
                         </Marker>
                     ))}
                 </MapView>
+                <ConfirmationModal
+                     isVisible={modalVisible}
+                     onConfirm={()=>{
+                        borrowToggleFunction();
+                        handleConfirm();
+                     }}
+                     onCancel={handleCancel}
+                   />
                 <View style={styles.toggleButton}>
                     <TouchableOpacity onPress={toggleFunction}>
                         <MaterialCommunityIcons
@@ -122,7 +174,41 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    
-});
+    centeredView: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // 半透明背景色
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: 'white',
+      borderRadius: 20,
+      padding: 20,
+      alignItems: 'center',
+      elevation: 5,
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: 'center',
+    },
+    buttonContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+    },
+    button: {
+        backgroundColor: '#DDDDDD',
+        borderRadius: 10,
+        padding: 10,
+        elevation: 2,
+        marginHorizontal:20
+      },
+      buttonText: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: 'black',
+      },
+}
+);
 
 export default HomeScreen;
