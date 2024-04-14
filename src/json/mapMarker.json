@@ -1,104 +1,104 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "latitude": 25.02411,
     "longitude": 121.54452,
     "title": "篤行樓",
     "description": "This is 篤行樓"
   },
   {
-    "id": 2,
+    "id": 1,
     "latitude": 25.02419,
     "longitude": 121.54497,
     "title": "行政大樓",
     "description": "This is 行政大樓"
   },
   {
-    "id": 3,
+    "id": 2,
     "latitude": 25.02405,
     "longitude": 121.54536,
     "title": "科學館",
     "description": "This is 科學館"
   },
   {
-    "id": 4,
+    "id": 3,
     "latitude": 25.02413,
     "longitude": 121.54594,
     "title": "至善樓",
     "description": "This is 至善樓"
   },
   {
-    "id": 5,
+    "id": 4,
     "latitude": 25.023097,
     "longitude": 121.5442174,
     "title": "創意館",
     "description": "This is 創意館"
   },
   {
-    "id": 6,
+    "id": 5,
     "latitude": 25.022346,
     "longitude": 121.5442945,
     "title": "泳健館",
     "description": "This is 泳健館"
   },
   {
-    "id": 7,
+    "id": 6,
     "latitude": 25.0222995,
     "longitude": 121.5448879,
     "title": "明德樓",
     "description": "This is 明德樓"
   },
   {
-    "id": 8,
+    "id": 7,
     "latitude": 25.0229551,
     "longitude": 121.5451561,
     "title": "體育館",
     "description": "This is 體育館"
   },
   {
-    "id": 9,
+    "id": 8,
     "latitude": 25.0227297,
     "longitude": 121.545645,
     "title": "藝術館",
     "description": "This is 藝術館"
   },
   {
-    "id": 10,
+    "id": 9,
     "latitude": 25.0234287,
     "longitude": 121.5461794,
     "title": "學生活動中心",
     "description": "This is 學生活動中心"
   },
   {
-    "id": 11,
+    "id": 10,
     "latitude": 25.0238525,
     "longitude": 121.54537,
     "title": "視聽館",
     "description": "This is 視聽館"
   },
   {
-    "id": 12,
+    "id": 11,
     "latitude": 25.0244301,
     "longitude": 121.5449932,
     "title": "鐘樓",
     "description": "This is 鐘樓"
   },
   {
-    "id": 13,
+    "id": 12,
     "latitude": 25.0237578,
     "longitude": 121.544969,
     "title": "圖書館",
     "description": "This is 圖書館"
   },
   {
-    "id": 14,
+    "id": 13,
     "latitude": 25.0242767,
     "longitude": 121.5459742,
     "title": "芳蘭樓",
     "description": "This is 芳蘭樓"
   },
   {
-    "id": 15,
+    "id": 14,
     "latitude": 25.0241937,
     "longitude": 121.5461878,
     "title": "文薈樓",

@@ -1,76 +1,76 @@
 [
     {
-        "id": 1,
+        "id": 0,
         "title": "篤行樓",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9168.jpg?raw=true"
     },
     {
-        "id": 2,
+        "id": 1,
         "title": "行政大樓",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9169.jpg?raw=true"
     },
     {
-        "id": 3,
+        "id": 2,
         "title": "科學館",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9149.jpg?raw=true"
     },
     {
-        "id": 4,
+        "id": 3,
         "title": "至善樓",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9152.jpg?raw=true"
     },
     {
-        "id": 5,
+        "id": 4,
         "title": "創意館",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9171.jpg?raw=true"
     },
     {
-        "id": 6,
+        "id": 5,
         "title": "泳健館",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9162.jpg?raw=true"
     },
     {
-        "id": 7,
+        "id": 6,
         "title": "明德樓",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9161.jpg?raw=true"
     },
     {
-        "id": 8,
+        "id": 7,
         "title": "體育館",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9159.jpg?raw=true"
     },
     {
-        "id": 9,
+        "id": 8,
         "title": "藝術館",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9164.jpg?raw=true"
     },
     {
-        "id": 10,
+        "id": 9,
         "title": "學生活動中心",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9156.jpg?raw=true"
     },
     {
-        "id": 11,
+        "id": 10,
         "title": "視聽館",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9157.jpg?raw=true"
     },
     {
-        "id": 12,
+        "id": 11,
         "title": "鐘樓",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9170.jpg?raw=true"
     },
     {
-        "id": 13,
+        "id": 12,
         "title": "圖書館",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9160.jpg?raw=true"
     },
     {
-        "id": 14,
+        "id": 13,
         "title": "芳蘭樓",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9150.jpg?raw=true"
     },
     {
-        "id": 15,
+        "id": 14,
         "title": "文薈樓",
         "picture": "https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9154.jpg?raw=true"
     }

@@ -8,11 +8,13 @@ import mapMarker from "../json/mapMarker.json";
 import { useDispatch, useSelector } from "react-redux";
 import { selectToggle, toggleColorMode } from "../redux/toggleSlice";
 import { selectBorrow, borrowToggle } from "../redux/borrowSlice";
-import { selectDuXing, DuXingUmbrellaMinus ,DuXingUmbrellaPlus} from "../redux/building/DuXingSlice";
+import { selectBuilding, buildingUmbrellaPlus, buildingUmbrellaMinus} from "../redux/building/buildingSlice";
 
 
 
-const ConfirmationModal = ({ isVisible, onConfirm, onCancel }) => { // 將 Modal 改為 ConfirmationModal
+const ConfirmationModal = ({ isVisible, onConfirm, onCancel,MarkerId ,borrowed}) => { // 將 Modal 改為 ConfirmationModal
+    const confirmText = borrowed ? "借傘" : "還傘";
+
     return (
       <Modal
         animationType="slide"
@@ -22,13 +24,13 @@ const ConfirmationModal = ({ isVisible, onConfirm, onCancel }) => { // 將 Modal
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Do you want to proceed?</Text>
+            <Text style={styles.modalText}>要於此地{confirmText}嗎?</Text>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={onConfirm} style={styles.button}>
-                <Text style={styles.buttonText}>Confirm</Text>
+            <TouchableOpacity onPress={() => onConfirm(MarkerId)} style={styles.button}>
+                <Text style={styles.buttonText}>確定</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={onCancel} style={styles.button}>
-                <Text style={styles.buttonText}>Cancel</Text>
+                <Text style={styles.buttonText}>取消</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -38,14 +40,6 @@ const ConfirmationModal = ({ isVisible, onConfirm, onCancel }) => { // 將 Modal
   };
 
 const HomeScreen = () => {
-
-    //Map
-    const [region, setRegion] = useState({
-        longitude: 121.544637,
-        latitude: 25.024624,
-        longitudeDelta: 0.001,
-        latitudeDelta: 0.002,
-    });
 
 
     // //darkmode 
@@ -91,17 +85,22 @@ const HomeScreen = () => {
       setModalVisible(false);
     };
   
-    const openConfirmationModal = () => {
-      setModalVisible(true);
+    const openConfirmationModal = (markerId) => {
+        setModalVisible(true);
+        setSelectedMarkerId(markerId); // 在狀態中保存 markerId
     };
-    //篤行變數
-    const DuXingUmbrellaSum = useSelector(selectDuXing);
-    const DuXingUmbrellaMinusFunction=()=>{
-        dispatch(DuXingUmbrellaMinus());
+
+    //樓變數
+    const UmbrellaSum = useSelector(selectBuilding);
+    const UmbrellaMinusFunction=(id)=>{
+        dispatch(buildingUmbrellaMinus(id));
     }
-    const DuXingUmbrellaPlusFunction=()=>{
-        dispatch(DuXingUmbrellaPlus());
+    const UmbrellaPlusFunction=(id)=>{
+        dispatch(buildingUmbrellaPlus(id));
     }
+
+    //船id的
+    const [selectedMarkerId, setSelectedMarkerId] = useState(null);
 
 
 
@@ -132,11 +131,14 @@ const HomeScreen = () => {
                             <Callout                                         
                             onPress={() => {
                                 console.log('Button pressed');
-                                openConfirmationModal();
+                                console.log('Button pressed for marker:', marker);
+
+                                openConfirmationModal(marker.id);
                             }}>
                                 <Box width={200} height="auto" alignItems="center">
-                                    <Text fontWeight="bold">{DuXingUmbrellaSum}</Text>
+                                    <Text fontWeight="bold">{marker.title}</Text>
                                     <Text>{marker.description}</Text>
+                                    <Text >此地目前有：{UmbrellaSum[marker.id]}把傘</Text>
                                 </Box>
                             </Callout>
 
@@ -145,18 +147,19 @@ const HomeScreen = () => {
                 </MapView>
                 <ConfirmationModal
                      isVisible={modalVisible}
-                     onConfirm={()=>{
+                     MarkerId={selectedMarkerId} // 傳遞 selectedMarkerId
+                     borrowed={{borrowed}}
+                     onConfirm={(MarkerId)=>{
                         borrowToggleFunction();
-                        
                         console.log({ borrowed });
                         if(borrowed){
-                            DuXingUmbrellaPlusFunction();
+                            UmbrellaPlusFunction(MarkerId); // 使用 MarkerId 而不是 MarkerId
                         }
                         else{
-                            DuXingUmbrellaMinusFunction();
+                            UmbrellaMinusFunction(MarkerId); // 使用 MarkerId 而不是 MarkerId
                         }
                         handleConfirm();
-                     }}
+                    }}
                      onCancel={handleCancel}
                    />
                 <View style={styles.toggleButton}>
