@@ -90,7 +90,7 @@ const HomeStack = ({ navigation }) => {
           },
 
           headerTintColor:
-            colormode == "light" ? "black" : "white"
+            "white"
           ,
           headerStyle: {
             backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
@@ -101,7 +101,7 @@ const HomeStack = ({ navigation }) => {
             <MaterialCommunityIcons
               name={'magnify'}
               size={30}
-              color={colormode == "light" ? "black" : "white"}
+              color={"white"}
               style={{ marginRight: 10 }}
               onPress={() => navigation.navigate('search')} // 在這裡添加導航功能
 
@@ -140,7 +140,7 @@ const MessageStack = () => {
         component={MessageBoard}
         options={{
           headerTintColor:
-            colormode == "light" ? "black" : "white"
+            "white"
           ,
           headerTitleStyle: {
             fontWeight: "bold"
@@ -156,7 +156,7 @@ const MessageStack = () => {
         component={MessageScreen}
         options={{
           headerTintColor:
-            colormode == "light" ? "black" : "white"
+            "white"
           ,
           headerTitleStyle: {
             fontWeight: "bold"
@@ -188,7 +188,7 @@ const AccountStack = () => {
             fontWeight: "bold"
           },
           headerTintColor:
-            colormode == "light" ? "black" : "white"
+            "white"
           ,
           headerStyle: {
             backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
