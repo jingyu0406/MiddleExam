@@ -82,8 +82,13 @@ const HomeStack = ({ navigation }) => {
     >
       <Stack.Screen
         name="-傘電-"
+
         component={HomeScreen}
         options={{
+          headerTitleStyle: {
+            fontWeight: "bold"
+          },
+
           headerTintColor:
             colormode == "light" ? "black" : "white"
           ,
@@ -137,6 +142,9 @@ const MessageStack = () => {
           headerTintColor:
             colormode == "light" ? "black" : "white"
           ,
+          headerTitleStyle: {
+            fontWeight: "bold"
+          },
           headerStyle: {
             backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
           },
@@ -147,6 +155,12 @@ const MessageStack = () => {
         name="留言"
         component={MessageScreen}
         options={{
+          headerTintColor:
+            colormode == "light" ? "black" : "white"
+          ,
+          headerTitleStyle: {
+            fontWeight: "bold"
+          },
           headerStyle: {
             backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
           },
@@ -170,6 +184,9 @@ const AccountStack = () => {
         name="關於"
         component={AccountScreen}
         options={{
+          headerTitleStyle: {
+            fontWeight: "bold"
+          },
           headerTintColor:
             colormode == "light" ? "black" : "white"
           ,
