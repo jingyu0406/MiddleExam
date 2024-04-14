@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, TouchableOpacity ,Modal} from "react-native";
+import { View, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import { Box, GluestackUIProvider, Center, HStack, Text, FlatList, Button, Pressable } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import MapView, { Callout, Marker } from "react-native-maps";
@@ -8,57 +8,57 @@ import mapMarker from "../json/mapMarker.json";
 import { useDispatch, useSelector } from "react-redux";
 import { selectToggle, toggleColorMode } from "../redux/toggleSlice";
 import { selectBorrow, borrowToggle } from "../redux/borrowSlice";
-import { selectBuilding, buildingUmbrellaPlus, buildingUmbrellaMinus} from "../redux/building/buildingSlice";
+import { selectBuilding, buildingUmbrellaPlus, buildingUmbrellaMinus } from "../redux/building/buildingSlice";
 
 
 
-const ConfirmationModal = ({ isVisible, onConfirm, onCancel,MarkerId ,borrowed}) => { // 將 Modal 改為 ConfirmationModal
+const ConfirmationModal = ({ isVisible, onConfirm, onCancel, MarkerId, borrowed }) => { // 將 Modal 改為 ConfirmationModal
     const confirmText = borrowed ? "還傘" : "借傘";
-    
+
     return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isVisible}
-        onRequestClose={onCancel}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>要於此地{confirmText}嗎?</Text>
-            <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={() => onConfirm(MarkerId)} style={styles.button}>
-                <Text style={styles.buttonText}>確定</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={onCancel} style={styles.button}>
-                <Text style={styles.buttonText}>取消</Text>
-              </TouchableOpacity>
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isVisible}
+            onRequestClose={onCancel}
+        >
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <Text style={styles.modalText}>要於此地{confirmText}嗎?</Text>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => onConfirm(MarkerId)} style={styles.button}>
+                            <Text style={styles.buttonText}>確定</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={onCancel} style={styles.button}>
+                            <Text style={styles.buttonText}>取消</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-          </View>
-        </View>
-      </Modal>
+        </Modal>
     );
 };
 
-const FailedModal=({FailedisVisible,onCancel})=>{
+const FailedModal = ({ FailedisVisible, onCancel }) => {
     return (
         <Modal
-          animationType="slide"
-          transparent={true}
-          visible={FailedisVisible}
-          onRequestClose={onCancel}
+            animationType="slide"
+            transparent={true}
+            visible={FailedisVisible}
+            onRequestClose={onCancel}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>借傘失敗</Text>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={onCancel} style={styles.button}>
-                  <Text style={styles.buttonText}>取消</Text>
-                </TouchableOpacity>
-              </View>
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <Text style={styles.modalText}>借傘失敗</Text>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={onCancel} style={styles.button}>
+                            <Text style={styles.buttonText}>取消</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-          </View>
         </Modal>
-      );
+    );
 }
 
 const HomeScreen = () => {
@@ -86,28 +86,28 @@ const HomeScreen = () => {
 
     //屆的變數
     const borrowed = useSelector(selectBorrow);
-    const borrowToggleFunction=()=>{
+    const borrowToggleFunction = () => {
         dispatch(borrowToggle());
     }
-    
+
     //Modal相關
 
     const [modalVisible, setModalVisible] = useState(false);
 
     const handleConfirm = () => {
-      console.log('Confirmed');
-      
-      setModalVisible(false);
-      setMarkers([...markers]);
+        console.log('Confirmed');
+
+        setModalVisible(false);
+        setMarkers([...markers]);
 
     };
-  
+
     const handleCancel = () => {
-      console.log('Cancelled');
-      setModalVisible(false);
-      setfailed(false);
+        console.log('Cancelled');
+        setModalVisible(false);
+        setfailed(false);
     };
-  
+
     const openConfirmationModal = (markerId) => {
         setModalVisible(true);
         setSelectedMarkerId(markerId); // 在狀態中保存 markerId
@@ -115,10 +115,10 @@ const HomeScreen = () => {
 
     //樓變數
     const UmbrellaSum = useSelector(selectBuilding);
-    const UmbrellaMinusFunction=(id)=>{
+    const UmbrellaMinusFunction = (id) => {
         dispatch(buildingUmbrellaMinus(id));
     }
-    const UmbrellaPlusFunction=(id)=>{
+    const UmbrellaPlusFunction = (id) => {
         dispatch(buildingUmbrellaPlus(id));
     }
 
@@ -126,7 +126,7 @@ const HomeScreen = () => {
     const [selectedMarkerId, setSelectedMarkerId] = useState(null);
 
     //提示
-    const hintText = borrowed ? "您已借傘":"您未借傘"
+    const hintText = borrowed ? "您已借傘" : "您未借傘"
     const hintContent = borrowed ? "點擊地點圖標提示即可還傘" : "點擊地點圖標提示即可借傘"
 
     //失敗變數
@@ -155,13 +155,13 @@ const HomeScreen = () => {
                             title={marker.title}
                             description={marker.description}
                         >
-                            <Callout                                         
-                            onPress={() => {
-                                console.log('Button pressed');
-                                console.log('Button pressed for marker:', marker);
+                            <Callout
+                                onPress={() => {
+                                    console.log('Button pressed');
+                                    console.log('Button pressed for marker:', marker);
 
-                                openConfirmationModal(marker.id);
-                            }}>
+                                    openConfirmationModal(marker.id);
+                                }}>
                                 <Box width={200} height="auto" alignItems="center">
                                     <Text fontWeight="bold">{marker.title}</Text>
                                     <Text>{marker.description}</Text>
@@ -173,45 +173,46 @@ const HomeScreen = () => {
                     ))}
                 </MapView>
                 <ConfirmationModal
-                     isVisible={modalVisible}
-                     MarkerId={selectedMarkerId} // 傳遞 selectedMarkerId
-                     borrowed={borrowed}
-                     onConfirm={(MarkerId)=>{
+                    isVisible={modalVisible}
+                    MarkerId={selectedMarkerId} // 傳遞 selectedMarkerId
+                    borrowed={borrowed}
+                    onConfirm={(MarkerId) => {
 
                         console.log({ borrowed });
-                        if(borrowed){
+                        if (borrowed) {
                             borrowToggleFunction();
                             UmbrellaPlusFunction(MarkerId); // 使用 MarkerId 而不是 MarkerId
                             handleConfirm();
                         }
-                        else if (!borrowed && UmbrellaSum[MarkerId]>0){
+                        else if (!borrowed && UmbrellaSum[MarkerId] > 0) {
                             borrowToggleFunction();
                             UmbrellaMinusFunction(MarkerId); // 使用 MarkerId 而不是 MarkerId
                             handleConfirm();
                         }
-                        else{
+                        else {
                             setfailed(true);
-                            setModalVisible(false); 
+                            setModalVisible(false);
 
                         }
 
                     }}
-                     onCancel={handleCancel}
+                    onCancel={handleCancel}
                 />
                 <FailedModal
                     FailedisVisible={failed}
                     onCancel={handleCancel}
 
                 />
-                <Box width={200} height={50} backgroundColor="white" position="absolute" top="3%"   left="50%" borderRadius={5}
+                <Box width={200} height={50} backgroundColor="#FFF7D9" position="absolute" top="3%" left="50%" borderRadius={5}
                     borderWidth={1}
-                      translateX={-100} // 移動寬度的一半
-                      //translateY={-50} // 移動高度的一半
-                      justifyContent="center"
-                      alignItems="center"
+                    borderColor='#1DA189'
+                    translateX={-100} // 移動寬度的一半
+                    //translateY={-50} // 移動高度的一半
+                    justifyContent="center"
+                    alignItems="center"
                 >
-                    
-                    <Text fontSize={10}>{hintText}</Text>
+
+                    <Text fontSize={10} fontWeight="800">{hintText}</Text>
                     <Text fontSize={10}>{hintContent}</Text>
                 </Box>
                 <View style={styles.toggleButton}>
@@ -247,39 +248,39 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     centeredView: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', // 半透明背景色
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // 半透明背景色
     },
     modalView: {
-      margin: 20,
-      backgroundColor: 'white',
-      borderRadius: 20,
-      padding: 20,
-      alignItems: 'center',
-      elevation: 5,
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 20,
+        alignItems: 'center',
+        elevation: 5,
     },
     modalText: {
-      marginBottom: 15,
-      textAlign: 'center',
+        marginBottom: 15,
+        textAlign: 'center',
     },
     buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
     button: {
         backgroundColor: '#DDDDDD',
         borderRadius: 10,
         padding: 10,
         elevation: 2,
-        marginHorizontal:20
-      },
-      buttonText: {
+        marginHorizontal: 20
+    },
+    buttonText: {
         fontSize: 12,
         fontWeight: 'bold',
         color: 'black',
-      },
+    },
 }
 );
 

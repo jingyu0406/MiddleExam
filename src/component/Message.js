@@ -31,7 +31,7 @@ const Message = ({ text }) => {
       paddingBottom={30}
       padding={10}
       flex={1}
-      borderColor={colormode === "light" ? "#73DBC8" : "#434343"}
+      borderColor={colormode === "light" ? "#D9EFEB" : "#434343"}
       backgroundColor={colormode === "light" ? "white" : "#6B6B6B"}
     >
       <MaterialCommunityIcons
