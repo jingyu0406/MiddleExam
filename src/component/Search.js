@@ -25,16 +25,16 @@ const Search = ({ search }) => {
             borderWidth={1}>
             <Box >
                 <Image
-                    width={80}
-                    height={80}
+                    width={60}
+                    height={60}
                     borderRadius={100}
                     source={{ uri: search.picture }}
 
                 />
             </Box>
             <Box marginLeft={20}>
-                <Text fontSize={30} color={colormode == "light" ? "black" : "white"}>{search.title}</Text>
-                <Text fontSize={15} color={colormode == "light" ? "black" : "white"}>剩餘傘:{UmbrellaSum[search.id]}</Text>
+                <Text fontSize={20} color={colormode == "light" ? "black" : "white"}>{search.title}</Text>
+                <Text fontSize={12} color={colormode == "light" ? "black" : "white"}>剩餘傘:{UmbrellaSum[search.id]}</Text>
             </Box>
         </Box>
     );

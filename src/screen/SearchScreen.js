@@ -23,8 +23,8 @@ const SearchScreen = ({ navigation }) => {
 
     return (
         <Box flex={1}>
-            <Box padding={10} backgroundColor={colormode == "light" ? "#73DBC8" : "#FF0000"}>
-                <Text fontSize={25} color="white">
+            <Box padding={10} backgroundColor={colormode == "light" ? "#73DBC8" : "#FFB800"}>
+                <Text fontSize={15} color="white">
                     目前尚有傘的地點
                 </Text>
             </Box>
