@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { StatusBar, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Navigation from './src/navigation';
@@ -12,11 +12,11 @@ import MyTheme from './src/theme';
 export default function App() {
   return (
     <SafeAreaProvider>
-        <Provider store={store}>
-          <GluestackUIProvider config={MyTheme}>
-          <Navigation/>
-          </GluestackUIProvider>
-        </Provider>
+      <Provider store={store}>
+        <GluestackUIProvider config={MyTheme}>
+          <Navigation />
+        </GluestackUIProvider>
+      </Provider>
     </SafeAreaProvider>
 
   );

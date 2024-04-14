@@ -52,7 +52,7 @@ const MessageScreen = ({ navigation }) => {
             backgroundColor: colormode == "light" ? "#73DBC8" : "#FFB800",
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: 20
+            borderRadius: 50
         },
         buttonText: {
             fontSize: 20,
@@ -62,8 +62,8 @@ const MessageScreen = ({ navigation }) => {
 
 
     return (
-        <Box flex={1} padding={20} backgroundColor={colormode == "light" ? "#73DBC8" : "#404040"}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Box flex={1} padding={20} backgroundColor={colormode == "light" ? "white" : "#404040"}>
+            <View style={{ marginBottom: 10, flexDirection: "row", alignItems: "center" }}>
                 <MaterialCommunityIcons
                     marginRight={10}
                     marginBottom={10}

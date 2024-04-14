@@ -25,7 +25,10 @@ const Message = ({ text }) => {
     <Box
       flexDirection='row'
       alignItems='center'
-      borderWidth={1}
+      borderBottomWidth={8}
+      borderLeftWidth={10}
+      borderRightWidth={10}
+      paddingBottom={30}
       padding={10}
       flex={1}
       borderColor={colormode === "light" ? "#73DBC8" : "#434343"}
@@ -42,7 +45,7 @@ const Message = ({ text }) => {
         }}
       />
       <Text fontSize={15} width={270} color={colormode === "light" ? "#434343" : "white"}>{text} </Text>
-    </Box>
+    </Box >
 
   );
 }
