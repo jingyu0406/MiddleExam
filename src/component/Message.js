@@ -26,9 +26,11 @@ const Message = ({ text }) => {
       flexDirection='row'
       alignItems='center'
       justifyContent='center'
-      borderBottomWidth={8}
+/*       borderBottomWidth={8}
       borderLeftWidth={10}
-      borderRightWidth={10}
+      borderRightWidth={10} */
+      marginHorizontal={10}
+      marginBottom={8}
       paddingVertical={20}
       padding={10}
       flex={1}
