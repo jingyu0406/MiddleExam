@@ -32,7 +32,7 @@ const Search = ({ search }) => {
                 <Image
                     width={60}
                     height={60}
-                    borderRadius={100}
+                    borderRadius={100000000}
                     source={{ uri: search.picture }}
 
                 />

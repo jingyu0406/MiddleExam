@@ -45,7 +45,7 @@ const Message = ({ text }) => {
         color='white'
         backgroundColor='pink'
         style={{
-          borderRadius: 50
+          borderRadius: 100000
         }}
       />
       <Text fontSize={15} width={270} color={colormode === "light" ? "#434343" : "white"}>{text} </Text>
