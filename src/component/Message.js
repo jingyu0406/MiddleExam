@@ -26,9 +26,11 @@ const Message = ({ text }) => {
       flexDirection='row'
       alignItems='center'
       justifyContent='center'
-      borderBottomWidth={8}
+/*       borderBottomWidth={8}
       borderLeftWidth={10}
-      borderRightWidth={10}
+      borderRightWidth={10} */
+      marginHorizontal={10}
+      marginBottom={8}
       paddingVertical={20}
       padding={10}
       flex={1}
@@ -43,7 +45,7 @@ const Message = ({ text }) => {
         color='white'
         backgroundColor='pink'
         style={{
-          borderRadius: 50
+          borderRadius: 100000
         }}
       />
       <Text fontSize={15} width={270} color={colormode === "light" ? "#434343" : "white"}>{text} </Text>
