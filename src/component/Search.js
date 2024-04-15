@@ -20,9 +20,14 @@ const Search = ({ search }) => {
             paddingLeft={20}
             paddingTop={10}
             paddingBottom={10}
-            backgroundColor={colormode == "light" ? "white" : "#6B6B6B"}
-            borderColor={colormode == "light" ? "#73DBC8" : "#333333"}
-            borderWidth={1}>
+            backgroundColor={colormode == "light" ? "white" : "#333333"}
+            borderColor={colormode == "light" ? "#73DBC8" : "#6B6B6B"}
+            borderWidth={2}
+            borderRadius={10}
+            margin={5}
+            marginBottom={3}
+            >
+
             <Box >
                 <Image
                     width={60}

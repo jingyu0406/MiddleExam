@@ -109,9 +109,9 @@ const AccountScreen = ({ navigation }) => {
             <Box
                 width='auto'
                 height={50}
-                backgroundColor={colormode == "light" ? "white" : "#A5A5A5"}
+                backgroundColor={colormode == "light" ? "white" : "#FFB800"}
                 borderWidth={1}
-                borderColor={colormode == "light" ? "#73DBC8" : "#A5A5A5"}
+                borderColor={colormode == "light" ? "#73DBC8" : "#FFB800"}
                 marginVertical={10}
                 alignItems='center'
                 justifyContent='center'
@@ -119,12 +119,8 @@ const AccountScreen = ({ navigation }) => {
 
             >
                 <Box flexDirection='row' justifyContent='space-between' alignItems='center' width='100%' paddingHorizontal={15}>
-                    <Text fontSize={15} color={colormode == "light" ? "#73DBC8" : "red"}>登出帳號</Text>
-                    <MaterialCommunityIcons
-                        name="chevron-right"
-                        size={40}
-                        color='white'
-                    />
+                    <Text fontSize={15} color={colormode == "light" ? "#73DBC8" : "white"}>登出帳號</Text>
+
                 </Box>
             </Box>
 

@@ -51,7 +51,7 @@ const MessageBoard = ({ navigation }) => {
 
   return (
 
-    <View style={{ flex: 1, backgroundColor: colormode === "light" ? "white" : "#3C3C3C" }}>
+    <View style={{ flex: 1, backgroundColor: colormode === "light" ? "#D9EFEB" : "#3C3C3C" }}>
 
       <FloatingActionButton onPress={() => {
         console.log('Button pressed');

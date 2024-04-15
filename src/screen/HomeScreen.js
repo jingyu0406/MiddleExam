@@ -13,9 +13,10 @@ import { BoxShadow } from "react-native-shadow";
 
 
 
+
 const ConfirmationModal = ({ isVisible, onConfirm, onCancel, MarkerId, borrowed }) => { // 將 Modal 改為 ConfirmationModal
     const confirmText = borrowed ? "還傘" : "借傘";
-
+    const colormode = useSelector(selectToggle);
     return (
         <Modal
             animationType="slide"
@@ -182,7 +183,7 @@ const HomeScreen = () => {
                             <MaterialCommunityIcons
                                 name={'map-marker'}
                                 size={selectedMarkerId === marker.id ? 70 : 50}
-                                color={"#9DD8CD"}
+                                color={colormode == "light" ? "#9DD8CD" : "#FFB800"}
                                 style={{ elevation: 10 }}
                             />
                             <Callout
@@ -235,7 +236,7 @@ const HomeScreen = () => {
                 />
                 <Box width={200} height={50} backgroundColor="white" position="absolute" top="3%" left="50%" borderRadius={5}
                     borderWidth={1}
-                    borderColor='#1DA189'
+                    borderColor={colormode == "light" ? "#1DA189" : "#FFB800"}
                     translateX={-100} // 移動寬度的一半
                     //translateY={-50} // 移動高度的一半
                     justifyContent="center"

@@ -25,17 +25,19 @@ const Message = ({ text }) => {
     <Box
       flexDirection='row'
       alignItems='center'
+      justifyContent='center'
       borderBottomWidth={8}
       borderLeftWidth={10}
       borderRightWidth={10}
-      paddingBottom={30}
+      paddingVertical={20}
       padding={10}
       flex={1}
       borderColor={colormode === "light" ? "#D9EFEB" : "#434343"}
       backgroundColor={colormode === "light" ? "white" : "#6B6B6B"}
+      borderRadius={20}
     >
       <MaterialCommunityIcons
-        marginRight={10}
+        marginRight={15}
         name="account"
         size={50}
         color='white'

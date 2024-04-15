@@ -117,7 +117,7 @@ const HomeStack = ({ navigation }) => {
         options={{
           title: "",
           headerStyle: {
-            backgroundColor: colormode == "light" ? "#CDEDE7" : "#6B6B6B"
+            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
           },
         }}
       />
@@ -139,6 +139,7 @@ const MessageStack = () => {
         name="留言板"
         component={MessageBoard}
         options={{
+
           headerTintColor:
             "white"
           ,

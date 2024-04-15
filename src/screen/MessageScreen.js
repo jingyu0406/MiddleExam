@@ -44,7 +44,7 @@ const MessageScreen = ({ navigation }) => {
             backgroundColor: colormode == "light" ? "white" : "#929292",
             borderRadius: 10,
             padding: 10,
-            fontSize: 10,
+            fontSize: 15,
 
         },
         AddButton: {
