@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectToggle, toggleColorMode } from "../redux/toggleSlice";
 import { selectBorrow, borrowToggle } from "../redux/borrowSlice";
 import { selectBuilding, buildingUmbrellaPlus, buildingUmbrellaMinus } from "../redux/building/buildingSlice";
+import { BoxShadow } from "react-native-shadow";
 
 
 
@@ -141,9 +142,21 @@ const HomeScreen = () => {
         setSelectedMarkerId(null);
     };
 
+    //陰影
+    // const shadowOpt = {
+    //     width: 160,
+    //     height: 170,
+    //     color: "#000",
+    //     border: 2,
+    //     radius: 3,
+    //     opacity: 0.2,
+    //     x: 0,
+    //     y: 3,
+    //     style: { marginVertical: 5 }
+    // };
 
     return (
-        <Box flex={1}>
+        <Box flex={1} >
             <GluestackUIProvider config={config}>
                 <MapView
                     initialRegion={{
@@ -170,7 +183,7 @@ const HomeScreen = () => {
                                 name={'map-marker'}
                                 size={selectedMarkerId === marker.id ? 70 : 50}
                                 color={"#9DD8CD"}
-
+                                style={{ elevation: 10 }}
                             />
                             <Callout
                                 onPress={() => {
@@ -220,7 +233,7 @@ const HomeScreen = () => {
                     onCancel={handleCancel}
 
                 />
-                <Box width={200} height={50} backgroundColor="#FFF7D9" position="absolute" top="3%" left="50%" borderRadius={5}
+                <Box width={200} height={50} backgroundColor="white" position="absolute" top="3%" left="50%" borderRadius={5}
                     borderWidth={1}
                     borderColor='#1DA189'
                     translateX={-100} // 移動寬度的一半
