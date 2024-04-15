@@ -122,7 +122,7 @@ const HomeScreen = () => {
         dispatch(buildingUmbrellaPlus(id));
     }
 
-    //船id的
+    //id的
     const [selectedMarkerId, setSelectedMarkerId] = useState(null);
 
     //提示
@@ -131,6 +131,16 @@ const HomeScreen = () => {
 
     //失敗變數
     const [failed, setfailed] = useState(false);
+
+    //Marker大小
+    const handleMarkerPress = (markerId) => {
+        setSelectedMarkerId(markerId);
+    };
+
+    const handleMarkerRelease = () => {
+        setSelectedMarkerId(null);
+    };
+
 
     return (
         <Box flex={1}>
@@ -154,12 +164,19 @@ const HomeScreen = () => {
                             }}
                             title={marker.title}
                             description={marker.description}
+                            onPress={() => handleMarkerPress(marker.id)}
                         >
+                            <MaterialCommunityIcons
+                                name={'map-marker'}
+                                size={selectedMarkerId === marker.id ? 70 : 50}
+                                color={"#9DD8CD"}
+
+                            />
                             <Callout
                                 onPress={() => {
                                     console.log('Button pressed');
                                     console.log('Button pressed for marker:', marker);
-
+                                    onPress = { handleMarkerRelease }
                                     openConfirmationModal(marker.id);
                                 }}>
                                 <Box width={200} height="auto" alignItems="center">
