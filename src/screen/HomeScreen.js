@@ -234,14 +234,21 @@ const HomeScreen = () => {
                     onCancel={handleCancel}
 
                 />
-                <Box width={200} height={50} backgroundColor="white" position="absolute" top="3%" left="50%" borderRadius={5}
-                    borderWidth={1}
-                    borderColor={colormode == "light" ? "#1DA189" : "#FFB800"}
-                    translateX={-100} // 移動寬度的一半
-                    //translateY={-50} // 移動高度的一半
-                    justifyContent="center"
-                    alignItems="center"
-                >
+<Box
+    width={200}
+    height={50}
+    backgroundColor="white"
+    position="absolute"
+    top="5%" // 垂直居中
+    left="50%" // 水平居中
+    marginLeft={-100} // 將自身寬度的一半往左移動，以實現水平居中
+    marginTop={-25} // 將自身高度的一半往上移動，以實現垂直居中
+    borderRadius={5}
+    borderWidth={1}
+    borderColor={colormode == "light" ? "#1DA189" : "#FFB800"}
+    justifyContent="center"
+    alignItems="center"
+>
 
                     <Text fontSize={10} fontWeight="800">{hintText}</Text>
                     <Text fontSize={10}>{hintContent}</Text>

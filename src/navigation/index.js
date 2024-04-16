@@ -39,7 +39,7 @@ const MyTabs = () => {
       initialRouteName='借傘'
       //tabBarPosition="bottom"
       screenOptions={{
-        tabBarStyle: { height: 60, backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B" }, //更改tab的高度
+        tabBarStyle: { height: "8%", backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B" }, //更改tab的高度
         tabBarActiveTintColor: "#FFE7AB",
         tabBarInactiveTintColor: 'white',
         tabBarLabel: () => null

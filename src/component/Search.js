@@ -37,7 +37,7 @@ const Search = ({ search }) => {
 
                 />
             </Box>
-            <Box marginLeft={20}>
+            <Box marginLeft={20} justifyContent='center'>
                 <Text fontSize={20} color={colormode == "light" ? "black" : "white"}>{search.title}</Text>
                 <Text fontSize={12} color={colormode == "light" ? "black" : "white"}>剩餘傘:{UmbrellaSum[search.id]}</Text>
             </Box>

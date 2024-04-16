@@ -87,7 +87,7 @@ const MessageScreen = ({ navigation }) => {
                 onChangeText={setInputText}
                 value={inputText}
                 textAlignVertical="top"
-                multiline={true} // 啟用多行輸入
+                multiline={false} // 啟用多行輸入
                 numberOfLines={null} // 讓文字自動換行
             />
             <Pressable
