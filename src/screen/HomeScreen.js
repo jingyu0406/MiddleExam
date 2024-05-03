@@ -98,10 +98,8 @@ const HomeScreen = () => {
 
     const handleConfirm = () => {
         console.log('Confirmed');
-
         setModalVisible(false);
         setMarkers([...markers]);
-
     };
 
     const handleCancel = () => {
