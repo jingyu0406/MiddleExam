@@ -8,15 +8,20 @@ import Navigation from "./src/navigation";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import store from "./src/redux/store";
 import { Provider } from "react-redux";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const App = () => {
   return (
-    <Provider store={store}>
+    <GestureHandlerRootView>
+          <Provider store={store}>
       <SafeAreaView flex={1}>
         <StatusBar />
         <Navigation />
       </SafeAreaView>
     </Provider>
+
+    </GestureHandlerRootView>
+
 
 
   )

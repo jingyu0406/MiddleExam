@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import { Box, GluestackUIProvider, Center, HStack, Text, FlatList, Button, Pressable } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
@@ -10,6 +10,9 @@ import { selectToggle, toggleColorMode } from "../redux/toggleSlice";
 import { selectBorrow, borrowToggle } from "../redux/borrowSlice";
 import { selectBuilding, buildingUmbrellaPlus, buildingUmbrellaMinus } from "../redux/building/buildingSlice";
 import { BoxShadow } from "react-native-shadow";
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 
 
 
@@ -140,6 +143,8 @@ const HomeScreen = () => {
     const handleMarkerRelease = () => {
         setSelectedMarkerId(null);
     };
+    const snapPoints=useMemo(()=>['4%','50%'],[]);
+
 
     //陰影
     // const shadowOpt = {
@@ -201,6 +206,20 @@ const HomeScreen = () => {
                         </Marker>
                     ))}
                 </MapView>
+
+                    <BottomSheet
+                        //ref={bottomSheetRef}
+                        index={1}
+                        snapPoints={snapPoints}
+                        //onChange={handleSheetChanges}
+                    >
+                        <BottomSheetView >
+                            <Text>Awesome 🎉</Text>
+                        </BottomSheetView>
+                </BottomSheet>
+
+                
+
                 <ConfirmationModal
                     isVisible={modalVisible}
                     MarkerId={selectedMarkerId} // 傳遞 selectedMarkerId
@@ -232,21 +251,21 @@ const HomeScreen = () => {
                     onCancel={handleCancel}
 
                 />
-<Box
-    width={200}
-    height={50}
-    backgroundColor="white"
-    position="absolute"
-    top="5%" // 垂直居中
-    left="50%" // 水平居中
-    marginLeft={-100} // 將自身寬度的一半往左移動，以實現水平居中
-    marginTop={-25} // 將自身高度的一半往上移動，以實現垂直居中
-    borderRadius={5}
-    borderWidth={1}
-    borderColor={colormode == "light" ? "#1DA189" : "#FFB800"}
-    justifyContent="center"
-    alignItems="center"
->
+                <Box
+                    width={200}
+                    height={50}
+                    backgroundColor="white"
+                    position="absolute"
+                    top="5%" // 垂直居中
+                    left="50%" // 水平居中
+                    marginLeft={-100} // 將自身寬度的一半往左移動，以實現水平居中
+                    marginTop={-25} // 將自身高度的一半往上移動，以實現垂直居中
+                    borderRadius={5}
+                    borderWidth={1}
+                    borderColor={colormode == "light" ? "#1DA189" : "#FFB800"}
+                    justifyContent="center"
+                    alignItems="center"
+                >
 
                     <Text fontSize={10} fontWeight="800">{hintText}</Text>
                     <Text fontSize={10}>{hintContent}</Text>
