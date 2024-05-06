@@ -12,59 +12,10 @@ import { selectBuilding, buildingUmbrellaPlus, buildingUmbrellaMinus } from "../
 import { BoxShadow } from "react-native-shadow";
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
-
-
-
-
-const ConfirmationModal = ({ isVisible, onConfirm, onCancel, MarkerId, borrowed }) => { // 將 Modal 改為 ConfirmationModal
-    const confirmText = borrowed ? "還傘" : "借傘";
-    const colormode = useSelector(selectToggle);
-    return (
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={isVisible}
-            onRequestClose={onCancel}
-        >
-            <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                    <Text style={styles.modalText}>要於此地{confirmText}嗎?</Text>
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity onPress={() => onConfirm(MarkerId)} style={styles.button}>
-                            <Text style={styles.buttonText}>確定</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={onCancel} style={styles.button}>
-                            <Text style={styles.buttonText}>取消</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
-        </Modal>
-    );
-};
-
-const FailedModal = ({ FailedisVisible, onCancel }) => {
-    return (
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={FailedisVisible}
-            onRequestClose={onCancel}
-        >
-            <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                    <Text style={styles.modalText}>借傘失敗</Text>
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity onPress={onCancel} style={styles.button}>
-                            <Text style={styles.buttonText}>取消</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
-        </Modal>
-    );
-}
+import FailedModal from "../component/FaildModal";
+import ConfirmationModal from "../component/ConfirmationModal";
+import Hint from "../component/Hint";
+//import { handleConfirm, handleCancel, openConfirmationModal, onConfirm} from "../component/ModalAbout";
 
 const HomeScreen = () => {
 
@@ -116,6 +67,26 @@ const HomeScreen = () => {
         setSelectedMarkerId(markerId); // 在狀態中保存 markerId
     };
 
+    const onConfirm = (MarkerId) => {
+        console.log({ borrowed });
+        if (borrowed) {
+            borrowToggleFunction();
+            UmbrellaPlusFunction(MarkerId); // 使用 MarkerId 而不是 MarkerId
+            handleConfirm();
+        }
+        else if (!borrowed && UmbrellaSum[MarkerId] > 0) {
+            borrowToggleFunction();
+            UmbrellaMinusFunction(MarkerId); // 使用 MarkerId 而不是 MarkerId
+            handleConfirm();
+        }
+        else {
+            setfailed(true);
+            setModalVisible(false);
+
+
+        }
+    }
+
     //樓變數
     const UmbrellaSum = useSelector(selectBuilding);
     const UmbrellaMinusFunction = (id) => {
@@ -128,10 +99,6 @@ const HomeScreen = () => {
     //id的
     const [selectedMarkerId, setSelectedMarkerId] = useState(null);
 
-    //提示
-    const hintText = borrowed ? "您已借傘" : "您未借傘"
-    const hintContent = borrowed ? "點擊地點圖標提示即可還傘" : "點擊地點圖標提示即可借傘"
-
     //失敗變數
     const [failed, setfailed] = useState(false);
 
@@ -143,7 +110,7 @@ const HomeScreen = () => {
     const handleMarkerRelease = () => {
         setSelectedMarkerId(null);
     };
-    const snapPoints=useMemo(()=>['4%','50%'],[]);
+    const snapPoints = useMemo(() => ['4%', '50%'], []);
 
 
     //陰影
@@ -207,69 +174,31 @@ const HomeScreen = () => {
                     ))}
                 </MapView>
 
-                    <BottomSheet
-                        //ref={bottomSheetRef}
-                        index={1}
-                        snapPoints={snapPoints}
-                        //onChange={handleSheetChanges}
-                    >
-                        <BottomSheetView >
-                            <Text>Awesome 🎉</Text>
-                        </BottomSheetView>
+                <BottomSheet
+                    //ref={bottomSheetRef}
+                    index={1}
+                    snapPoints={snapPoints}
+                //onChange={handleSheetChanges}
+                >
+                    <BottomSheetView >
+                        <Text>Awesome 🎉</Text>
+                    </BottomSheetView>
                 </BottomSheet>
 
-                
+
 
                 <ConfirmationModal
                     isVisible={modalVisible}
                     MarkerId={selectedMarkerId} // 傳遞 selectedMarkerId
                     borrowed={borrowed}
-                    onConfirm={(MarkerId) => {
-
-                        console.log({ borrowed });
-                        if (borrowed) {
-                            borrowToggleFunction();
-                            UmbrellaPlusFunction(MarkerId); // 使用 MarkerId 而不是 MarkerId
-                            handleConfirm();
-                        }
-                        else if (!borrowed && UmbrellaSum[MarkerId] > 0) {
-                            borrowToggleFunction();
-                            UmbrellaMinusFunction(MarkerId); // 使用 MarkerId 而不是 MarkerId
-                            handleConfirm();
-                        }
-                        else {
-                            setfailed(true);
-                            setModalVisible(false);
-
-                        }
-
-                    }}
+                    onConfirm={onConfirm}
                     onCancel={handleCancel}
                 />
                 <FailedModal
                     FailedisVisible={failed}
                     onCancel={handleCancel}
-
                 />
-                <Box
-                    width={200}
-                    height={50}
-                    backgroundColor="white"
-                    position="absolute"
-                    top="5%" // 垂直居中
-                    left="50%" // 水平居中
-                    marginLeft={-100} // 將自身寬度的一半往左移動，以實現水平居中
-                    marginTop={-25} // 將自身高度的一半往上移動，以實現垂直居中
-                    borderRadius={5}
-                    borderWidth={1}
-                    borderColor={colormode == "light" ? "#1DA189" : "#FFB800"}
-                    justifyContent="center"
-                    alignItems="center"
-                >
-
-                    <Text fontSize={10} fontWeight="800">{hintText}</Text>
-                    <Text fontSize={10}>{hintContent}</Text>
-                </Box>
+                <Hint />
                 <View style={styles.toggleButton}>
                     <TouchableOpacity onPress={toggleFunction}>
                         <MaterialCommunityIcons
