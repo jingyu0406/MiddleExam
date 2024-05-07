@@ -4,14 +4,12 @@ import React from "react";
 import { StyleSheet, View, Button } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useNavigation, useTheme } from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { selectToggle } from '../redux/toggleSlice';
-import EditAccountScreen from '../screen/EditAccountScreen';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const AccountScreen = () => {
-    const navigation = useNavigation();
+const AccountScreen = ({ navigation }) => {
+
     const colormode = useSelector(selectToggle);
     const { colors } = useTheme();
     return (
@@ -44,9 +42,10 @@ const AccountScreen = () => {
                 height={35}
                 alignItems='center'
                 justifyContent='center'
-                width={320}
+                width={335}
                 onPress={() => {
-                    navigation.navigate(EditAccountScreen)
+                    //console.log('Button pressed');
+                    navigation.navigate('編輯個人資料')
                 }} >
 
                 <Text color="white" >編輯個人資料</Text>

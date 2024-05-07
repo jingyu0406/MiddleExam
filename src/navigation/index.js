@@ -18,6 +18,7 @@ import SearchScreen from '../screen/SearchScreen';
 import MyTheme from '../theme';
 import { useSelector } from 'react-redux';
 import { selectToggle } from '../redux/toggleSlice';
+import EditAccountScreen from '../screen/EditAccountScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -197,7 +198,22 @@ const AccountStack = () => {
           headerTitleAlign: "center", //文字置中
         }}
       />
-
+      <Stack.Screen
+        name="編輯個人資料"
+        component={EditAccountScreen}
+        options={{
+          headerTintColor:
+            "white"
+          ,
+          headerTitleStyle: {
+            fontWeight: "bold"
+          },
+          headerStyle: {
+            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
+          },
+          headerTitleAlign: "center",
+        }}
+      />
     </Stack.Navigator >
   )
 }
