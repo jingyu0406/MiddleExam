@@ -81,14 +81,23 @@ const AccountScreen = ({ navigation }) => {
                 justifyContent='center'
                 borderRadius={5}
             >
-                <Box flexDirection='row' justifyContent='space-between' alignItems='center' width='100%' paddingHorizontal={15}>
+                <Pressable
+                    flexDirection='row'
+                    justifyContent='space-between'
+                    alignItems='center' width='100%'
+                    paddingHorizontal={15}
+                    onPress={() => {
+                        //console.log('Button pressed');
+                        navigation.navigate('維護公告')
+                    }} >
                     <Text color={colormode == "light" ? "black" : "white"} fontSize={15}>維護公告</Text>
                     <MaterialCommunityIcons
                         name="chevron-right"
                         size={40}
                         color='white'
                     />
-                </Box>
+                </Pressable>
+
             </Box>
 
             <Box
