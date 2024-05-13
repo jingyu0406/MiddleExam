@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Modal } from "react-native";
-import { Box, GluestackUIProvider, Center, HStack, Text, FlatList, Button, Pressable } from "@gluestack-ui/themed";
+import { Box, GluestackUIProvider, Center, HStack, Text, FlatList, Button, Pressable, Image } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -182,6 +182,27 @@ const HomeScreen = () => {
                 >
                     <BottomSheetView >
                         <Text>Awesome 🎉</Text>
+                        <Box
+                            
+                            justifyContent="center"
+                            alignItems="center"
+                            flexDirection="row"
+                        >
+                        <Image
+                            source={"https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9168.jpg?raw=true"} // 使用本地图片，注意替换为你的图片路径
+                            width={200}
+                            height={200}
+                            borderRadius={50}
+                            margin={20}
+                        />
+                        <Box>
+                            <Text fontWeight="bold" fontSize={30}>篤行樓</Text>
+                            
+                            <Text>可借：99把傘</Text>
+                            <Text>可還：1 把傘</Text>
+                        </Box>
+                        </Box>
+
                     </BottomSheetView>
                 </BottomSheet>
 
