@@ -19,6 +19,7 @@ import AnnouncementScreen from '../screen/AnnouncementScreen';
 import MyTheme from '../theme';
 import { useSelector } from 'react-redux';
 import { selectToggle } from '../redux/toggleSlice';
+import SignUpScreen from '../screen/SignUpScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -178,12 +179,29 @@ const AccountStack = () => {
   const colormode = useSelector(selectToggle);
   return (
     <Stack.Navigator
-      initialRouteName='關於'
+      initialRouteName='新增帳號'
     // screenOptions={{
     //   backgroundColor: 'white',
     // }}
     >
       <Stack.Screen
+        name='新增帳號'
+        component={SignUpScreen}
+        options={{
+          // headerShown: false,
+          headerTitleStyle: {
+            fontWeight: "bold"
+          },
+          headerTintColor:
+            "white"
+          ,
+          headerStyle: {
+            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
+          },
+          headerTitleAlign: "center", //文字置中
+        }}
+      />
+      {/* <Stack.Screen
         name="關於"
         component={AccountScreen}
         options={{
@@ -198,7 +216,7 @@ const AccountStack = () => {
           },
           headerTitleAlign: "center", //文字置中
         }}
-      />
+      /> */}
       <Stack.Screen
         name="編輯個人資料"
         component={EditAccountScreen}
