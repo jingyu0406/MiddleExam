@@ -15,6 +15,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import FailedModal from "../component/FaildModal";
 import ConfirmationModal from "../component/ConfirmationModal";
 import Hint from "../component/Hint";
+import searchMap from "../json/searchMap.json"
 //import { handleConfirm, handleCancel, openConfirmationModal, onConfirm} from "../component/ModalAbout";
 
 const HomeScreen = () => {
@@ -110,7 +111,7 @@ const HomeScreen = () => {
     const handleMarkerRelease = () => {
         setSelectedMarkerId(null);
     };
-    const snapPoints = useMemo(() => ['4%', '50%'], []);
+    const snapPoints = useMemo(() => ['4%', '40%'], []);
 
 
     //陰影
@@ -146,8 +147,6 @@ const HomeScreen = () => {
                                 latitude: marker.latitude,
                                 longitude: marker.longitude,
                             }}
-                            title={marker.title}
-                            description={marker.description}
                             onPress={() => handleMarkerPress(marker.id)}
                         >
                             <MaterialCommunityIcons
@@ -156,20 +155,6 @@ const HomeScreen = () => {
                                 color={colormode == "light" ? "#9DD8CD" : "#FFB800"}
                                 style={{ elevation: 10 }}
                             />
-                            <Callout
-                                onPress={() => {
-                                    console.log('Button pressed');
-                                    console.log('Button pressed for marker:', marker);
-                                    onPress = { handleMarkerRelease }
-                                    openConfirmationModal(marker.id);
-                                }}>
-                                <Box width={200} height="auto" alignItems="center">
-                                    <Text fontWeight="bold">{marker.title}</Text>
-                                    <Text>{marker.description}</Text>
-                                    <Text >此地目前有：{UmbrellaSum[marker.id]}把傘</Text>
-                                </Box>
-                            </Callout>
-
                         </Marker>
                     ))}
                 </MapView>
@@ -178,30 +163,56 @@ const HomeScreen = () => {
                     //ref={bottomSheetRef}
                     index={1}
                     snapPoints={snapPoints}
+
                 //onChange={handleSheetChanges}
                 >
                     <BottomSheetView >
-                        <Text>Awesome 🎉</Text>
                         <Box
-                            
                             justifyContent="center"
                             alignItems="center"
-                            flexDirection="row"
+                            marginVertical={3}
                         >
-                        <Image
-                            source={"https://github.com/jingyu0406/MiddleExam/blob/main/src/img/AnyConv.com__IMG_9168.jpg?raw=true"} // 使用本地图片，注意替换为你的图片路径
-                            width={200}
-                            height={200}
-                            borderRadius={50}
-                            margin={20}
-                        />
-                        <Box>
-                            <Text fontWeight="bold" fontSize={30}>篤行樓</Text>
-                            
-                            <Text>可借：99把傘</Text>
-                            <Text>可還：1 把傘</Text>
+                            <Box
+                                flexDirection="row"
+                            >
+                                <Image
+                                    source={{ uri: selectedMarkerId == null ? searchMap[0].picture : searchMap[selectedMarkerId].picture }} // 使用本地图片，注意替换为你的图片路径
+                                    alt="Selected Marker"
+                                    width={150}
+                                    height={150}
+                                    borderRadius={50}
+                                    margin={20}
+                                />
+
+                                <Box justifyContent="center" height={150} margin={20}>
+                                    <Text fontWeight="bold" fontSize={35} margin={10} marginTop={0}
+                                    //{selectedMarkerId == null ? mapMarker[0].title : mapMarker[selectedMarkerId].title}
+                                    >{selectedMarkerId == null ? mapMarker[0].title : mapMarker[selectedMarkerId].title}</Text>
+
+                                    <Text fontSize={20}>可借： {UmbrellaSum[selectedMarkerId]} 把傘</Text>
+                                    <Text fontSize={20}>可還： {UmbrellaSum[selectedMarkerId]} 把傘</Text>
+                                </Box>
+                            </Box>
+                            <Pressable
+                                onPress={() => {
+                                    console.log('Button pressed');
+                                    console.log('Button pressed for marker:', mapMarker[selectedMarkerId].title);
+                                    onPress = { handleMarkerRelease }
+                                    openConfirmationModal(selectedMarkerId);
+                                }}>
+                                <Box
+                                    backgroundColor="pink"
+                                    padding={10}
+                                    paddingHorizontal={100}
+                                    borderRadius={20}
+
+                                >
+                                    <Text fontSize={25}>立即借傘</Text>
+                                </Box>
+                            </Pressable>
+
                         </Box>
-                        </Box>
+
 
                     </BottomSheetView>
                 </BottomSheet>
