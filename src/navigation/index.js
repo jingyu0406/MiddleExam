@@ -20,6 +20,8 @@ import MyTheme from '../theme';
 import { useSelector } from 'react-redux';
 import { selectToggle } from '../redux/toggleSlice';
 import SignUpScreen from '../screen/SignUpScreen';
+import LoginScreen from '../screen/LoginScreen';
+import ForgetcodeScreen from '../screen/ForgetcodeScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -51,6 +53,7 @@ const MyTabs = () => {
     >
       <Tab.Screen name="留言區" component={MessageStack}
         options={{
+          tabBarHideOnKeyboard: true,
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="chat" color={color} size={30} />
@@ -67,6 +70,7 @@ const MyTabs = () => {
       />
       <Tab.Screen name="個人" component={AccountStack}
         options={{
+          tabBarHideOnKeyboard: true,
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={30} />
@@ -199,6 +203,34 @@ const AccountStack = () => {
             backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
           },
           headerTitleAlign: "center", //文字置中
+        }}
+      />
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{
+          // headerShown: false,
+          title: "",
+          headerBackVisible: false,
+          headerTitle: false,
+          headerStyle: {
+            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
+          },
+
+        }}
+      />
+      <Stack.Screen
+        name="忘記密碼"
+        component={ForgetcodeScreen}
+        options={{
+          // headerShown: false,
+          title: "",
+          headerBackVisible: false,
+          headerTitle: false,
+          headerStyle: {
+            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B"
+          },
+
         }}
       />
       {/* <Stack.Screen

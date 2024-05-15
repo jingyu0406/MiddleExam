@@ -1,4 +1,4 @@
-import { Box, Text, View } from "@gluestack-ui/themed";
+import { Box, Pressable, Text, View } from "@gluestack-ui/themed";
 import { Picker } from "@react-native-picker/picker";
 
 import React, { useState } from "react";
@@ -6,7 +6,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { TextInput } from "react-native-gesture-handler";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ navigation }) => {
     const [selectedValue, setSelectedValue] = useState();
 
     return (
@@ -37,9 +37,9 @@ const SignUpScreen = () => {
                 <TextInput placeholder="學號" placeholderTextColor={"lightgray"} />
             </Box>
             <Box marginLeft={80} borderBottomWidth={1} marginRight={80} marginBottom={30}>
-                <TextInput placeholder="設定密碼" placeholderTextColor={"lightgray"} />
+                <TextInput placeholder="設定密碼" placeholderTextColor={"lightgray"} secureTextEntry />
             </Box>
-            <Box marginLeft={80} borderWidth={1} marginTop={30} marginRight={80} borderColor="black" borderRadius={10}>
+            <Box marginLeft={80} borderWidth={1} marginRight={80} borderColor="black" borderRadius={10}>
 
                 <Picker
                     selectedValue={selectedValue}
@@ -50,6 +50,22 @@ const SignUpScreen = () => {
                     <Picker.Item label="男性" value="male" />
 
                 </Picker>
+            </Box>
+            <Box marginTop={30} alignItems="center" marginLeft={80} marginRight={80} paddingBottom={5} borderRadius={30} backgroundColor="#73DBC8">
+                <Pressable>
+                    <Text fontSize={20} color="white">註冊</Text>
+                </Pressable>
+            </Box>
+            <Box marginLeft={150} marginTop={10}>
+                <Pressable
+                    onPress={() => {
+                        navigation.navigate('LoginScreen')
+                    }}
+                >
+
+                    <Text color="lightgray" textDecorationLine="underline">已經有帳號了嗎?立即登入</Text>
+                </Pressable>
+
             </Box>
 
         </Box>
