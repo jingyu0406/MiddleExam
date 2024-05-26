@@ -10,6 +10,7 @@ import { GluestackUIProvider } from '@gluestack-ui/themed';
 import MyTheme from './src/theme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+
 export default function App() {
   return (
 

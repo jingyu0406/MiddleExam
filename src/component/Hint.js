@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Text } from "@gluestack-ui/themed";
 import { selectBorrow, borrowToggle } from "../redux/borrowSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import LocationTracker from "./LocationTracker";
 import { selectToggle } from "../redux/toggleSlice";
 
 const Hint = () => {
@@ -28,8 +28,9 @@ const Hint = () => {
             alignItems="center"
         >
 
-            <Text fontSize={10} fontWeight="800">{hintText}</Text>
-            <Text fontSize={10}>{hintContent}</Text>
+            {/* <Text fontSize={10} fontWeight="800">{hintText}</Text>
+            <Text fontSize={10}>{hintContent}</Text> */}
+            <LocationTracker/>
         </Box>
     )
 }
