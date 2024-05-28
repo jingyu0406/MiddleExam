@@ -185,6 +185,8 @@ const HomeScreen = () => {
                     </BottomSheetView>
                 </BottomSheet>
 
+                <Hint onPress={handleCenterCoordinate}/>
+
                 <ConfirmationModal
                     isVisible={modalVisible}
                     MarkerId={selectedMarkerId}
@@ -196,10 +198,6 @@ const HomeScreen = () => {
                     FailedisVisible={failed}
                     onCancel={handleCancel}
                 />
-                    <Hint onPress={handleCenterCoordinate}/>
-                
-
-
 
                 <View style={styles.toggleButton}>
                     <TouchableOpacity onPress={toggleFunction}>
