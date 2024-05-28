@@ -1,53 +1,49 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
-import { View, StyleSheet, TouchableOpacity, Modal } from "react-native";
-import { Box, GluestackUIProvider, Center, HStack, Text, FlatList, Button, Pressable, Image } from "@gluestack-ui/themed";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { Box, GluestackUIProvider, Text, Pressable, Image } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
-import MapView, { Callout, Marker } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import mapMarker from "../json/mapMarker.json";
 import { useDispatch, useSelector } from "react-redux";
 import { selectToggle, toggleColorMode } from "../redux/toggleSlice";
 import { selectBorrow, borrowToggle } from "../redux/borrowSlice";
 import { selectBuilding, buildingUmbrellaPlus, buildingUmbrellaMinus } from "../redux/building/buildingSlice";
-import { BoxShadow } from "react-native-shadow";
+import { selectNearest } from "../redux/nearestSlice";
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import FailedModal from "../component/FaildModal";
 import ConfirmationModal from "../component/ConfirmationModal";
+import FailedModal from "../component/FaildModal";
 import Hint from "../component/Hint";
 import searchMap from "../json/searchMap.json"
 
 const HomeScreen = () => {
-
     const colormode = useSelector(selectToggle);
     const dispatch = useDispatch();
+    const [markers, setMarkers] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedMarkerId, setSelectedMarkerId] = useState(null);
+    const [failed, setFailed] = useState(false);
+    const borrowed = useSelector(selectBorrow);
+    const UmbrellaSum = useSelector(selectBuilding);
+    const nearest = useSelector(selectNearest);
+    const mapRef = useRef(null);
+
+    useEffect(() => {
+        setMarkers(mapMarker);
+    }, []);
 
     const toggleFunction = () => {
         dispatch(toggleColorMode());
     };
 
-    const [markers, setMarkers] = useState([]);
-    useEffect(() => {
-        setMarkers(mapMarker);
-    }, []);
-
-    const borrowed = useSelector(selectBorrow);
-    const borrowToggleFunction = () => {
-        dispatch(borrowToggle());
-    }
-
-    const [modalVisible, setModalVisible] = useState(false);
-
     const handleConfirm = () => {
-        console.log('Confirmed');
         setModalVisible(false);
         setMarkers([...markers]);
     };
 
     const handleCancel = () => {
-        console.log('Cancelled');
         setModalVisible(false);
-        setfailed(false);
+        setFailed(false);
     };
 
     const openConfirmationModal = (markerId) => {
@@ -56,7 +52,6 @@ const HomeScreen = () => {
     };
 
     const onConfirm = (MarkerId) => {
-        console.log({ borrowed });
         if (borrowed) {
             borrowToggleFunction();
             UmbrellaPlusFunction(MarkerId);
@@ -68,22 +63,22 @@ const HomeScreen = () => {
             handleConfirm();
         }
         else {
-            setfailed(true);
+            setFailed(true);
             setModalVisible(false);
         }
     }
 
-    const UmbrellaSum = useSelector(selectBuilding);
+    const borrowToggleFunction = () => {
+        dispatch(borrowToggle());
+    }
+
     const UmbrellaMinusFunction = (id) => {
         dispatch(buildingUmbrellaMinus(id));
     }
+
     const UmbrellaPlusFunction = (id) => {
         dispatch(buildingUmbrellaPlus(id));
     }
-
-    const [selectedMarkerId, setSelectedMarkerId] = useState(null);
-
-    const [failed, setfailed] = useState(false);
 
     const handleMarkerPress = (markerId) => {
         setSelectedMarkerId(markerId);
@@ -97,14 +92,33 @@ const HomeScreen = () => {
     const snapPoints = useMemo(() => ['3%', '40%'], []);
     const bottomSheetRef = useRef(null);
     const handleButtonPress = () => {
-        bottomSheetRef.current.snapToIndex(0) // 使用 bottomSheetRef.current 获取 BottomSheet 组件实例
+        bottomSheetRef.current.snapToIndex(0);
     };
-    const bottomSheetText= borrowed ? "立即還傘" : "立即借傘"
+
+    const bottomSheetText = borrowed ? "立即還傘" : "立即借傘";
+
+    const targetCoordinate = nearest !== null ? {
+        latitude: mapMarker[nearest].latitude,
+        longitude: mapMarker[nearest].longitude
+    } : null;
+
+    const handleCenterCoordinate = () => {
+        if (mapRef.current && targetCoordinate) {
+            mapRef.current.animateToRegion({
+                ...targetCoordinate,
+                latitudeDelta: 0.0001,
+                longitudeDelta: 0.0001,
+            });
+        } else {
+            console.error('targetCoordinate is not defined');
+        }
+    };
 
     return (
         <Box flex={1}>
             <GluestackUIProvider config={config}>
                 <MapView
+                    ref={mapRef}
                     initialRegion={{
                         longitude: 121.544637,
                         latitude: 25.024624,
@@ -113,7 +127,8 @@ const HomeScreen = () => {
                     }}
                     style={styles.map}
                     showsTraffic
-                    mapType="terrain">
+                    mapType="terrain"
+                >
                     {markers.map(marker => (
                         <Marker
                             key={marker.id}
@@ -139,14 +154,8 @@ const HomeScreen = () => {
                     snapPoints={snapPoints}
                 >
                     <BottomSheetView>
-                        <Box
-                            justifyContent="center"
-                            alignItems="center"
-                            marginVertical={3}
-                        >
-                            <Box
-                                flexDirection="row"
-                            >
+                        <Box justifyContent="center" alignItems="center" marginVertical={3}>
+                            <Box flexDirection="row">
                                 <Image
                                     source={{ uri: selectedMarkerId == null ? searchMap[0].picture : searchMap[selectedMarkerId].picture }}
                                     alt="Selected Marker"
@@ -165,15 +174,10 @@ const HomeScreen = () => {
                             <Pressable
                                 onPress={() => {
                                     handleMarkerRelease();
-                                    handleButtonPress(); // 调用移动 Bottom Sheet 的函数
+                                    handleButtonPress();
                                     openConfirmationModal(selectedMarkerId);
                                 }}>
-                                <Box
-                                    backgroundColor="pink"
-                                    padding={10}
-                                    paddingHorizontal={100}
-                                    borderRadius={20}
-                                >
+                                <Box backgroundColor="pink" padding={10} paddingHorizontal={100} borderRadius={20}>
                                     <Text fontSize={25}>{bottomSheetText}</Text>
                                 </Box>
                             </Pressable>
@@ -192,7 +196,11 @@ const HomeScreen = () => {
                     FailedisVisible={failed}
                     onCancel={handleCancel}
                 />
-                <Hint />
+                    <Hint onPress={handleCenterCoordinate}/>
+                
+
+
+
                 <View style={styles.toggleButton}>
                     <TouchableOpacity onPress={toggleFunction}>
                         <MaterialCommunityIcons
@@ -210,6 +218,21 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
     map: {
         flex: 1,
+    },
+    buttonContainer: {
+        position: 'absolute',
+        top: '90%',
+        left: '50%',
+        transform: [{ translateX: -75 }],
+    },
+    button: {
+        backgroundColor: 'blue',
+        padding: 10,
+        borderRadius: 5,
+    },
+    buttonText: {
+        color: 'white',
+        textAlign: 'center',
     },
     toggleButton: {
         position: "absolute",

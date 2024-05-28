@@ -23,6 +23,7 @@
     "expo-location": "^17.0.1",
     "expo-status-bar": "~1.11.1",
     "expo-updates": "~0.24.12",
+    "geolib": "^3.3.4",
     "react": "18.2.0",
     "react-native": "0.73.6",
     "react-native-element-dropdown": "^2.12.0",
