@@ -15,6 +15,7 @@ import ConfirmationModal from "../component/ConfirmationModal";
 import FailedModal from "../component/FaildModal";
 import Hint from "../component/Hint";
 import searchMap from "../json/searchMap.json"
+import { useRoute } from "@react-navigation/native";
 
 const HomeScreen = () => {
     const colormode = useSelector(selectToggle);
@@ -27,10 +28,22 @@ const HomeScreen = () => {
     const UmbrellaSum = useSelector(selectBuilding);
     const nearest = useSelector(selectNearest);
     const mapRef = useRef(null);
+    const route = useRoute();
 
     useEffect(() => {
         setMarkers(mapMarker);
     }, []);
+
+    useEffect(() => {
+        if (route.params?.myChoose) {
+            const myChoose = route.params.myChoose;
+            mapRef.current.animateToRegion({
+                ...myChoose,
+                latitudeDelta: 0.0001,
+                longitudeDelta: 0.0001,
+            });
+        }
+    }, [route.params?.myChoose]);
 
     const toggleFunction = () => {
         dispatch(toggleColorMode());
@@ -185,7 +198,7 @@ const HomeScreen = () => {
                     </BottomSheetView>
                 </BottomSheet>
 
-                <Hint onPress={handleCenterCoordinate}/>
+                <Hint onPress={handleCenterCoordinate} />
 
                 <ConfirmationModal
                     isVisible={modalVisible}
