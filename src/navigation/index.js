@@ -19,7 +19,7 @@ import AnnouncementScreen from '../screen/AnnouncementScreen';
 import MyTheme from '../theme';
 import { useSelector } from 'react-redux';
 import { selectToggle } from '../redux/toggleSlice';
-import SignUpScreen from '../screen/SignUpScreen';
+import RegisterScreen from '../screen/SignUpScreen';
 import LoginScreen from '../screen/LoginScreen';
 import ForgetcodeScreen from '../screen/ForgetcodeScreen';
 
@@ -191,7 +191,7 @@ const AccountStack = () => {
     >
       <Stack.Screen
         name='新增帳號'
-        component={SignUpScreen}
+        component={RegisterScreen}
         options={{
           // headerShown: false,
           headerTitleStyle: {
