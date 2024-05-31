@@ -30,6 +30,7 @@ const HomeScreen = () => {
     const mapRef = useRef(null);
     const route = useRoute();
 
+
     useEffect(() => {
         setMarkers(mapMarker);
     }, []);

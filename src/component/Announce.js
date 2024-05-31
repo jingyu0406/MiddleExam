@@ -2,11 +2,11 @@ import React from 'react';
 import { Box, Button, Text, } from '@gluestack-ui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { useTheme } from '@react-navigation/native';
+
 import { Pressable, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { selectToggle } from '../redux/toggleSlice';
-
+import { useTheme } from '@react-navigation/native';
 
 
 
@@ -19,7 +19,7 @@ const FloatingActionButton = ({ onPress }) => {
 };
 
 const Announce = ({ text, text2 }) => {
-    // const { colors } = useTheme();
+
     const colormode = useSelector(selectToggle);
     return (
 
