@@ -1,16 +1,16 @@
-import { Box, Button, Pressable, Text, View } from "@gluestack-ui/themed";
+import { Box, Pressable, Text, View } from "@gluestack-ui/themed";
 import { Picker } from "@react-native-picker/picker";
 
 import React, { useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { FIREBASE_AUTH, auth, createUserWithEmailAndPassword } from "../api/FireBase"; // 確保這裡的路徑正確
-import { ActivityIndicator, ActivityIndicatorBase } from "react-native";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { FIREBASE_AUTH, auth } from "../api/FireBase"; // 確保這裡的路徑正確
+import { ActivityIndicator, ActivityIndicatorBase, Button, KeyboardAvoidingView } from "react-native";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUpScreen = ({ navigation }) => {
     const [selectedValue, setSelectedValue] = useState();
-    const [identity, setIdentity] = useState('');
+    const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false)
     const auth = FIREBASE_AUTH
@@ -18,7 +18,7 @@ const SignUpScreen = ({ navigation }) => {
     const signIn = async () => {
         setLoading(true);
         try {
-            const response = await signInWithEmailAndPassword(auth, identity, password);
+            const response = await signInWithEmailAndPassword(auth, email, password);
             console.log(response);
         } catch (error) {
             console.log(error)
@@ -32,7 +32,7 @@ const SignUpScreen = ({ navigation }) => {
     const signUp = async () => {
         setLoading(true);
         try {
-            const response = await createUserWithEmailAndPassword(auth, identity, password);
+            const response = await createUserWithEmailAndPassword(auth, email, password);
             console.log(response);
             alert('Check your email!')
         } catch (error) {
@@ -46,33 +46,36 @@ const SignUpScreen = ({ navigation }) => {
 
     return (
         <Box flex={1} justifyContent="center" backgroundColor="white">
-            <Text marginHorizontal="20">LoginScreen</Text>
-            <Box borderColor="black" borderWidth={1} margin={20} borderRadius={5} padding={10}>
-                <TextInput
-                    value={identity}
-                    placeholder="identity"
-                    placeholderTextColor={"darkgray"}
-                    onChangeText={(text) => setIdentity(text)}
-                />
-            </Box>
-            <Box borderColor="black" borderWidth={1} margin={20} borderRadius={5} padding={10}>
-                <TextInput
-                    value={password}
-                    placeholder="password"
-                    placeholderTextColor={"darkgray"}
-                    onChangeText={(text) => setPassword(text)}
-                    secureTextEntry={true}
-                />
-            </Box>
+            <KeyboardAvoidingView behavior="padding">
+                <Text marginHorizontal="20">LoginScreen</Text>
+                <Box borderColor="black" borderWidth={1} margin={20} borderRadius={5} padding={10}>
+                    <TextInput
+                        value={email}
+                        placeholder="email"
+                        placeholderTextColor={"darkgray"}
+                        onChangeText={(text) => setemail(text)}
+                    />
+                </Box>
+                <Box borderColor="black" borderWidth={1} margin={20} borderRadius={5} padding={10}>
+                    <TextInput
+                        value={password}
+                        placeholder="password"
+                        placeholderTextColor={"darkgray"}
+                        onChangeText={(text) => setPassword(text)}
+                        secureTextEntry={true}
+                    />
+                </Box>
 
-            {loading ? (
-                <ActivityIndicator size="large" color="#0000ff" />
-            ) : (
-                <>
-                    <Button title="Sign Up" onPress={() => signUp} />
-                    <Button title="Login" onPress={() => signIn} />
-                </>
-            )}
+                {loading ? (
+                    <ActivityIndicator size="large" color="#0000ff" />
+                ) : (
+                    <>
+                        <Button title="Create Account" onPress={signUp} />
+                        <Button title="Login" onPress={signIn} />
+                    </>
+                )}
+            </KeyboardAvoidingView>
+
         </Box>
     )
 }
