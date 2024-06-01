@@ -16,6 +16,8 @@ const SignUpScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [number, setnumber] = useState('')
     const [loading, setLoading] = useState(false)
+    const [gender, setgender] = useState('female')
+    const [name, setname] = useState('')
     const [id, setid] = useState('')
     const auth = FIREBASE_AUTH
     const data = FIREBASE_DB
@@ -35,15 +37,20 @@ const SignUpScreen = ({ navigation }) => {
     }
 
     const signUp = async () => {
+        //檢查必填項目是否填寫
+        if (!email || !password || !number || !id || !gender)
+            return;
         setLoading(true);
         try {
             const response = await createUserWithEmailAndPassword(auth, email, password);
             //儲存額外的用戶資料
             const user = response.user
             await setDoc(doc(data, 'users', user.uid), {
+                name: name,
                 email: email,
                 number: number,
-                id: id
+                id: id,
+                gender: gender,
             });
             console.log(response);
             alert('已創建用戶資料並儲存')
@@ -58,7 +65,7 @@ const SignUpScreen = ({ navigation }) => {
 
     return (
         <Box flex={1} backgroundColor="white">
-            <Box alignItems={"center"} marginTop={100} marginBottom={10}>
+            <Box alignItems={"center"} marginTop={70} marginBottom={10}>
                 <MaterialCommunityIcons
                     marginRight={10}
                     marginBottom={10}
@@ -72,8 +79,19 @@ const SignUpScreen = ({ navigation }) => {
                 />
             </Box>
             <KeyboardAvoidingView behavior="padding">
-                <Text marginl={10} marginHorizontal="20">Email</Text>
-                <Box borderColor="black" borderWidth={1} margin={20} borderRadius={5} padding={10}>
+                <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>姓名</Text>
+                <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
+
+                    <TextInput
+                        value={name}
+                        placeholder="name"
+                        placeholderTextColor={"darkgray"}
+                        onChangeText={(text) => setname(text)}
+                    />
+                </Box>
+                <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>信箱</Text>
+                <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
+
                     <TextInput
                         value={email}
                         placeholder="email"
@@ -81,8 +99,8 @@ const SignUpScreen = ({ navigation }) => {
                         onChangeText={(text) => setemail(text)}
                     />
                 </Box>
-                <Text marginHorizontal="20">password</Text>
-                <Box borderColor="black" borderWidth={1} margin={20} borderRadius={5} padding={10}>
+                <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>密碼</Text>
+                <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
                     <TextInput
                         value={password}
                         placeholder="password"
@@ -91,8 +109,8 @@ const SignUpScreen = ({ navigation }) => {
                         secureTextEntry={true}
                     />
                 </Box>
-                <Text marginHorizontal="20">identity</Text>
-                <Box borderColor="black" borderWidth={1} margin={20} borderRadius={5} padding={10}>
+                <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>身分證字號</Text>
+                <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
                     <TextInput
                         value={id}
                         placeholder="id"
@@ -101,8 +119,8 @@ const SignUpScreen = ({ navigation }) => {
                         secureTextEntry={true}
                     />
                 </Box>
-                <Text marginHorizontal="20">number</Text>
-                <Box borderColor="black" borderWidth={1} margin={20} borderRadius={5} padding={10}>
+                <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>學號</Text>
+                <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
                     <TextInput
                         value={number}
                         placeholder="number"
@@ -111,12 +129,35 @@ const SignUpScreen = ({ navigation }) => {
                         secureTextEntry={true}
                     />
                 </Box>
+                <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>性別</Text>
+                <Box marginLeft={80} marginRight={80} marginBottom={20} borderColor="darkgray" borderWidth={1} borderRadius={5}>
+                    <Picker
+                        selectedValue={selectedValue}
+                        onValueChange={(itemValue) =>
+                            setgender(itemValue)
+                        }>
+                        <Picker.Item label="女性" value="female" />
+                        <Picker.Item label="男性" value="male" />
+                    </Picker>
+                </Box>
                 {loading ? (
-                    <ActivityIndicator size="large" color="#0000ff" />
+                    //等待時轉圈圈
+                    <ActivityIndicator size="small" color="#0000ff" />
                 ) : (
                     <>
-                        <Button title="Create Account" onPress={signUp} />
-                        <Button title="Login" onPress={signIn} />
+                        <Box alignItems="center" marginLeft={80} marginRight={80} paddingBottom={5} borderRadius={30} backgroundColor="#73DBC8">
+                            <Button color="#73DBC8" title="註冊" onPress={signUp} />
+                            {/* <Button title="Login" onPress={signIn} /> */}
+                        </Box>
+
+                        <Pressable
+                            marginLeft={150}
+                            onPress={() => {
+                                navigation.navigate('LoginScreen')
+                            }}
+                        >
+                            <Text fontSize={10} color="lightgray" textDecorationLine="underline">已經有帳號了嗎?立即登入</Text>
+                        </Pressable>
                     </>
                 )}
             </KeyboardAvoidingView>
