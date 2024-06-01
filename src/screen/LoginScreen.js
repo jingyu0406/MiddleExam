@@ -1,8 +1,8 @@
-import { Box, Button, Pressable, Text } from "@gluestack-ui/themed";
+import { Box, Pressable, Text } from "@gluestack-ui/themed";
 import { retry } from "@reduxjs/toolkit/query";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Button, } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -61,44 +61,46 @@ const LoginScreen = ({ navigation }) => {
                 />
             </Box>
 
-            <Box marginLeft={110} marginTop={0} flexDirection="row">
-                {loading ? (
-                    //等待時轉圈圈
-                    <ActivityIndicator size="small" color="#0000ff" />
-                ) : (
-                    <>
-                        <Box alignItems="center" marginLeft={80} marginRight={80} paddingBottom={5} borderRadius={30} backgroundColor="#73DBC8">
 
-                            <Button color="#73DBC8" title="登入" onPress={signIn} />
-                        </Box>
-
-
-                        <Pressable
-                            onPress={() => {
-                                console.log('Button pressed');
-                                navigation.navigate('忘記密碼')
-                            }}
-                        >
-
-                            <Text color="lightgray" textDecorationLine="underline">忘記密碼?</Text>
+            {loading ? (
+                //等待時轉圈圈
+                <ActivityIndicator size="small" color="#0000ff" />
+            ) : (
+                <>
+                    <Box marginTop={15} alignItems="center" marginLeft={80} marginRight={80} paddingBottom={5} borderRadius={30} backgroundColor="#73DBC8">
+                        <Pressable color="#73DBC8" title="登入" onPress={signIn}>
+                            <Text color="white">登入</Text>
                         </Pressable>
-                        <Text color="lightgray">or</Text>
-                        <Pressable
-                            onPress={() => {
-                                navigation.navigate('新增帳號')
-                            }}
-                        >
+                    </Box>
 
-                            <Text color="lightgray" textDecorationLine="underline">沒有帳號?立即註冊</Text>
-                        </Pressable>
-                    </>
-                )}
+                    {/*忘記密碼區 */}
+                    {/* <Pressable
+                        onPress={() => {
+                            console.log('Button pressed');
+                            navigation.navigate('忘記密碼')
+                        }}
+                    >
 
-
-            </Box>
-
-
+                        <Text color="lightgray" textDecorationLine="underline">忘記密碼?</Text>
+                    </Pressable> */}
+                    {/* <Text color="lightgray">or</Text> */}
+                    <Pressable
+                        marginLeft={165}
+                        justifyContent="center"
+                        onPress={() => {
+                            navigation.navigate('新增帳號')
+                        }}
+                    >
+                        <Text fontSize={10} color="lightgray" textDecorationLine="underline">沒有帳號?立即註冊</Text>
+                    </Pressable>
+                </>
+            )}
         </Box>
+
+
+
+
+
     )
 }
 
