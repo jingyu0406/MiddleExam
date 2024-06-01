@@ -5,23 +5,34 @@ import React, { useState } from "react";
 import { ActivityIndicator, Button, } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { FIREBASE_AUTH } from "../api/FireBase";
+import HomeScreen from "./HomeScreen";
+import { useNavigation } from "@react-navigation/native";
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
     const [password, setPassword] = useState('');
-    const [number, setnumber] = useState('')
+    const [email, setemail] = useState('')
     const [loading, setLoading] = useState(false)
+    const auth = FIREBASE_AUTH
+    const navigation = useNavigation();
 
     const signIn = async () => {
+        //判斷有無輸入
+        if (!email || !password)
+            return;
+
         setLoading(true);
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
             console.log(response);
+
         } catch (error) {
             console.log(error)
             alert('登入錯誤:' + error.message);
         }
         finally {
             setLoading(false);
+            navigation.navigate('-傘電-')
         }
     }
 
@@ -40,14 +51,13 @@ const LoginScreen = ({ navigation }) => {
                     }}
                 />
             </Box>
-            <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>學號</Text>
+            <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>信箱</Text>
             <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
                 <TextInput
-                    value={number}
-                    placeholder="number"
+                    value={email}
+                    placeholder="email"
                     placeholderTextColor={"darkgray"}
-                    onChangeText={(text) => setnumber(text)}
-                    secureTextEntry={true}
+                    onChangeText={(text) => setemail(text)}
                 />
             </Box>
             <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>密碼</Text>

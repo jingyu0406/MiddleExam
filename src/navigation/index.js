@@ -22,6 +22,7 @@ import { selectToggle } from '../redux/toggleSlice';
 import RegisterScreen from '../screen/SignUpScreen';
 import LoginScreen from '../screen/LoginScreen';
 import ForgetcodeScreen from '../screen/ForgetcodeScreen';
+import SignUpScreen from '../screen/SignUpScreen';
 
 
 
@@ -184,14 +185,14 @@ const AccountStack = () => {
   const colormode = useSelector(selectToggle);
   return (
     <Stack.Navigator
-      initialRouteName='新增帳號'
+      initialRouteName='關於'
     // screenOptions={{
     //   backgroundColor: 'white',
     // }}
     >
       <Stack.Screen
         name='新增帳號'
-        component={RegisterScreen}
+        component={SignUpScreen}
         options={{
           // headerShown: false,
           headerTitleStyle: {
@@ -220,7 +221,7 @@ const AccountStack = () => {
 
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="忘記密碼"
         component={ForgetcodeScreen}
         options={{
@@ -233,8 +234,8 @@ const AccountStack = () => {
           },
 
         }}
-      />
-      {/* <Stack.Screen
+      /> */}
+      <Stack.Screen
         name="關於"
         component={AccountScreen}
         options={{
@@ -249,7 +250,7 @@ const AccountStack = () => {
           },
           headerTitleAlign: "center", //文字置中
         }}
-      /> */}
+      />
       <Stack.Screen
         name="編輯個人資料"
         component={EditAccountScreen}
