@@ -22,6 +22,7 @@ import SignUpScreen from '../screen/SignUpScreen';
 import MyTheme from '../theme';
 import { selectToggle } from '../redux/toggleSlice';
 import useColormodeChange from '../component/colorchange/ColormodeChange';
+import useAnimatedColor from '../component/colorchange/useAnimated';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -44,12 +45,16 @@ const MyTabs = () => {
         tabBarActiveTintColor: "#FFE7AB",
         tabBarInactiveTintColor: 'white',
         tabBarLabel: () => null,
+        headerStyle: { backgroundColor },
+        headerTintColor: 'white',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center'
       }}
     >
       <Tab.Screen name="留言區" component={MessageStack}
         options={{
           tabBarHideOnKeyboard: true,
-          headerShown: false,
+          //headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="chat" color={color} size={30} />
           ),
@@ -57,7 +62,7 @@ const MyTabs = () => {
       />
       <Tab.Screen name="借傘" component={HomeStack}
         options={{
-          headerShown: false,
+          //headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="umbrella" color={color} size={40} />
           ),
@@ -66,7 +71,7 @@ const MyTabs = () => {
       <Tab.Screen name="個人" component={AccountStack}
         options={{
           tabBarHideOnKeyboard: true,
-          headerShown: false,
+          //headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={30} />
           ),
@@ -78,40 +83,42 @@ const MyTabs = () => {
 
 const HomeStack = ({ navigation }) => {
   const colormode = useSelector(selectToggle);
-  const { backgroundColor } = useColormodeChange(colormode, '#73DBC8', '#6B6B6B');
-
+  const backgroundColor = useColormodeChange(colormode, '#73DBC8', '#6B6B6B');
   return (
-      <Stack.Navigator initialRouteName='-傘電-'>
-        <Stack.Screen
-          name="-傘電-"
-          component={HomeScreen}
-          options={{
-            headerTitleStyle: { fontWeight: "bold" },
-            headerTintColor: "white",
-            headerStyle: {
-              backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B" // 动态背景颜色
-            },
-            headerTitleAlign: "center", // 文字置中
-            headerRight: () => (
-              <MaterialCommunityIcons
-                name={'magnify'}
-                size={30}
-                color={"white"}
-                style={{ marginRight: 10 }}
-                onPress={() => navigation.navigate('search')} // 在这里添加导航功能
-              />
-            ),
-          }}
-        />
-        <Stack.Screen
-          name="search"
-          component={SearchScreen}
-          options={{
-            title: "",
-            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B" // 动态背景颜色
-          }}
-        />
-      </Stack.Navigator>
+    <Stack.Navigator
+      initialRouteName='-傘電-'
+      // screenOptions={{
+      //   headerStyle: { height: "8%",backgroundColor },
+      //   headerTintColor: 'white',
+      //   headerTitleStyle: { fontWeight: 'bold' },
+      //   headerTitleAlign: 'center'
+      // }}
+    >
+      <Stack.Screen
+        name="-傘電-"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+          headerRight: () => (
+            <MaterialCommunityIcons
+              name={'magnify'}
+              size={30}
+              color={"white"}
+              style={{ marginRight: 10 }}
+              onPress={() => navigation.navigate('search')} // 在这里添加导航功能
+            />
+          )
+        }}
+      />
+      <Stack.Screen
+        name="search"
+        component={SearchScreen}
+        options={{
+          headerShown: false,
+          title: "",
+        }}
+      />
+    </Stack.Navigator>
   );
 };
 
@@ -120,28 +127,30 @@ const MessageStack = () => {
   const { backgroundColor } = useColormodeChange(colormode, '#73DBC8', '#6B6B6B');
 
   return (
-      <Stack.Navigator initialRouteName='留言板'>
-        <Stack.Screen
-          name="留言板"
-          component={MessageBoard}
-          options={{
-            headerTintColor: "white",
-            headerTitleStyle: { fontWeight: "bold" },
-            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B", // 动态背景颜色
-            headerTitleAlign: "center", //文字置中
-          }}
-        />
-        <Stack.Screen
-          name="留言"
-          component={MessageScreen}
-          options={{
-            headerTintColor: "white",
-            headerTitleStyle: { fontWeight: "bold" },
-            backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B", // 动态背景颜色
-            headerTitleAlign: "center", //文字置中
-          }}
-        />
-      </Stack.Navigator>
+    <Stack.Navigator initialRouteName='留言板'>
+      <Stack.Screen
+        name="留言板"
+        component={MessageBoard}
+        options={{
+          headerShown: false,
+          headerTintColor: "white",
+          headerTitleStyle: { fontWeight: "bold" },
+          backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B", // 动态背景颜色
+          headerTitleAlign: "center", //文字置中
+        }}
+      />
+      <Stack.Screen
+        name="留言"
+        component={MessageScreen}
+        options={{
+          headerShown: false,
+          headerTintColor: "white",
+          headerTitleStyle: { fontWeight: "bold" },
+          backgroundColor: colormode == "light" ? "#73DBC8" : "#6B6B6B", // 动态背景颜色
+          headerTitleAlign: "center", //文字置中
+        }}
+      />
+    </Stack.Navigator>
 
   );
 };
@@ -162,6 +171,7 @@ const AccountStack = () => {
         component={SignUpScreen}
         options={{
           // headerShown: false,
+          headerShown: false,
           headerTitleStyle: {
             fontWeight: "bold"
           },
@@ -179,6 +189,7 @@ const AccountStack = () => {
         component={LoginScreen}
         options={{
           // headerShown: false,
+          headerShown: false,
           title: "",
           headerBackVisible: false,
           headerTitle: false,
@@ -206,6 +217,7 @@ const AccountStack = () => {
         name="關於"
         component={AccountScreen}
         options={{
+          headerShown: false,
           headerTitleStyle: {
             fontWeight: "bold"
           },
@@ -222,6 +234,7 @@ const AccountStack = () => {
         name="編輯個人資料"
         component={EditAccountScreen}
         options={{
+          headerShown: false,
           headerTintColor:
             "white"
           ,
@@ -238,6 +251,7 @@ const AccountStack = () => {
         name="維護公告"
         component={AnnouncementScreen}
         options={{
+          headerShown: false,
           headerTintColor:
             "white"
           ,

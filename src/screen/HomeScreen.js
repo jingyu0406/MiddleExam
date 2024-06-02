@@ -17,6 +17,7 @@ import Hint from "../component/Hint";
 import searchMap from "../json/searchMap.json";
 import { useRoute } from "@react-navigation/native";
 import ColormodeChange from "../component/colorchange/ColormodeChange";
+import useColormodeChange from "../component/colorchange/ColormodeChange";
 
 
 
@@ -33,7 +34,6 @@ const HomeScreen = () => {
     const mapRef = useRef(null);
     const route = useRoute();
 
-    const [backgroundColor, setBackgroundColor] = useState(new Animated.Value(0));
 
     useEffect(() => {
         setMarkers(mapMarker);
@@ -133,6 +133,43 @@ const HomeScreen = () => {
         }
     };
 
+    const backgroundColor = useColormodeChange(colormode, '#73DBC8', '#6B6B6B');
+
+    const FadeInView = ({ trigger, fromColor, toColor, duration, children, style }) => {
+        const colorAnim = useRef(new Animated.Value(0)).current;
+
+        useEffect(() => {
+            Animated.timing(
+                colorAnim,
+                {
+                    toValue: trigger ? 1 : 0,
+                    duration: duration || 3000,
+                    useNativeDriver: false,
+                }
+            ).start();
+        }, [trigger]);
+
+        const backgroundColorInterpolation = colorAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [fromColor, toColor]
+        });
+
+        return (
+            <Animated.View
+                style={{
+                    ...style,
+                    borderColor: backgroundColorInterpolation,
+                }}
+            >
+                {children}
+            </Animated.View>
+        );
+    };
+
+    const trigger = colormode === "light" ? 0 : 1;
+
+
+
 
     return (
 
@@ -159,19 +196,33 @@ const HomeScreen = () => {
                         }}
                         onPress={() => handleMarkerPress(marker.id)}
                     >
-                        {/* <ColormodeChange
-                            trigger={colormode}
-                            fromColor="#9DD8CD"
-                            toColor="#FFB800"
 
-                        > */}
-                            <MaterialCommunityIcons
-                                name={'map-marker'}
-                                size={selectedMarkerId === marker.id ? 70 : 50}
-                                color={colormode == "light" ? "#9DD8CD" : "#FFB800"}
-                                style={{ elevation: 10 }}
-                            />
-                        {/* </ColormodeChange> */}
+                        {/* <MaterialCommunityIcons
+                            name={'map-marker'}
+                            size={selectedMarkerId === marker.id ? 70 : 50}
+                            color={colormode == "light" ? "#9DD8CD" : "#FFB800"}
+                            style={{ elevation: 10 }}
+                        /> */}
+
+                        {/* <Box
+                            backgroundColor="white"
+                            padding={3}
+                            borderWidth={3}
+                            borderRadius={20}
+                            borderColor={backgroundColor}
+                            >
+                                <Text style={{color:{backgroundColor}}}>123123</Text>
+                            </Box> */}
+                        <FadeInView
+                            trigger={trigger}
+                            fromColor="red"
+                            toColor="blue"
+                            duration={3000}
+                            style={styles.markerTest}
+                        >
+                            <Text style={styles.text}>123</Text>
+                        </FadeInView>
+
 
                     </Marker>
                 ))}
@@ -216,6 +267,19 @@ const HomeScreen = () => {
 
             <Hint onPress={handleCenterCoordinate} />
 
+            {/* <View style={styles.container}>
+                <FadeInView
+                    trigger={trigger}
+                    fromColor="red"
+                    toColor="blue"
+                    duration={3000}
+                    style={styles.fadeInView}
+                >
+                    <Text style={styles.text}>React Native Animated</Text>
+                </FadeInView>
+
+            </View> */}
+
             <ConfirmationModal
                 isVisible={modalVisible}
                 MarkerId={selectedMarkerId}
@@ -243,9 +307,7 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
+
     map: {
         flex: 1,
 
@@ -273,6 +335,26 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
     },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    fadeInView: {
+        padding: 20,
+        marginBottom: 20,
+    },
+    text: {
+        fontSize: 15,
+        color: 'black',
+    },
+    markerTest:{
+        backgroundColor:"white",
+        padding:3,
+        borderWidth:3,
+        borderRadius:20,
+        
+    }
 });
 
 export default HomeScreen;
