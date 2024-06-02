@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Animated } from "react-native";
 import { Box, GluestackUIProvider, Text, Pressable, Image } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import mapMarker from "../json/mapMarker.json";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,8 +14,11 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import ConfirmationModal from "../component/ConfirmationModal";
 import FailedModal from "../component/FaildModal";
 import Hint from "../component/Hint";
-import searchMap from "../json/searchMap.json"
+import searchMap from "../json/searchMap.json";
 import { useRoute } from "@react-navigation/native";
+import ColormodeChange from "../component/colorchange/ColormodeChange";
+
+
 
 const HomeScreen = () => {
     const colormode = useSelector(selectToggle);
@@ -30,6 +33,7 @@ const HomeScreen = () => {
     const mapRef = useRef(null);
     const route = useRoute();
 
+    const [backgroundColor, setBackgroundColor] = useState(new Animated.Value(0));
 
     useEffect(() => {
         setMarkers(mapMarker);
@@ -45,6 +49,7 @@ const HomeScreen = () => {
             });
         }
     }, [route.params?.myChoose]);
+
 
     const toggleFunction = () => {
         dispatch(toggleColorMode());
@@ -128,108 +133,122 @@ const HomeScreen = () => {
         }
     };
 
+
     return (
-        <Box flex={1}>
-            <GluestackUIProvider config={config}>
-                <MapView
-                    ref={mapRef}
-                    initialRegion={{
-                        longitude: 121.544637,
-                        latitude: 25.024624,
-                        longitudeDelta: 0.001,
-                        latitudeDelta: 0.002,
-                    }}
-                    style={styles.map}
-                    showsTraffic
-                    mapType="terrain"
-                >
-                    {markers.map(marker => (
-                        <Marker
-                            key={marker.id}
-                            coordinate={{
-                                latitude: marker.latitude,
-                                longitude: marker.longitude,
-                            }}
-                            onPress={() => handleMarkerPress(marker.id)}
-                        >
+
+        <GluestackUIProvider config={config}>
+            <MapView
+                ref={mapRef}
+                initialRegion={{
+                    longitude: 121.544637,
+                    latitude: 25.024624,
+                    longitudeDelta: 0.001,
+                    latitudeDelta: 0.002,
+                }}
+                provider={PROVIDER_GOOGLE}
+                style={styles.map}
+                showsTraffic
+                mapType="terrain"
+            >
+                {markers.map(marker => (
+                    <Marker
+                        key={marker.id}
+                        coordinate={{
+                            latitude: marker.latitude,
+                            longitude: marker.longitude,
+                        }}
+                        onPress={() => handleMarkerPress(marker.id)}
+                    >
+                        {/* <ColormodeChange
+                            trigger={colormode}
+                            fromColor="#9DD8CD"
+                            toColor="#FFB800"
+
+                        > */}
                             <MaterialCommunityIcons
                                 name={'map-marker'}
                                 size={selectedMarkerId === marker.id ? 70 : 50}
                                 color={colormode == "light" ? "#9DD8CD" : "#FFB800"}
                                 style={{ elevation: 10 }}
                             />
-                        </Marker>
-                    ))}
-                </MapView>
+                        {/* </ColormodeChange> */}
 
-                <BottomSheet
-                    ref={bottomSheetRef}
-                    index={0}
-                    snapPoints={snapPoints}
-                >
-                    <BottomSheetView>
-                        <Box justifyContent="center" alignItems="center" marginVertical={3}>
-                            <Box flexDirection="row">
-                                <Image
-                                    source={{ uri: selectedMarkerId == null ? searchMap[0].picture : searchMap[selectedMarkerId].picture }}
-                                    alt="Selected Marker"
-                                    width={150}
-                                    height={150}
-                                    borderRadius={50}
-                                    margin={20}
-                                />
+                    </Marker>
+                ))}
+            </MapView>
 
-                                <Box justifyContent="center" height={150} margin={20}>
-                                    <Text fontWeight="bold" fontSize={35} margin={10} marginTop={0}>{selectedMarkerId == null ? mapMarker[0].title : mapMarker[selectedMarkerId].title}</Text>
-                                    <Text fontSize={20}>可借： {UmbrellaSum[selectedMarkerId]} 把傘</Text>
-                                    <Text fontSize={20}>可還： {UmbrellaSum[selectedMarkerId]} 把傘</Text>
-                                </Box>
+            <BottomSheet
+                ref={bottomSheetRef}
+                index={0}
+                snapPoints={snapPoints}
+            >
+                <BottomSheetView>
+                    <Box justifyContent="center" alignItems="center" marginVertical={3}>
+                        <Box flexDirection="row">
+                            <Image
+                                source={{ uri: selectedMarkerId == null ? searchMap[0].picture : searchMap[selectedMarkerId].picture }}
+                                alt="Selected Marker"
+                                width={150}
+                                height={150}
+                                borderRadius={50}
+                                margin={20}
+                            />
+
+                            <Box justifyContent="center" height={150} margin={20}>
+                                <Text fontWeight="bold" fontSize={35} margin={10} marginTop={0}>{selectedMarkerId == null ? mapMarker[0].title : mapMarker[selectedMarkerId].title}</Text>
+                                <Text fontSize={20}>可借： {UmbrellaSum[selectedMarkerId]} 把傘</Text>
+                                <Text fontSize={20}>可還： {UmbrellaSum[selectedMarkerId]} 把傘</Text>
                             </Box>
-                            <Pressable
-                                onPress={() => {
-                                    handleMarkerRelease();
-                                    handleButtonPress();
-                                    openConfirmationModal(selectedMarkerId);
-                                }}>
-                                <Box backgroundColor="pink" padding={10} paddingHorizontal={100} borderRadius={20}>
-                                    <Text fontSize={25}>{bottomSheetText}</Text>
-                                </Box>
-                            </Pressable>
                         </Box>
-                    </BottomSheetView>
-                </BottomSheet>
+                        <Pressable
+                            onPress={() => {
+                                handleMarkerRelease();
+                                handleButtonPress();
+                                openConfirmationModal(selectedMarkerId);
+                            }}>
+                            <Box backgroundColor="pink" padding={10} paddingHorizontal={100} borderRadius={20}>
+                                <Text fontSize={25}>{bottomSheetText}</Text>
+                            </Box>
+                        </Pressable>
+                    </Box>
+                </BottomSheetView>
+            </BottomSheet>
 
-                <Hint onPress={handleCenterCoordinate} />
+            <Hint onPress={handleCenterCoordinate} />
 
-                <ConfirmationModal
-                    isVisible={modalVisible}
-                    MarkerId={selectedMarkerId}
-                    borrowed={borrowed}
-                    onConfirm={onConfirm}
-                    onCancel={handleCancel}
-                />
-                <FailedModal
-                    FailedisVisible={failed}
-                    onCancel={handleCancel}
-                />
+            <ConfirmationModal
+                isVisible={modalVisible}
+                MarkerId={selectedMarkerId}
+                borrowed={borrowed}
+                onConfirm={onConfirm}
+                onCancel={handleCancel}
+            />
+            <FailedModal
+                FailedisVisible={failed}
+                onCancel={handleCancel}
+            />
 
-                <View style={styles.toggleButton}>
-                    <TouchableOpacity onPress={toggleFunction}>
-                        <MaterialCommunityIcons
-                            name={colormode === "light" ? "moon-waxing-crescent" : "white-balance-sunny"}
-                            size={20}
-                            color={colormode === "light" ? "black" : "gold"}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </GluestackUIProvider>
-        </Box>
+            <View style={styles.toggleButton}>
+                <TouchableOpacity onPress={toggleFunction}>
+                    <MaterialCommunityIcons
+                        name={colormode === "light" ? "moon-waxing-crescent" : "white-balance-sunny"}
+                        size={20}
+                        color={colormode === "light" ? "black" : "gold"}
+                    />
+                </TouchableOpacity>
+            </View>
+        </GluestackUIProvider>
+
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     map: {
         flex: 1,
+
     },
     buttonContainer: {
         position: 'absolute',
