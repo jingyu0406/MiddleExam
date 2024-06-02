@@ -9,6 +9,8 @@ import { ActivityIndicator, ActivityIndicatorBase, Button, KeyboardAvoidingView 
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { firebase } from "@react-native-firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { logIn } from "../redux/accountSlice";
 
 const SignUpScreen = ({ navigation }) => {
     const [email, setemail] = useState('');
@@ -20,7 +22,7 @@ const SignUpScreen = ({ navigation }) => {
     const [id, setid] = useState('')
     const auth = FIREBASE_AUTH
     const data = FIREBASE_DB
-
+    const dispatch = useDispatch();
 
 
     const signUp = async () => {
@@ -50,7 +52,8 @@ const SignUpScreen = ({ navigation }) => {
         }
         finally {
             setLoading(false);
-            navigation.navigate('-傘電-')
+            dispatch(logIn());
+            // navigation.navigate('HomeScreen')
         }
     }
 

@@ -3,7 +3,7 @@ import { NavigationContainer, useTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Animated } from 'react-native';
 
 import HomeScreen from '../screen/HomeScreen';
@@ -18,7 +18,7 @@ import LoginScreen from '../screen/LoginScreen';
 import ForgetcodeScreen from '../screen/ForgetcodeScreen';
 import SignUpScreen from '../screen/SignUpScreen';
 
-
+import { selectIsLoggedIn, logIn, logOut } from '../redux/accountSlice';
 import MyTheme from '../theme';
 import { selectToggle } from '../redux/toggleSlice';
 import useColormodeChange from '../component/colorchange/ColormodeChange';
@@ -33,9 +33,13 @@ const Navigation = () => (
   </NavigationContainer>
 );
 
+
 const MyTabs = () => {
   const colormode = useSelector(selectToggle);
+  const isLoggedIn = useSelector(selectIsLoggedIn); //查看登入狀態
   const backgroundColor = useColormodeChange(colormode, '#73DBC8', '#6B6B6B');
+  const dispatch = useDispatch();
+
 
   return (
     <Tab.Navigator
@@ -51,32 +55,38 @@ const MyTabs = () => {
         headerTitleAlign: 'center'
       }}
     >
-      <Tab.Screen name="留言區" component={MessageStack}
+      <Tab.Screen name="留言區"
         options={{
           tabBarHideOnKeyboard: true,
           //headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="chat" color={color} size={30} />
           ),
-        }}
-      />
-      <Tab.Screen name="借傘" component={HomeStack}
+        }}>
+        {() => <MessageStack />}
+      </Tab.Screen>
+      <Tab.Screen name="借傘"
         options={{
           //headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="umbrella" color={color} size={40} />
           ),
-        }}
-      />
-      <Tab.Screen name="個人" component={AccountStack}
-        options={{
-          tabBarHideOnKeyboard: true,
-          //headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={30} />
-          ),
-        }}
-      />
+        }}>
+        {() => <HomeStack />}
+      </Tab.Screen>
+      <Tab.Screen name="個人" options={{
+        tabBarHideOnKeyboard: true,
+        // headerShown: false,
+        tabBarIcon: ({ color }) => (
+          <MaterialCommunityIcons name="account" color={color} size={30} />
+        ),
+      }}>
+
+
+        {() => isLoggedIn ? <AccountStack /> : <LoginScreen />}
+
+
+      </Tab.Screen>
     </Tab.Navigator>
   );
 };
@@ -87,12 +97,12 @@ const HomeStack = ({ navigation }) => {
   return (
     <Stack.Navigator
       initialRouteName='-傘電-'
-      // screenOptions={{
-      //   headerStyle: { height: "8%",backgroundColor },
-      //   headerTintColor: 'white',
-      //   headerTitleStyle: { fontWeight: 'bold' },
-      //   headerTitleAlign: 'center'
-      // }}
+    // screenOptions={{
+    //   headerStyle: { height: "8%",backgroundColor },
+    //   headerTintColor: 'white',
+    //   headerTitleStyle: { fontWeight: 'bold' },
+    //   headerTitleAlign: 'center'
+    // }}
     >
       <Stack.Screen
         name="-傘電-"
@@ -105,7 +115,7 @@ const HomeStack = ({ navigation }) => {
               size={30}
               color={"white"}
               style={{ marginRight: 10 }}
-              onPress={() => navigation.navigate('search')} // 在这里添加导航功能
+              onPress={() => navigation.navigate('search')}
             />
           )
         }}

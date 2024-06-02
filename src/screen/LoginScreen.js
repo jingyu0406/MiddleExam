@@ -8,6 +8,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { FIREBASE_AUTH } from "../api/FireBase";
 import HomeScreen from "./HomeScreen";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { logIn } from "../redux/accountSlice";
 
 const LoginScreen = () => {
     const [password, setPassword] = useState('');
@@ -15,6 +17,7 @@ const LoginScreen = () => {
     const [loading, setLoading] = useState(false)
     const auth = FIREBASE_AUTH
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     const signIn = async () => {
         //判斷有無輸入
@@ -32,7 +35,8 @@ const LoginScreen = () => {
         }
         finally {
             setLoading(false);
-            navigation.navigate('-傘電-')
+            dispatch(logIn());
+            // navigation.navigate('HomeScreen')
         }
     }
 
