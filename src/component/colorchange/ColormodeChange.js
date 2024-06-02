@@ -8,7 +8,7 @@ const useColormodeChange = (colormode, fromColor, toColor) => {
     Animated.timing(colorAnim, {
       toValue: colormode === 'light' ? 0 : 1,
       duration: 3000,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   }, [colormode]);
 
@@ -17,7 +17,7 @@ const useColormodeChange = (colormode, fromColor, toColor) => {
     outputRange: [fromColor, toColor],
   });
 
-  return { backgroundColor };
+  return backgroundColor ;
 };
 
 export default useColormodeChange;

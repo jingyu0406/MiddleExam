@@ -8,7 +8,7 @@ const useStackChange = (trigger, fromColor, toColor, duration = 3000) => {
     Animated.timing(colorAnim, {
       toValue: trigger === 'light' ? 0 : 1,
       duration,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   }, [trigger, duration]);
 
