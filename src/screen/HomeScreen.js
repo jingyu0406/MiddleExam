@@ -18,10 +18,10 @@ import searchMap from "../json/searchMap.json";
 import { useRoute } from "@react-navigation/native";
 import ColormodeChange from "../component/colorchange/ColormodeChange";
 import useColormodeChange from "../component/colorchange/ColormodeChange";
+import { selectIsLoggedIn } from "../redux/accountSlice";
 
 
-
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
     const colormode = useSelector(selectToggle);
     const dispatch = useDispatch();
     const [markers, setMarkers] = useState([]);
@@ -33,6 +33,9 @@ const HomeScreen = ({navigation}) => {
     const nearest = useSelector(selectNearest);
     const mapRef = useRef(null);
     const route = useRoute();
+
+    const isLoggedIn = useSelector(selectIsLoggedIn); //查看登入狀態
+
 
 
     useEffect(() => {
@@ -72,12 +75,12 @@ const HomeScreen = ({navigation}) => {
 
     const onConfirm = (MarkerId) => {
         if (borrowed) {
-            if ( 5 - UmbrellaSum[MarkerId] > 0) {
+            if (5 - UmbrellaSum[MarkerId] > 0) {
                 borrowToggleFunction();
                 UmbrellaPlusFunction(MarkerId);
                 handleConfirm();
             }
-            else{
+            else {
                 setFailed(true);
                 setModalVisible(false);
             }
@@ -172,6 +175,35 @@ const HomeScreen = ({navigation}) => {
             </Animated.View>
         );
     };
+    const FadeInView2 = ({ trigger, fromColor, toColor, duration, children, style }) => {
+
+        useEffect(() => {
+            Animated.timing(
+                colorAnim,
+                {
+                    toValue: trigger ? 1 : 0,
+                    duration: duration || 3000,
+                    useNativeDriver: false,
+                }
+            ).start();
+        }, [trigger]);
+
+        const backgroundColorInterpolation = colorAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [fromColor, toColor]
+        });
+
+        return (
+            <Animated.View
+                style={{
+                    ...style,
+                    backgroundColor: backgroundColorInterpolation,
+                }}
+            >
+                {children}
+            </Animated.View>
+        );
+    };
 
     const trigger = colormode === "light" ? 0 : 1;
 
@@ -240,18 +272,29 @@ const HomeScreen = ({navigation}) => {
                             <Box justifyContent="center" height={150} margin={20}>
                                 <Text fontWeight="bold" fontSize={35} margin={10} marginTop={0}>{selectedMarkerId == null ? mapMarker[0].title : mapMarker[selectedMarkerId].title}</Text>
                                 <Text fontSize={20}>可借： {UmbrellaSum[selectedMarkerId]} 把傘</Text>
-                                <Text fontSize={20}>可還： {5-UmbrellaSum[selectedMarkerId]} 把傘</Text>
+                                <Text fontSize={20}>可還： {5 - UmbrellaSum[selectedMarkerId]} 把傘</Text>
                             </Box>
                         </Box>
                         <Pressable
                             onPress={() => {
-                                handleMarkerRelease();
-                                handleButtonPress();
-                                openConfirmationModal(selectedMarkerId);
+                                if (isLoggedIn) {
+                                    handleMarkerRelease();
+                                    handleButtonPress();
+                                    openConfirmationModal(selectedMarkerId);
+                                } else {
+                                    navigation.navigate("個人");
+                                }
                             }}>
-                            <Box backgroundColor="pink" padding={10} paddingHorizontal={100} borderRadius={20}>
-                                <Text fontSize={25}>{bottomSheetText}</Text>
-                            </Box>
+                            <FadeInView2
+                                trigger={trigger}
+                                fromColor="#9DD8CD"
+                                toColor="#FFB800"
+                                duration={1000}
+                                style={styles.BottomSheetButton}
+                            >
+                                <Text fontSize={25}>{bottomSheetText}</Text>              
+                            </FadeInView2>
+
                         </Pressable>
                     </Box>
                 </BottomSheetView>
@@ -359,16 +402,21 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'gray',
     },
-    markerTest:{
-        backgroundColor:"white",
- 
-        width:50,
-        height:50,
-        borderWidth:3,
-        borderRadius:10000,
-        alignItems:"center",
-        justifyContent:"center"
-        
+    markerTest: {
+        backgroundColor: "white",
+
+        width: 50,
+        height: 50,
+        borderWidth: 3,
+        borderRadius: 10000,
+        alignItems: "center",
+        justifyContent: "center"
+
+    },
+    BottomSheetButton:{
+        padding:10,
+        paddingHorizontal:100,
+        borderRadius:20
     }
 });
 

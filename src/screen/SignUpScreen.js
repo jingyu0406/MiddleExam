@@ -140,19 +140,20 @@ const SignUpScreen = ({ navigation }) => {
                         <ActivityIndicator size="small" color="#0000ff" />
                     ) : (
                         <>
-                            <Box alignItems="center" marginLeft={80} marginRight={80} paddingBottom={5} borderRadius={30} backgroundColor="#73DBC8">
-                                <Pressable color="#73DBC8" title="註冊" onPress={signUp}>
-                                    <Text color="white">註冊</Text>
-                                </Pressable>
-                            </Box>
+                            <Pressable color="#73DBC8" title="註冊" onPress={signUp}>
 
+                                <Box alignItems="center" marginLeft={80} marginRight={80} paddingBottom={5} borderRadius={30} backgroundColor="#73DBC8">
+                                    <Text color="white">註冊</Text>
+
+                                </Box>
+                            </Pressable>
                             <Pressable
                                 marginLeft={150}
                                 onPress={() => {
                                     navigation.navigate('LoginScreen')
                                 }}
                             >
-                                <Text fontSize={10} color="lightgray" textDecorationLine="underline">已經有帳號了嗎?立即登入</Text>
+                                <Text fontSize={10} color="lightgray" textDecorationLie="underline">已經有帳號了嗎?立即登n入</Text>
                             </Pressable>
                         </>
                     )}
