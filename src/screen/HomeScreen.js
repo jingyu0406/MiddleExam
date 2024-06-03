@@ -46,15 +46,18 @@ const HomeScreen = ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        if (route.params?.myChoose) {
-            const myChoose = route.params.myChoose;
+        if (route.params?.myChoose && route.params?.itemId) {
+            const { myChoose, itemId } = route.params;
             mapRef.current.animateToRegion({
                 ...myChoose,
                 latitudeDelta: 0.0001,
                 longitudeDelta: 0.0001,
             });
+    
+            console.log(itemId); // 处理 itemId
+            handleMarkerPress(itemId)
         }
-    }, [route.params?.myChoose]);
+    }, [route.params?.myChoose, route.params?.itemId]);
 
 
     const toggleFunction = () => {
@@ -148,6 +151,7 @@ const HomeScreen = ({ navigation }) => {
                 latitudeDelta: 0.0001,
                 longitudeDelta: 0.0001,
             });
+            handleMarkerPress(nearest)
         } else {
             console.error('targetCoordinate is not defined');
         }
@@ -356,7 +360,8 @@ const HomeScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.SearchButton}>
-                <TouchableOpacity onPress={() => navigation.navigate('search')}>
+                <TouchableOpacity onPress={() => {navigation.navigate('search')
+                ,handleButtonPress()}}>
                     <MaterialCommunityIcons
                         name='magnify'
                         size={20}

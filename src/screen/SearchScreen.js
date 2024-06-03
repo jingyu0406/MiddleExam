@@ -20,8 +20,10 @@ const SearchScreen = () => {
             latitude: item.latitude,
             longitude: item.longitude,
         };
+        const itemId = item.id;
+    
         console.log(myChoose);
-        navigation.navigate('-傘電-', { myChoose });
+        navigation.navigate('-傘電-', { myChoose ,itemId});
     };
 
     return (
