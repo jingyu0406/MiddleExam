@@ -28,10 +28,10 @@ const SignUpScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const [showError, setShowError] = useState(false);
 
-    const handleEmailChange = (text) => {
-        setEmail(text);
-        dispatch(setEmail(text));
-    }
+    // const handleEmailChange = (text) => {
+    //     setEmail(text);
+    //     dispatch(setEmail(text));
+    // }
     const signUp = async () => {
         //檢查必填項目是否填寫
         if (!email || !password || !number || !id || !gender) {
@@ -53,6 +53,7 @@ const SignUpScreen = ({ navigation }) => {
             });
             console.log(response);
             alert('已創建用戶資料並儲存')
+            dispatch(setEmail(email))
             dispatch(logIn());
         } catch (error) {
             console.log(error)
@@ -139,14 +140,14 @@ const SignUpScreen = ({ navigation }) => {
                         />
                     </Box>
                     <Text style={{ fontWeight: "bold", color: colormode === "light" ? "black" : "white" }} marginLeft={80} marginBottom={10}>性別</Text>
-                    <Box marginLeft={80} marginRight={80} marginBottom={20} borderColor="darkgray" borderWidth={1} borderRadius={5}>
+                    <Box marginLeft={80} marginRight={80} marginBottom={20} backgroundColor={colormode == "light" ? "white" : "darkgray"} borderColor="darkgray" borderWidth={1} borderRadius={5}>
                         <Picker
                             selectedValue={gender}
                             onValueChange={(gender) =>
                                 setgender(gender)
                             }>
-                            <Picker.Item style={{ color: colormode === "light" ? "black" : "white" }} label="女性" value="female" />
-                            <Picker.Item style={{ color: colormode === "light" ? "black" : "white" }} label="男性" value="male" />
+                            <Picker.Item style={{ color: "black" }} label="女性" value="female" />
+                            <Picker.Item style={{ color: "black" }} label="男性" value="male" />
                         </Picker>
                     </Box>
                     {loading ? (
