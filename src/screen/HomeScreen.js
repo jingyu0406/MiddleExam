@@ -19,6 +19,7 @@ import { useRoute } from "@react-navigation/native";
 import ColormodeChange from "../component/colorchange/ColormodeChange";
 import useColormodeChange from "../component/colorchange/ColormodeChange";
 import { selectIsLoggedIn } from "../redux/accountSlice";
+import GoLogin from "../component/GoLogin";
 
 
 const HomeScreen = ({ navigation }) => {
@@ -26,6 +27,8 @@ const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const [markers, setMarkers] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [LoginVisible, setLoginVisible] = useState(false);
+
     const [selectedMarkerId, setSelectedMarkerId] = useState(null);
     const [failed, setFailed] = useState(false);
     const borrowed = useSelector(selectBorrow);
@@ -66,12 +69,19 @@ const HomeScreen = ({ navigation }) => {
     const handleCancel = () => {
         setModalVisible(false);
         setFailed(false);
+        setLoginVisible(false);
     };
 
     const openConfirmationModal = (markerId) => {
         setModalVisible(true);
         setSelectedMarkerId(markerId);
     };
+
+    const GoLoginConfirm=()=>{
+        setLoginVisible(false);
+        navigation.navigate("個人");
+        console.log(navigation)
+    }
 
     const onConfirm = (MarkerId) => {
         if (borrowed) {
@@ -282,7 +292,7 @@ const HomeScreen = ({ navigation }) => {
                                     handleButtonPress();
                                     openConfirmationModal(selectedMarkerId);
                                 } else {
-                                    navigation.navigate("個人");
+                                    setLoginVisible(true);
                                 }
                             }}>
                             <FadeInView2
@@ -327,6 +337,13 @@ const HomeScreen = ({ navigation }) => {
                 onCancel={handleCancel}
                 borrowed={borrowed}
 
+            />
+            <GoLogin
+                isVisible={LoginVisible}
+                MarkerId={selectedMarkerId}
+                borrowed={borrowed}
+                onConfirm={GoLoginConfirm}
+                onCancel={handleCancel}
             />
 
             <View style={styles.toggleButton}>
