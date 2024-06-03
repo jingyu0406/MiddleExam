@@ -258,7 +258,7 @@ const HomeScreen = ({ navigation }) => {
                             duration={1000}
                             style={styles.markerTest}
                         >
-                            <Text style={styles.text}>{UmbrellaSum[marker.id]}</Text>
+                            <Text style={styles.text}>{borrowed?5-UmbrellaSum[marker.id]:UmbrellaSum[marker.id]}</Text>
                         </FadeInView>
 
 

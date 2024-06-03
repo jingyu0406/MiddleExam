@@ -43,7 +43,7 @@ const MyTabs = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName='借傘'
+      initialRouteName='地圖'
       screenOptions={{
         tabBarStyle: { height: "8%", backgroundColor },
         tabBarActiveTintColor: "#FFE7AB",
@@ -65,7 +65,7 @@ const MyTabs = () => {
         }}>
         {() => <MessageStack />}
       </Tab.Screen>
-      <Tab.Screen name="借傘"
+      <Tab.Screen name="地圖"
         options={{
           //headerShown: false,
           tabBarIcon: ({ color }) => (

@@ -140,7 +140,7 @@ const AccountScreen = ({ navigation }) => {
                     paddingHorizontal={15}
                     onPress={() => {
                         //console.log('Button pressed');
-                        navigation.navigate('借傘')
+                        navigation.navigate('地圖')
                         dispatch(logOut())
                     }} >
 
