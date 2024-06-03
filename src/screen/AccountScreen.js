@@ -9,11 +9,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectToggle } from '../redux/toggleSlice';
 import { logIn, logOut, selectIsLoggedIn } from '../redux/accountSlice';
 import { selectUserEmail } from '../redux/emailSlice';
+import { selectUserName } from '../redux/nameSlice';
 
 const AccountScreen = ({ navigation, email }) => {
     const isLoggedIn = useSelector(selectIsLoggedIn)
     const dispatch = useDispatch()
     const userEmail = useSelector(selectUserEmail);
+    const userName = useSelector(selectUserName)
     const colormode = useSelector(selectToggle);
     const { colors } = useTheme();
     return (
@@ -34,7 +36,7 @@ const AccountScreen = ({ navigation, email }) => {
                     }}
                 />
                 <Box padding={5}>
-                    <Text color={colormode == "light" ? "black" : "white"} fontSize={20} marginBottom={10}>傘電鳥</Text>
+                    <Text color={colormode == "light" ? "black" : "white"} fontSize={20} marginBottom={10}>{userName}</Text>
                     <Text color={colormode == "light" ? "gray" : "#E1E1E1"} fontSize={15} >Email:{userEmail}</Text>
                 </Box>
             </Box>

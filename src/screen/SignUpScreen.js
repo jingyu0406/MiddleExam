@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../redux/accountSlice";
 import { selectToggle } from "../redux/toggleSlice";
 import { setEmail } from "../redux/emailSlice";
+import { setName } from "../redux/nameSlice";
 
 const SignUpScreen = ({ navigation }) => {
     const colormode = useSelector(selectToggle)
@@ -54,6 +55,7 @@ const SignUpScreen = ({ navigation }) => {
             console.log(response);
             alert('已創建用戶資料並儲存')
             dispatch(setEmail(email))
+            dispatch(setName(name))
             dispatch(logIn());
         } catch (error) {
             console.log(error)

@@ -7,6 +7,7 @@ import announcementSlice from './announcementSlice';
 import nearestSlice from './nearestSlice'
 import accountSlice from './accountSlice';
 import emailSlice from './emailSlice';
+import nameSlice from './nameSlice';
 
 export default configureStore({
     reducer: {
@@ -17,7 +18,8 @@ export default configureStore({
         building: buildingSlice,
         nearest: nearestSlice,
         account: accountSlice,
-        email: emailSlice
+        email: emailSlice,
+        name:nameSlice,
     },
     devTools: process.env.NODE_ENV !== 'production',
 })

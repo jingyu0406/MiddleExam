@@ -11,12 +11,19 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../redux/accountSlice";
 import { selectToggle } from "../redux/toggleSlice";
+import { setEmail } from "../redux/emailSlice";
+import { setName } from "../redux/nameSlice";
+import { getDoc, doc } from 'firebase/firestore';
+import { FIREBASE_DB } from "../api/FireBase";
+import { selectUserName } from "../redux/nameSlice";
+import { selectUserEmail } from "../redux/emailSlice";
 
 const LoginScreen = () => {
     const colormode = useSelector(selectToggle);
     const [password, setPassword] = useState('');
     const [email, setemail] = useState('')
     const [loading, setLoading] = useState(false)
+    const db = FIREBASE_DB
     const auth = FIREBASE_AUTH
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -29,7 +36,11 @@ const LoginScreen = () => {
         setLoading(true);
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
+            
             console.log(response);
+            const user = response.user;
+            console.log('User logged in:', user);
+            fetchUserData(user.uid);
 
             dispatch(logIn());
         } catch (error) {
@@ -42,6 +53,27 @@ const LoginScreen = () => {
             // navigation.navigate('HomeScreen')
         }
     }
+    const fetchUserData = async (uid) => {
+        try {
+          const userDocRef = doc(db, 'users', uid);
+          const userDoc = await getDoc(userDocRef);
+    
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            console.log('User data:', userData);
+            dispatch(setEmail(userData.email));
+            dispatch(setName(userData.name));
+
+            console.log(userData.email, userData.name);
+
+            dispatch(logIn());
+          } else {
+            console.log('No such user data!');
+          }
+        } catch (error) {
+          console.log('Error fetching user data:', error);
+        }
+      };
 
     return (
         <Box flex={1} backgroundColor={colormode == "light" ? "white" : "#404040"}>
