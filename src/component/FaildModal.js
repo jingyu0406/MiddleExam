@@ -3,7 +3,9 @@ import { View, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import {Text} from "@gluestack-ui/themed";
 
 
-const FailedModal = ({ FailedisVisible, onCancel }) => {
+const FailedModal = ({ FailedisVisible, onCancel ,borrowed}) => {
+    const confirmText = borrowed ? "還傘" : "借傘";
+
     return (
         <Modal
             animationType="slide"
@@ -13,7 +15,7 @@ const FailedModal = ({ FailedisVisible, onCancel }) => {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>借傘失敗</Text>
+                    <Text style={styles.modalText}>{confirmText}失敗</Text>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={onCancel} style={styles.button}>
                             <Text style={styles.buttonText}>取消</Text>

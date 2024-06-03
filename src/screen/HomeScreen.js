@@ -21,7 +21,7 @@ import useColormodeChange from "../component/colorchange/ColormodeChange";
 
 
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
     const colormode = useSelector(selectToggle);
     const dispatch = useDispatch();
     const [markers, setMarkers] = useState([]);
@@ -72,10 +72,17 @@ const HomeScreen = () => {
 
     const onConfirm = (MarkerId) => {
         if (borrowed) {
-            borrowToggleFunction();
-            UmbrellaPlusFunction(MarkerId);
-            handleConfirm();
+            if ( 5 - UmbrellaSum[MarkerId] > 0) {
+                borrowToggleFunction();
+                UmbrellaPlusFunction(MarkerId);
+                handleConfirm();
+            }
+            else{
+                setFailed(true);
+                setModalVisible(false);
+            }
         }
+
         else if (!borrowed && UmbrellaSum[MarkerId] > 0) {
             borrowToggleFunction();
             UmbrellaMinusFunction(MarkerId);
@@ -134,9 +141,9 @@ const HomeScreen = () => {
     };
 
     const backgroundColor = useColormodeChange(colormode, '#73DBC8', '#6B6B6B');
+    const colorAnim = useRef(new Animated.Value(colormode === 'light' ? 0 : 1)).current;
 
     const FadeInView = ({ trigger, fromColor, toColor, duration, children, style }) => {
-        const colorAnim = useRef(new Animated.Value(0)).current;
 
         useEffect(() => {
             Animated.timing(
@@ -197,30 +204,15 @@ const HomeScreen = () => {
                         onPress={() => handleMarkerPress(marker.id)}
                     >
 
-                        {/* <MaterialCommunityIcons
-                            name={'map-marker'}
-                            size={selectedMarkerId === marker.id ? 70 : 50}
-                            color={colormode == "light" ? "#9DD8CD" : "#FFB800"}
-                            style={{ elevation: 10 }}
-                        /> */}
 
-                        {/* <Box
-                            backgroundColor="white"
-                            padding={3}
-                            borderWidth={3}
-                            borderRadius={20}
-                            borderColor={backgroundColor}
-                            >
-                                <Text style={{color:{backgroundColor}}}>123123</Text>
-                            </Box> */}
                         <FadeInView
                             trigger={trigger}
-                            fromColor="red"
-                            toColor="blue"
-                            duration={3000}
+                            fromColor="#9DD8CD"
+                            toColor="#FFB800"
+                            duration={1000}
                             style={styles.markerTest}
                         >
-                            <Text style={styles.text}>123</Text>
+                            <Text style={styles.text}>{UmbrellaSum[marker.id]}</Text>
                         </FadeInView>
 
 
@@ -248,7 +240,7 @@ const HomeScreen = () => {
                             <Box justifyContent="center" height={150} margin={20}>
                                 <Text fontWeight="bold" fontSize={35} margin={10} marginTop={0}>{selectedMarkerId == null ? mapMarker[0].title : mapMarker[selectedMarkerId].title}</Text>
                                 <Text fontSize={20}>可借： {UmbrellaSum[selectedMarkerId]} 把傘</Text>
-                                <Text fontSize={20}>可還： {UmbrellaSum[selectedMarkerId]} 把傘</Text>
+                                <Text fontSize={20}>可還： {5-UmbrellaSum[selectedMarkerId]} 把傘</Text>
                             </Box>
                         </Box>
                         <Pressable
@@ -290,6 +282,8 @@ const HomeScreen = () => {
             <FailedModal
                 FailedisVisible={failed}
                 onCancel={handleCancel}
+                borrowed={borrowed}
+
             />
 
             <View style={styles.toggleButton}>
@@ -298,6 +292,15 @@ const HomeScreen = () => {
                         name={colormode === "light" ? "moon-waxing-crescent" : "white-balance-sunny"}
                         size={20}
                         color={colormode === "light" ? "black" : "gold"}
+                    />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.SearchButton}>
+                <TouchableOpacity onPress={() => navigation.navigate('search')}>
+                    <MaterialCommunityIcons
+                        name='magnify'
+                        size={20}
+                        color={"black"}
                     />
                 </TouchableOpacity>
             </View>
@@ -329,8 +332,16 @@ const styles = StyleSheet.create({
     },
     toggleButton: {
         position: "absolute",
-        top: "88%",
-        left: "3%",
+        top: "8%",
+        right: "3%",
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 10,
+    },
+    SearchButton: {
+        position: "absolute",
+        top: "1%",
+        right: "3%",
         backgroundColor: "white",
         borderRadius: 20,
         padding: 10,
@@ -345,14 +356,18 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     text: {
-        fontSize: 15,
-        color: 'black',
+        fontSize: 20,
+        color: 'gray',
     },
     markerTest:{
         backgroundColor:"white",
-        padding:3,
+ 
+        width:50,
+        height:50,
         borderWidth:3,
-        borderRadius:20,
+        borderRadius:10000,
+        alignItems:"center",
+        justifyContent:"center"
         
     }
 });

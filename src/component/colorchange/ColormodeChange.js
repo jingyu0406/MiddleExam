@@ -7,7 +7,7 @@ const useColormodeChange = (colormode, fromColor, toColor) => {
   useEffect(() => {
     Animated.timing(colorAnim, {
       toValue: colormode === 'light' ? 0 : 1,
-      duration: 3000,
+      duration: 1000,
       useNativeDriver: true,
     }).start();
   }, [colormode]);

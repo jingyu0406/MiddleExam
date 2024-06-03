@@ -109,15 +109,7 @@ const HomeStack = ({ navigation }) => {
         component={HomeScreen}
         options={{
           headerShown: false,
-          headerRight: () => (
-            <MaterialCommunityIcons
-              name={'magnify'}
-              size={30}
-              color={"white"}
-              style={{ marginRight: 10 }}
-              onPress={() => navigation.navigate('search')}
-            />
-          )
+          
         }}
       />
       <Stack.Screen

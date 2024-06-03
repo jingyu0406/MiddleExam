@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 //Define Slice(include reducers and action)
 const initialState = { 
     umbrellaSum: [
-        0,1,2,3,4,5,6,7,8,9,10,11,12,13,14
-    ] 
+        0,1,2,3,4,5,4,3,2,1,0,4,5,2,1
+    ]
 };
 
 const buildingSlice = createSlice({
