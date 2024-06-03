@@ -23,14 +23,14 @@ const SignUpScreen = ({ navigation }) => {
     const auth = FIREBASE_AUTH
     const data = FIREBASE_DB
     const dispatch = useDispatch();
-
+    const [showError, setShowError] = useState(false);
 
     const signUp = async () => {
         //檢查必填項目是否填寫
-        if (!email || !password || !number || !id || !gender)
+        if (!email || !password || !number || !id || !gender) {
+            alert('尚未輸入完全(密碼需5字以上)')
             return;
-
-
+        }
 
         setLoading(true);
         try {
