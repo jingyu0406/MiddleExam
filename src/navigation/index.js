@@ -83,7 +83,7 @@ const MyTabs = () => {
       }}>
 
 
-        {() => isLoggedIn ? <AccountStack /> : <LoginScreen />}
+        {() => isLoggedIn ? <AccountStack /> : <LoginStack />}
 
 
       </Tab.Screen>
@@ -165,19 +165,19 @@ const MessageStack = () => {
   );
 };
 
-const AccountStack = () => {
+const LoginStack = () => {
   const colormode = useSelector(selectToggle);
   const { backgroundColor } = useColormodeChange(colormode, '#73DBC8', '#6B6B6B');
 
   return (
     <Stack.Navigator
-      initialRouteName='關於'
+      initialRouteName='LoginScreen'
     // screenOptions={{
     //   backgroundColor: 'white',
     // }}
     >
       <Stack.Screen
-        name='新增帳號'
+        name='SignUpScreen'
         component={SignUpScreen}
         options={{
           // headerShown: false,
@@ -209,6 +209,21 @@ const AccountStack = () => {
 
         }}
       />
+    </Stack.Navigator >
+  )
+}
+
+const AccountStack = () => {
+  const colormode = useSelector(selectToggle);
+  const { backgroundColor } = useColormodeChange(colormode, '#73DBC8', '#6B6B6B');
+
+  return (
+    <Stack.Navigator
+      initialRouteName='LoginScreen'
+    // screenOptions={{
+    //   backgroundColor: 'white',
+    // }}
+    >
       {/* <Stack.Screen
         name="忘記密碼"
         component={ForgetcodeScreen}

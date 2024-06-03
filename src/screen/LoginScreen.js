@@ -102,7 +102,7 @@ const LoginScreen = () => {
                         marginLeft={165}
                         justifyContent="center"
                         onPress={() => {
-                            navigation.navigate('新增帳號')
+                            navigation.navigate('SignUpScreen')
                         }}
                     >
                         <Text fontSize={10} color="lightgray" textDecorationLine="underline">沒有帳號?立即註冊</Text>
