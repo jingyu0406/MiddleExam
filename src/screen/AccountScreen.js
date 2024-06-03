@@ -1,15 +1,17 @@
 import { Box, Pressable, Text } from '@gluestack-ui/themed';
 import { StatusBar } from 'expo-status-bar';
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Button } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTheme } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectToggle } from '../redux/toggleSlice';
+import { logIn, logOut, selectIsLoggedIn } from '../redux/accountSlice';
 
 const AccountScreen = ({ navigation }) => {
-
+    const isLoggedIn = useSelector(selectIsLoggedIn)
+    const dispatch = useDispatch()
     const colormode = useSelector(selectToggle);
     const { colors } = useTheme();
     return (
@@ -129,12 +131,22 @@ const AccountScreen = ({ navigation }) => {
                 alignItems='center'
                 justifyContent='center'
                 borderRadius={5}
-
             >
-                <Box flexDirection='row' justifyContent='space-between' alignItems='center' width='100%' paddingHorizontal={15}>
+                <Pressable
+                    flexDirection='row'
+                    justifyContent='space-between'
+                    alignItems='center'
+                    width='100%'
+                    paddingHorizontal={15}
+                    onPress={() => {
+                        //console.log('Button pressed');
+                        navigation.navigate('借傘')
+                        dispatch(logOut())
+                    }} >
+
                     <Text fontSize={15} color={colormode == "light" ? "#73DBC8" : "white"}>登出帳號</Text>
 
-                </Box>
+                </Pressable>
             </Box>
 
 

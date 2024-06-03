@@ -8,10 +8,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { FIREBASE_AUTH } from "../api/FireBase";
 import HomeScreen from "./HomeScreen";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../redux/accountSlice";
+import { selectToggle } from "../redux/toggleSlice";
 
 const LoginScreen = () => {
+    const colormode = useSelector(selectToggle);
     const [password, setPassword] = useState('');
     const [email, setemail] = useState('')
     const [loading, setLoading] = useState(false)
@@ -41,7 +43,7 @@ const LoginScreen = () => {
     }
 
     return (
-        <Box flex={1} backgroundColor="white">
+        <Box flex={1} backgroundColor={colormode == "light" ? "white" : "#404040"}>
             <Box alignItems={"center"} marginTop={50} marginBottom={50}>
                 <MaterialCommunityIcons
                     marginRight={10}
@@ -55,16 +57,17 @@ const LoginScreen = () => {
                     }}
                 />
             </Box>
-            <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>信箱</Text>
+            <Text style={{ fontWeight: "bold", color: colormode === "light" ? "black" : "white" }} marginLeft={80} marginBottom={10}>信箱</Text>
             <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
                 <TextInput
                     value={email}
                     placeholder="email"
                     placeholderTextColor={"darkgray"}
                     onChangeText={(text) => setemail(text)}
+                    style={{ color: colormode === "light" ? "black" : "white" }}
                 />
             </Box>
-            <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>密碼</Text>
+            <Text style={{ fontWeight: "bold", color: colormode === "light" ? "black" : "white" }} marginLeft={80} marginBottom={10}>密碼</Text>
             <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
                 <TextInput
                     value={password}
@@ -72,6 +75,7 @@ const LoginScreen = () => {
                     placeholderTextColor={"darkgray"}
                     onChangeText={(text) => setPassword(text)}
                     secureTextEntry={true}
+                    style={{ color: colormode === "light" ? "black" : "white" }}
                 />
             </Box>
 
@@ -81,7 +85,14 @@ const LoginScreen = () => {
                 <ActivityIndicator size="small" color="#0000ff" />
             ) : (
                 <>
-                    <Box marginTop={15} alignItems="center" marginLeft={80} marginRight={80} paddingBottom={5} borderRadius={30} backgroundColor="#73DBC8">
+                    <Box
+                        marginTop={15}
+                        alignItems="center"
+                        marginLeft={80}
+                        marginRight={80}
+                        paddingBottom={5}
+                        borderRadius={30}
+                        backgroundColor={colormode === "light" ? "#73DBC8" : "#FFB800"}>
                         <Pressable color="#73DBC8" title="登入" onPress={signIn}>
                             <Text color="white">登入</Text>
                         </Pressable>
@@ -109,7 +120,7 @@ const LoginScreen = () => {
                     </Pressable>
                 </>
             )}
-        </Box>
+        </Box >
 
 
 

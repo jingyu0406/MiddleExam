@@ -1,4 +1,4 @@
-import { Box, Pressable, ScrollView, Text, View } from "@gluestack-ui/themed";
+import { Box, Pressable, ScrollView, Text, View, useColorMode } from "@gluestack-ui/themed";
 import { Picker } from "@react-native-picker/picker";
 
 import React, { useState } from "react";
@@ -9,10 +9,12 @@ import { ActivityIndicator, ActivityIndicatorBase, Button, KeyboardAvoidingView 
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { firebase } from "@react-native-firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../redux/accountSlice";
+import { selectToggle } from "../redux/toggleSlice";
 
 const SignUpScreen = ({ navigation }) => {
+    const colormode = useSelector(selectToggle)
     const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
     const [number, setnumber] = useState('')
@@ -58,7 +60,7 @@ const SignUpScreen = ({ navigation }) => {
     }
 
     return (
-        <Box flex={1} backgroundColor="white">
+        <Box flex={1} backgroundColor={colormode == "light" ? "white" : "#404040"}>
             <Box alignItems={"center"} marginTop={50} marginBottom={10}>
                 <MaterialCommunityIcons
                     marginRight={10}
@@ -74,7 +76,7 @@ const SignUpScreen = ({ navigation }) => {
             </Box>
             <ScrollView>
                 <KeyboardAvoidingView behavior="padding">
-                    <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>姓名</Text>
+                    <Text style={{ fontWeight: "bold", color: colormode === "light" ? "black" : "white" }} marginLeft={80} marginBottom={10}>姓名</Text>
                     <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
 
                         <TextInput
@@ -82,9 +84,10 @@ const SignUpScreen = ({ navigation }) => {
                             placeholder="name"
                             placeholderTextColor={"darkgray"}
                             onChangeText={(text) => setname(text)}
+                            style={{ color: colormode === "light" ? "black" : "white" }}
                         />
                     </Box>
-                    <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>信箱</Text>
+                    <Text style={{ fontWeight: "bold", color: colormode === "light" ? "black" : "white" }} marginLeft={80} marginBottom={10}>信箱</Text>
                     <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
 
                         <TextInput
@@ -92,9 +95,10 @@ const SignUpScreen = ({ navigation }) => {
                             placeholder="email"
                             placeholderTextColor={"darkgray"}
                             onChangeText={(text) => setemail(text)}
+                            style={{ color: colormode === "light" ? "black" : "white" }}
                         />
                     </Box>
-                    <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>密碼</Text>
+                    <Text style={{ fontWeight: "bold", color: colormode === "light" ? "black" : "white" }} marginLeft={80} marginBottom={10}>密碼</Text>
                     <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
                         <TextInput
                             value={password}
@@ -102,9 +106,10 @@ const SignUpScreen = ({ navigation }) => {
                             placeholderTextColor={"darkgray"}
                             onChangeText={(text) => setPassword(text)}
                             secureTextEntry={true}
+                            style={{ color: colormode === "light" ? "black" : "white" }}
                         />
                     </Box>
-                    <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>身分證字號</Text>
+                    <Text style={{ fontWeight: "bold", color: colormode === "light" ? "black" : "white" }} marginLeft={80} marginBottom={10}>身分證字號</Text>
                     <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
                         <TextInput
                             value={id}
@@ -112,9 +117,11 @@ const SignUpScreen = ({ navigation }) => {
                             placeholderTextColor={"darkgray"}
                             onChangeText={(text) => setid(text)}
                             secureTextEntry={true}
+                            style={{ color: colormode === "light" ? "black" : "white" }}
+
                         />
                     </Box>
-                    <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>學號</Text>
+                    <Text style={{ fontWeight: "bold", color: colormode === "light" ? "black" : "white" }} marginLeft={80} marginBottom={10}>學號</Text>
                     <Box marginLeft={80} marginRight={80} marginBottom={10} borderColor="darkgray" borderWidth={1} borderRadius={5} padding={1} paddingLeft={5}>
                         <TextInput
                             value={number}
@@ -122,17 +129,18 @@ const SignUpScreen = ({ navigation }) => {
                             placeholderTextColor={"darkgray"}
                             onChangeText={(text) => setnumber(text)}
                             secureTextEntry={true}
+                            style={{ color: colormode === "light" ? "black" : "white" }}
                         />
                     </Box>
-                    <Text style={{ fontWeight: "bold" }} marginLeft={80} marginBottom={10}>性別</Text>
+                    <Text style={{ fontWeight: "bold", color: colormode === "light" ? "black" : "white" }} marginLeft={80} marginBottom={10}>性別</Text>
                     <Box marginLeft={80} marginRight={80} marginBottom={20} borderColor="darkgray" borderWidth={1} borderRadius={5}>
                         <Picker
                             selectedValue={gender}
                             onValueChange={(gender) =>
                                 setgender(gender)
                             }>
-                            <Picker.Item label="女性" value="female" />
-                            <Picker.Item label="男性" value="male" />
+                            <Picker.Item style={{ color: colormode === "light" ? "black" : "white" }} label="女性" value="female" />
+                            <Picker.Item style={{ color: colormode === "light" ? "black" : "white" }} label="男性" value="male" />
                         </Picker>
                     </Box>
                     {loading ? (
@@ -142,7 +150,13 @@ const SignUpScreen = ({ navigation }) => {
                         <>
                             <Pressable color="#73DBC8" title="註冊" onPress={signUp}>
 
-                                <Box alignItems="center" marginLeft={80} marginRight={80} paddingBottom={5} borderRadius={30} backgroundColor="#73DBC8">
+                                <Box
+                                    alignItems="center"
+                                    marginLeft={80}
+                                    marginRight={80}
+                                    paddingBottom={5}
+                                    borderRadius={30}
+                                    backgroundColor={colormode === "light" ? "#73DBC8" : "#FFB800"}>
                                     <Text color="white">註冊</Text>
 
                                 </Box>
@@ -153,14 +167,14 @@ const SignUpScreen = ({ navigation }) => {
                                     navigation.navigate('LoginScreen')
                                 }}
                             >
-                                <Text fontSize={10} color="lightgray" textDecorationLie="underline">已經有帳號了嗎?立即登n入</Text>
+                                <Text fontSize={10} color="lightgray" textDecorationLie="underline">已經有帳號了嗎?立即登入</Text>
                             </Pressable>
                         </>
                     )}
 
                 </KeyboardAvoidingView>
             </ScrollView>
-        </Box>
+        </Box >
     )
 }
 

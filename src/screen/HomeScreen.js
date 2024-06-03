@@ -258,7 +258,7 @@ const HomeScreen = ({ navigation }) => {
                 snapPoints={snapPoints}
             >
                 <BottomSheetView>
-                    <Box justifyContent="center" alignItems="center" marginVertical={3}>
+                    <Box justifyContent="center" alignItems="center" marginVertical={3} >
                         <Box flexDirection="row">
                             <Image
                                 source={{ uri: selectedMarkerId == null ? searchMap[0].picture : searchMap[selectedMarkerId].picture }}
@@ -292,7 +292,7 @@ const HomeScreen = ({ navigation }) => {
                                 duration={1000}
                                 style={styles.BottomSheetButton}
                             >
-                                <Text fontSize={25}>{bottomSheetText}</Text>              
+                                <Text fontSize={25}>{bottomSheetText}</Text>
                             </FadeInView2>
 
                         </Pressable>
@@ -413,10 +413,10 @@ const styles = StyleSheet.create({
         justifyContent: "center"
 
     },
-    BottomSheetButton:{
-        padding:10,
-        paddingHorizontal:100,
-        borderRadius:20
+    BottomSheetButton: {
+        padding: 10,
+        paddingHorizontal: 100,
+        borderRadius: 20
     }
 });
 
