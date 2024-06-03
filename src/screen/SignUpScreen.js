@@ -12,6 +12,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../redux/accountSlice";
 import { selectToggle } from "../redux/toggleSlice";
+import { setEmail } from "../redux/emailSlice";
 
 const SignUpScreen = ({ navigation }) => {
     const colormode = useSelector(selectToggle)
@@ -27,6 +28,10 @@ const SignUpScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const [showError, setShowError] = useState(false);
 
+    const handleEmailChange = (text) => {
+        setEmail(text);
+        dispatch(setEmail(text));
+    }
     const signUp = async () => {
         //檢查必填項目是否填寫
         if (!email || !password || !number || !id || !gender) {
@@ -48,13 +53,14 @@ const SignUpScreen = ({ navigation }) => {
             });
             console.log(response);
             alert('已創建用戶資料並儲存')
+            dispatch(logIn());
         } catch (error) {
             console.log(error)
             alert('註冊錯誤:' + error.message);
         }
         finally {
             setLoading(false);
-            dispatch(logIn());
+
             // navigation.navigate('HomeScreen')
         }
     }
