@@ -122,35 +122,33 @@ const AccountScreen = ({ navigation, email }) => {
                     />
                 </Box>
             </Box>
-
-            <Box
-                width='auto'
-                height={50}
-                backgroundColor={colormode == "light" ? "white" : "#FFB800"}
-                borderWidth={1}
-                borderColor={colormode == "light" ? "#73DBC8" : "#FFB800"}
-                marginVertical={10}
+            <Pressable
+                flexDirection='row'
+                justifyContent='space-between'
                 alignItems='center'
-                justifyContent='center'
-                borderRadius={5}
-            >
-                <Pressable
-                    flexDirection='row'
-                    justifyContent='space-between'
-                    alignItems='center'
+                width='100%'
+
+                onPress={() => {
+                    //console.log('Button pressed');
+                    navigation.navigate('地圖')
+                    dispatch(logOut())
+                }} >
+
+                <Box
                     width='100%'
+                    height={50}
+                    backgroundColor={colormode == "light" ? "white" : "#FFB800"}
+                    borderWidth={1}
+                    borderColor={colormode == "light" ? "#73DBC8" : "#FFB800"}
+                    marginVertical={10}
                     paddingHorizontal={15}
-                    onPress={() => {
-                        //console.log('Button pressed');
-                        navigation.navigate('地圖')
-                        dispatch(logOut())
-                    }} >
-
+                    //alignItems='center'
+                    justifyContent='center'
+                    borderRadius={5}
+                >
                     <Text fontSize={15} color={colormode == "light" ? "#73DBC8" : "white"}>登出帳號</Text>
-
-                </Pressable>
-            </Box>
-
+                </Box>
+            </Pressable>
 
 
 

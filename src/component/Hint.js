@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Box } from "@gluestack-ui/themed";
+import { Box, Text } from "@gluestack-ui/themed";
 import { selectBorrow, borrowToggle } from "../redux/borrowSlice";
 import { useDispatch, useSelector } from "react-redux";
 import LocationTracker from "./LocationTracker";
@@ -10,6 +10,8 @@ const Hint = ({ onPress }) => {
   const borrowed = useSelector(selectBorrow);
   const colormode = useSelector(selectToggle);
   const colorAnim = useRef(new Animated.Value(colormode === "light" ? 0 : 1)).current;
+
+  const HintText = borrowed ? "借傘中": "未借傘"
 
   useEffect(() => {
     Animated.timing(colorAnim, {
@@ -23,6 +25,27 @@ const Hint = ({ onPress }) => {
     inputRange: [0, 1],
     outputRange: ["#1DA189", "#FFB800"], // 起始和结束颜色
   });
+
+  const opacityAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    const blink = () => {
+      Animated.sequence([
+        Animated.timing(opacityAnim, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: false,
+        }),
+        Animated.timing(opacityAnim, {
+          toValue: 1,
+          duration: 500,
+          useNativeDriver: false,
+        }),
+      ]).start(() => blink());
+    };
+
+    blink();
+  }, [opacityAnim]);
 
   return (
     <TouchableOpacity
@@ -39,7 +62,7 @@ const Hint = ({ onPress }) => {
       <Animated.View
         style={{
           width: 200,
-          height: 50,
+          height: 60,
           backgroundColor: "white",
           borderRadius: 5,
           borderWidth: 1,
@@ -48,6 +71,17 @@ const Hint = ({ onPress }) => {
           alignItems: "center",
         }}
       >
+
+        <Animated.Text
+          style={{
+            padding:2,
+            justifyContent: "center",
+            alignItems: "center",
+            opacity: opacityAnim 
+          }}
+        >
+          <Text fontSize={15}>{HintText}</Text>
+        </Animated.Text>
         <LocationTracker />
       </Animated.View>
     </TouchableOpacity>

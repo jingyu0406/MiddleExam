@@ -31,13 +31,14 @@ const LoginScreen = () => {
             const response = await signInWithEmailAndPassword(auth, email, password);
             console.log(response);
 
+            dispatch(logIn());
         } catch (error) {
             console.log(error)
             alert('登入錯誤:' + error.message);
         }
         finally {
             setLoading(false);
-            dispatch(logIn());
+
             // navigation.navigate('HomeScreen')
         }
     }
@@ -85,18 +86,19 @@ const LoginScreen = () => {
                 <ActivityIndicator size="small" color="#0000ff" />
             ) : (
                 <>
-                    <Box
-                        marginTop={15}
-                        alignItems="center"
-                        marginLeft={80}
-                        marginRight={80}
-                        paddingBottom={5}
-                        borderRadius={30}
-                        backgroundColor={colormode === "light" ? "#73DBC8" : "#FFB800"}>
-                        <Pressable color="#73DBC8" title="登入" onPress={signIn}>
+                    <Pressable  title="登入" onPress={signIn}>
+                        <Box
+                            marginTop={15}
+                            alignItems="center"
+                            marginLeft={80}
+                            marginRight={80}
+                            paddingBottom={5}
+                            borderRadius={30}
+                            backgroundColor={colormode === "light" ? "#73DBC8" : "#FFB800"}>
+
                             <Text color="white">登入</Text>
-                        </Pressable>
-                    </Box>
+                        </Box>
+                    </Pressable>
 
                     {/*忘記密碼區 */}
                     {/* <Pressable
