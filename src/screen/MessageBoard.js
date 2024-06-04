@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Pressable, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import { selectToggle } from '../redux/toggleSlice';
+import { selectIsLoggedIn } from '../redux/accountSlice';
+import GoLogin2 from '../component/GoLogin2';
 
 
 const FloatingActionButton = ({ onPress }) => {
@@ -46,29 +48,53 @@ const MessageBoard = ({ navigation }) => {
   const message = useSelector(selectMessage);
   const colormode = useSelector(selectToggle);
 
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [LoginVisible, setLoginVisible] = useState(false);
+  const GoLoginConfirm = () => {
+    setLoginVisible(false);
+    navigation.navigate("個人");
+    console.log(navigation)
+  }
 
+  const handleCancel = () => {
 
+    setLoginVisible(false);
+  };
 
   return (
+    // <View>
+      <View style={{ flex: 1, backgroundColor: colormode === "light" ? "#D9EFEB" : "#3C3C3C" }}>
 
-    <View style={{ flex: 1, backgroundColor: colormode === "light" ? "#D9EFEB" : "#3C3C3C" }}>
+        <FloatingActionButton onPress={() => {
+          console.log('Button pressed');
+          if (isLoggedIn) {
+            navigation.navigate('留言');
+          } else {
+            setLoginVisible(true);
+          }
 
-      <FloatingActionButton onPress={() => {
-        console.log('Button pressed');
-        navigation.navigate('留言');
-      }} />
-      <FlatList
-        data={message}
-        renderItem={({ item }) =>
-          <Message text={item.text} id={item.id} />
-          /*           (<View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-                      <Text>{item.text}</Text>
-                      <Button title="Delete" onPress={() => handleDeleteMessage(item.id)} />
-                    </View> )*/
-        }
-        keyExtractor={item => item.id.toString()}
+
+        }} />
+        <FlatList
+          data={message}
+          renderItem={({ item }) =>
+            <Message text={item.text} id={item.id} />
+            /*           (<View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+                        <Text>{item.text}</Text>
+                        <Button title="Delete" onPress={() => handleDeleteMessage(item.id)} />
+                      </View> )*/
+          }
+          keyExtractor={item => item.id.toString()}
+        />
+              <GoLogin2
+        isVisible={LoginVisible}
+        onConfirm={GoLoginConfirm}
+        onCancel={handleCancel}
       />
-    </View>
+
+      </View>
+
+
   );
 };
 
